@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RIVALS Hugo – Game Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -12,7 +12,18 @@
       --text:#e0dcd0; --text-dim:#9a9690; --text-faint:#5a5a58;
       --white:#f4f0e4; --red:#cc2200; --red-dim:#881500;
       --nav-h:52px; --font:'Space Mono','Courier New',monospace;
+      --font-jp:'Noto Sans JP','Space Mono','Courier New',monospace;
     }
+    html[lang="ja"] body { font-family:var(--font-jp); }
+    html[lang="ja"] .hero-title, html[lang="ja"] .hero-title-glitch,
+    html[lang="ja"] .section-title, html[lang="ja"] .nav-logo,
+    html[lang="ja"] .nav-links a, html[lang="ja"] .mobile-nav a,
+    html[lang="ja"] .btn, html[lang="ja"] .btn-submit,
+    html[lang="ja"] .hero-eyebrow, html[lang="ja"] .section-label,
+    html[lang="ja"] .skill-name, html[lang="ja"] .project-title,
+    html[lang="ja"] .link-name, html[lang="ja"] .pill,
+    html[lang="ja"] .form-group label, html[lang="ja"] .hero-subtitle,
+    html[lang="ja"] .footer-logo { font-family:var(--font-jp); letter-spacing:.02em; }
     html { scroll-behavior:smooth; font-size:16px; }
     body {
       background:var(--bg); color:var(--text); font-family:var(--font);
@@ -105,6 +116,18 @@
     }
     .nav-links a:hover, .nav-links a.active { color:var(--white); }
     .nav-links a:hover::after, .nav-links a.active::after { transform:scaleX(1); }
+    .lang-switch { display:flex; align-items:center; }
+    .lang-btn {
+      background:none; border:1px solid var(--text-faint); color:var(--text-dim);
+      font-family:var(--font); font-size:.6rem; letter-spacing:.15em; padding:4px 10px;
+      cursor:pointer; text-transform:uppercase; margin-right:6px; transition:color .1s steps(1),border-color .1s steps(1);
+    }
+    .lang-btn:last-child { margin-right:8px; }
+    .lang-btn:hover { color:var(--white); border-color:var(--text-dim); }
+    .lang-btn.active { color:var(--white); border-color:var(--red); background:rgba(204,34,0,.12); }
+    @media (max-width:900px) {
+      .lang-switch span { display:none; }
+    }
     .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; padding:4px; cursor:pointer; }
     .hamburger span { display:block; width:20px; height:1px; background:var(--text); }
     .hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
@@ -400,7 +423,12 @@
         <li><a href="#liens" data-i18n="nav_links">Liens</a></li>
         <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
       </ul>
-      <span style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-right:6px;">Language :</span><button id="lang-toggle" style="background:none;border:1px solid var(--text-faint);color:var(--text);font-family:var(--font);font-size:.6rem;letter-spacing:.15em;padding:4px 10px;cursor:pointer;text-transform:uppercase;margin-right:8px;">FR</button>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <span style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-right:6px;">Language :</span>
+        <button type="button" class="lang-btn active" data-lang="fr">FR</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="ja">JA</button>
+      </div>
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </nav>
   </header>
@@ -494,17 +522,17 @@
             <p class="section-label" data-i18n="section_about">À propos</p>
             <h2 class="section-title" data-i18n="bio_title">Qui<br>suis-je ?</h2>
             <p data-i18n="bio_p1">Je m'appelle <strong>Hugo Rivals</strong>, alias <strong>H33O</strong> — game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.</p>
-            <p>Je conçois des expériences, des jeux et des récits qui sortent de l'ordinaire. Mon objectif est de <strong>provoquer des émotions</strong> chez le joueur, que ce soit à travers la narration ou les mécaniques de jeu.</p>
+            <p data-i18n="bio_p1b">Je conçois des expériences, des jeux et des récits qui sortent de l'ordinaire. Mon objectif est de <strong>provoquer des émotions</strong> chez le joueur, que ce soit à travers la narration ou les mécaniques de jeu.</p>
             <p data-i18n="bio_p2">Je suis à l'aise autant dans la création d'<strong>expériences fortement scénarisées</strong> que dans des <strong>systèmes purement mécaniques</strong>. Cette flexibilité me permet d'explorer des formats variés et d'adapter mon approche en fonction de l'intention de design.</p>
             <p data-i18n="bio_p3">Je cherche constamment à me confronter à des univers que je ne maîtrise pas encore. Ma curiosité et ma capacité d'apprentissage me poussent à explorer de nouvelles idées et à considérer chaque projet comme une <strong>opportunité d'évolution</strong>.</p>
             <p data-i18n="bio_p4">Enfin, je suis aussi efficace en <strong>autonomie</strong> que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.</p>
             <div class="bio-pills">
-              <span class="pill">Jeux narratifs</span>
-              <span class="pill">Emotion-driven design</span>
-              <span class="pill">Jeux à mécaniques</span>
-              <span class="pill">Level Design</span>
-              <span class="pill">Réalité Virtuelle</span>
-              <span class="pill">Ateliers game design</span>
+              <span class="pill" data-i18n="pill1">Jeux narratifs</span>
+              <span class="pill" data-i18n="pill2">Emotion-driven design</span>
+              <span class="pill" data-i18n="pill3">Jeux à mécaniques</span>
+              <span class="pill" data-i18n="pill4">Level Design</span>
+              <span class="pill" data-i18n="pill5">Réalité Virtuelle</span>
+              <span class="pill" data-i18n="pill6">Ateliers game design</span>
             </div>
           </div>
         </div>
@@ -861,9 +889,16 @@
             "section_about": "À propos",
             "bio_title": "Qui<br>suis-je ?",
             "bio_p1": "Je m'appelle <strong>Hugo Rivals</strong>, alias <strong>H33O</strong> — game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.",
-            "bio_p2": "Je suis à l'aise autant dans la création d'<strong>expériences fortement scénarisées</strong> que dans des <strong>systèmes purement mécaniques</strong>. Cette flexibilité me permet d'explorer des formats variés et d'adapter mon approche en fonction de l'intention de design.",
+            "bio_p1b": "Je conçois des expériences, des jeux et des récits qui sortent de l'ordinaire. Mon objectif est de <strong>provoquer des émotions</strong> chez le joueur, que ce soit à travers la narration ou les mécaniques de jeu.",
+      "bio_p2": "Je suis à l'aise autant dans la création d'<strong>expériences fortement scénarisées</strong> que dans des <strong>systèmes purement mécaniques</strong>. Cette flexibilité me permet d'explorer des formats variés et d'adapter mon approche en fonction de l'intention de design.",
             "bio_p3": "Je cherche constamment à me confronter à des univers que je ne maîtrise pas encore. Ma curiosité et ma capacité d'apprentissage me poussent à explorer de nouvelles idées et à considérer chaque projet comme une <strong>opportunité d'évolution</strong>.",
             "bio_p4": "Enfin, je suis aussi efficace en <strong>autonomie</strong> que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.",
+            "pill1": "Jeux narratifs",
+            "pill2": "Emotion-driven design",
+            "pill3": "Jeux à mécaniques",
+            "pill4": "Level Design",
+            "pill5": "Réalité Virtuelle",
+            "pill6": "Ateliers game design",
             "bio_tl1_year": "2026",
             "bio_tl1_text": "Organisateur de groupes de création de jeux de société avec des jeunes, en collaboration avec des MJC.",
             "bio_tl2_year": "Auj.",
@@ -952,7 +987,14 @@
             "bio_p1": "My name is <strong>Hugo Rivals</strong>, alias <strong>H33O</strong> — a 26-year-old game designer in my 3rd year at Brassart Aix-en-Provence. Before game design, I worked in a dozen different fields: sales, cooking, youth work, carpentry. That versatility directly shapes how I design games.",
             "bio_p2": "I'm as comfortable creating <strong>heavily story-driven experiences</strong> as I am with <strong>purely mechanical systems</strong>. This flexibility lets me explore varied formats and adapt my approach to the design intent.",
             "bio_p3": "I constantly seek out territory I haven't mastered yet. My curiosity and ability to learn push me to explore new ideas and treat every project as an <strong>opportunity to grow</strong>.",
+            "bio_p1b": "I design experiences, games, and stories that break the mold. My goal is to <strong>spark real emotion</strong> in the player, whether through narrative or game mechanics.",
             "bio_p4": "Lastly, I'm just as effective working <strong>independently</strong> as I am in collaborative environments, including within large teams.",
+            "pill1": "Narrative games",
+            "pill2": "Emotion-driven design",
+            "pill3": "Mechanics-driven games",
+            "pill4": "Level Design",
+            "pill5": "Virtual Reality",
+            "pill6": "Game design workshops",
             "bio_tl1_year": "2026",
             "bio_tl1_text": "Ran tabletop game-design workshop groups for young people, in partnership with local youth centers.",
             "bio_tl2_year": "Now",
@@ -1019,6 +1061,102 @@
             "contact_btn": "[ Send → ]",
             "email_alt": "Or directly:",
             "footer_copy": "© 2025 Hugo Rivals – Game Designer. All rights reserved."
+      },
+      "ja": {
+            "nav_home": "ホーム",
+            "nav_about": "プロフィール",
+            "nav_portfolio": "ポートフォリオ",
+            "nav_skills": "スキル",
+            "nav_podcast": "ポッドキャスト",
+            "nav_links": "リンク",
+            "nav_contact": "お問い合わせ",
+            "hero_eyebrow": "ゲームデザイナー・Brassart Aix-en-Provence・3年生",
+            "hero_sub": "本当のことを語る体験をデザインしています。<br>インディーゲームデザイナー、奇妙な世界の語り手。",
+            "hero_btn1": "[ 作品を見る ]",
+            "hero_btn2": "[ お問い合わせ ]",
+            "stat_games": "制作したゲーム数",
+            "stat_age": "歳",
+            "stat_ep": "エピソード数",
+            "scroll": "スクロール",
+            "section_about": "プロフィール",
+            "bio_title": "自己紹介",
+            "bio_p1": "私の名前は<strong>ユゴー・リヴァルス</strong>、通称<strong>H33O</strong>。26歳のゲームデザイナーで、Brassart Aix-en-Provenceの3年生です。ゲームデザインを始める前は、販売員、料理人、青少年指導員、大工など十以上の職業を経験しました。この多様な経験が、私のゲームデザインの考え方に直接活かされています。",
+            "bio_p1b": "私は常識にとらわれない体験、ゲーム、物語をデザインしています。物語であれゲームメカニクスであれ、プレイヤーに<strong>本物の感情を呼び起こす</strong>ことを目指しています。",
+            "bio_p2": "私は<strong>物語性の強い体験</strong>の制作にも、<strong>純粋にメカニクス中心のシステム</strong>にも、同じように自然体で取り組めます。この柔軟性のおかげで、多様なフォーマットを探求し、デザインの意図に応じてアプローチを調整することができます。",
+            "bio_p3": "私は常に、まだ経験したことのない未知の領域に挑み続けています。好奇心と学習意欲が、新しいアイデアを探求する原動力となり、すべてのプロジェクトを<strong>成長の機会</strong>として捉えています。",
+            "bio_p4": "最後に、私は大規模なチームを含む協働環境と同じくらい、<strong>単独作業</strong>でも高い成果を発揮できます。",
+            "bio_tl1_year": "2026",
+            "bio_tl1_text": "青少年向け施設（MJC）と連携し、若者向けボードゲーム制作ワークショップグループを主催。",
+            "bio_tl2_year": "現在",
+            "bio_tl2_text": "Brassart Aixにてゲームデザイン3年生。MJCでゲームデザイン入門ワークショップを開催。",
+            "bio_tl3_year": "2024",
+            "bio_tl3_text": "転機。6か月間の受験準備を経てDAEU（哲学＋保健）取得。創作への情熱に再び焦点を当てる。",
+            "bio_tl4_year": "それ以前",
+            "bio_tl4_text": "青少年活動指導員資格（CPJEPS）、大工仕事など多職種を経験 —— 好奇心と適応力を原動力に。",
+            "bio_tl5_year": "15歳頃",
+            "bio_tl5_text": "最初の仕事：市場での販売、調理師資格（CAP・BEP）。働く世界との出会い。",
+            "portfolio_label": "制作作品",
+            "section_portfolio": "ポートフォリオ",
+            "proj1_badge": "サバイバル・48時間ゲームジャム",
+            "proj1_title": "ABYSS",
+            "proj1_desc": "「プレッシャーの中で」というテーマの48時間ゲームジャムにて、7名のアーティストチームのアートディレクションと統率を担当。制約のある環境下で一貫したビジュアルアイデンティティを構築。",
+            "proj2_badge": "アドベンチャー・タイムループ",
+            "proj2_title": "オグと時の砂",
+            "proj2_desc": "4名のゲームデザイナーからなるチームで1か月間のプロジェクトリーダーを担当。作業管理、進行管理、デザインの統括を実施。",
+            "proj3_badge": "VR・48時間ゲームジャム",
+            "proj3_title": "RINKA",
+            "proj3_desc": "「影絵」をテーマにした48時間のVRゲームを共同制作。VRという媒体とそのインタラクティブな制約に初めて深く挑戦。",
+            "proj4_badge": "VR・アクション・学校プロジェクト",
+            "proj4_title": "ASORIO",
+            "proj4_desc": "10名の3Dアーティストからなるチームと協働し、アートディレクションを担当。プロジェクト全体にわたる一貫したビジュアルの構築・維持を実施。",
+            "proj_link": "Itch.ioで見る →",
+            "skills_label": "習得ツール",
+            "section_skills": "使用ソフト",
+            "skill1_name": "Photoshop",
+            "skill1_level": "レタッチ・合成",
+            "skill1_desc": "写真のレタッチ、UI、ゲームビジュアル、ゲームデザインプロジェクト向けの合成作業。",
+            "skill2_name": "Unreal Engine",
+            "skill2_level": "ブループリント・レベルデザイン",
+            "skill2_desc": "レベルのプロトタイピング、ビジュアルブループリント、ライティングと雰囲気づくり。",
+            "skill3_name": "Unity",
+            "skill3_level": "C#・VR・プロトタイピング",
+            "skill3_desc": "プロトタイプおよびVRゲームの開発、C#スクリプティング、シーン管理。",
+            "skill4_name": "Blender",
+            "skill4_level": "3D・モデリング",
+            "skill4_desc": "ローポリ3Dモデリング、ゲーム用アセット制作、アートディレクション向けレンダリング。",
+            "skill5_name": "Aseprite",
+            "skill5_level": "ピクセルアート・アニメーション",
+            "skill5_desc": "ピクセルアートスプライトの制作、2Dゲーム向けコマ送りアニメーション。",
+            "skill6_name": "Miro",
+            "skill6_level": "GDD・ゲームフロー・進行管理",
+            "skill6_desc": "ゲームデザインドキュメント、ユーザーフロー、ブレインストーミング、共同プロジェクト管理。",
+            "podcast_label": "私のポッドキャスト",
+            "podcast_desc": "ゲーム業界に関わる仕事をしている人々へのインタビューシリーズ —— 愛好家による、愛好家のための番組。",
+            "podcast_spotify_link": "Spotifyで聴く →",
+            "links_label": "見つけてください",
+            "section_links": "リンク",
+            "link1_desc": "すべての作品",
+            "link2_desc": "ポッドキャスト GameView",
+            "link3_desc": "プロフィールページ",
+            "contact_title": "一緒に仕事をしましょう",
+            "section_contact": "お問い合わせ",
+            "contact_desc": "プロジェクト、コラボレーション、あるいはちょっとした質問でも構いません。ご連絡ください、迅速にお返事します。",
+            "form_name_label": "お名前",
+            "form_name_ph": "下のお名前",
+            "form_email_label": "メールアドレス",
+            "form_subject_label": "件名",
+            "form_subject_ph": "コラボレーション、質問など…",
+            "form_message_label": "メッセージ",
+            "form_message_ph": "プロジェクトやご依頼の内容をご記入ください…",
+            "contact_btn": "[ 送信する → ]",
+            "email_alt": "または直接：",
+            "pill1": "ナラティブゲーム",
+            "pill2": "感情主導デザイン",
+            "pill3": "メカニクス中心のゲーム",
+            "pill4": "レベルデザイン",
+            "pill5": "バーチャルリアリティ",
+            "pill6": "ゲームデザインワークショップ",
+            "footer_copy": "© 2025 Hugo Rivals – ゲームデザイナー。無断複写・転載を禁じます。"
       }
 };
 
@@ -1039,17 +1177,17 @@
 
       document.documentElement.setAttribute('lang', lang);
 
-      var btn = document.getElementById('lang-toggle');
-      if (btn) btn.textContent = lang === 'fr' ? 'EN' : 'FR';
+      document.querySelectorAll('.lang-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+      });
       currentLang = lang;
     }
 
-    var toggleBtn = document.getElementById('lang-toggle');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', function() {
-        applyLang(currentLang === 'fr' ? 'en' : 'fr');
+    document.querySelectorAll('.lang-btn').forEach(function(b) {
+      b.addEventListener('click', function() {
+        applyLang(b.getAttribute('data-lang'));
       });
-    }
+    });
   })();
   </script>
 </body>
