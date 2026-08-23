@@ -296,13 +296,13 @@
     .project-badge {
       position:absolute; top:10px; left:10px; z-index:3;
       font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-      background:var(--bg); color:var(--text-dim); padding:6px 12px;
+      background:var(--bg); color:var(--white); padding:6px 12px;
       border:1px solid var(--text-faint);
     }
     .project-badge-year {
       position:absolute; top:10px; right:10px; z-index:3;
       font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-      background:var(--bg); color:var(--red); padding:6px 12px;
+      background:var(--bg); color:var(--white); padding:6px 12px;
       border:1px solid var(--red);
     }
     .project-body { padding:20px; flex:1; display:flex; flex-direction:column; gap:10px; }
@@ -423,7 +423,6 @@
         <li><a href="#competences" data-i18n="nav_skills">Skills</a></li>
         <li><a href="#interviews" data-i18n="nav_podcast">Podcast</a></li>
         <li><a href="#liens" data-i18n="nav_links">Liens</a></li>
-        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
       </ul>
       <div class="lang-switch" role="group" aria-label="Language">
         <span style="font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-faint);margin-right:6px;">Language :</span>
@@ -442,7 +441,6 @@
     <a href="#competences" data-i18n="nav_skills">Skills</a>
     <a href="#interviews" data-i18n="nav_podcast">Podcast</a>
     <a href="#liens" data-i18n="nav_links">Liens</a>
-    <a href="#contact" data-i18n="nav_contact">Contact</a>
   </nav>
 
   <main>
@@ -462,7 +460,7 @@
           <p class="hero-sub" data-i18n="hero_sub">Je conçois des expériences qui donnent du sens au jeu.<br>Game designer indie, narrateur de mondes étranges.</p>
           <div class="hero-ctas">
             <a href="#portfolio" class="btn btn-primary" data-i18n="hero_btn1">[ Voir mes jeux ]</a>
-            <a href="#contact" class="btn btn-outline" data-i18n="hero_btn2">[ Me contacter ]</a>
+            <a href="#liens" class="btn btn-outline" data-i18n="hero_btn2">[ Me contacter ]</a>
             <span class="red-star" style="margin-left:8px;width:20px;height:20px;">
               <svg viewBox="0 0 40 40" fill="none"><line x1="20" y1="0" x2="20" y2="40" stroke="#22aa33" stroke-width="1.5"/><line x1="0" y1="20" x2="40" y2="20" stroke="#22aa33" stroke-width="1.5"/><line x1="5" y1="5" x2="35" y2="35" stroke="#22aa33" stroke-width=".8"/><line x1="35" y1="5" x2="5" y2="35" stroke="#22aa33" stroke-width=".8"/></svg>
             </span>
@@ -781,34 +779,10 @@
             <div class="link-icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#9a9690"/></svg></div>
             <span class="link-name">LinkedIn</span><span class="link-desc" data-i18n="link3_desc">Mon profil pro</span><span class="link-arrow">↗</span>
           </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="container">
-        <div class="contact-wrapper">
-          <p class="section-label reveal" data-i18n="contact_title">Travaillons ensemble</p>
-          <h2 class="section-title reveal" data-i18n="section_contact">Contact</h2>
-          <p class="reveal" style="font-size:.85rem;color:var(--text-dim);" data-i18n="contact_desc">Tu as un projet, une collaboration ou juste une question ? Écris-moi, je réponds rapidement.</p>
-          <form class="contact-form reveal" onsubmit="handleSubmit(event)">
-            <div class="form-row">
-              <div class="form-group"><label for="name" data-i18n="form_name_label">Nom</label><input type="text" id="name" name="name" placeholder="Ton prénom" required data-i18n-placeholder="form_name_ph"></div>
-              <div class="form-group"><label for="email" data-i18n="form_email_label">Email</label><input type="email" id="email" name="email" placeholder="ton@email.com" required></div>
-            </div>
-            <div class="form-group"><label for="subject" data-i18n="form_subject_label">Sujet</label><input type="text" id="subject" name="subject" placeholder="Collaboration, question…" data-i18n-placeholder="form_subject_ph"></div>
-            <div class="form-group"><label for="message" data-i18n="form_message_label">Message</label><textarea id="message" name="message" placeholder="Décris ton projet ou ta demande…" required data-i18n-placeholder="form_message_ph"></textarea></div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <button type="submit" class="btn-submit" data-i18n="contact_btn">[ Envoyer → ]</button>
-              <span class="red-star" style="width:18px;height:18px;opacity:.8;">
-                <svg viewBox="0 0 40 40" fill="none"><line x1="20" y1="0" x2="20" y2="40" stroke="#22aa33" stroke-width="2"/><line x1="0" y1="20" x2="40" y2="20" stroke="#22aa33" stroke-width="2"/><line x1="5" y1="5" x2="35" y2="35" stroke="#22aa33" stroke-width="1"/><line x1="35" y1="5" x2="5" y2="35" stroke="#22aa33" stroke-width="1"/></svg>
-              </span>
-            </div>
-          </form>
-          <p class="email-alt reveal"><span data-i18n="email_alt">Ou directement :</span> <a href="mailto:hugo.rivals@brassart.fr">hugo.rivals@brassart.fr</a></p>
+          <a href="mailto:rivals.hugo@gmail.com" class="link-card reveal">
+            <div class="link-icon"><svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 010 19.366V5.457c0-.913.472-1.727 1.183-2.19l.006-.004a1.636 1.636 0 011.831.04L12 10.09l8.98-6.786a1.636 1.636 0 011.837-.038l.006.004A2.652 2.652 0 0124 5.457z" fill="#9a9690"/></svg></div>
+            <span class="link-name">Mon mail</span><span class="link-desc" data-i18n="link4_desc">rivals.hugo@gmail.com</span><span class="link-arrow">↗</span>
+          </a>
         </div>
       </div>
     </section>
@@ -916,34 +890,6 @@
       entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
     },{threshold:.08});
     revEls.forEach(r=>ro.observe(r));
-
-    // ── FORM ──
-    function handleSubmit(e){
-      e.preventDefault();
-      const form = e.target;
-      const name = form.querySelector('#name').value.trim();
-      const email = form.querySelector('#email').value.trim();
-      const subject = form.querySelector('#subject').value.trim();
-      const message = form.querySelector('#message').value.trim();
-
-      const mailSubject = subject || 'Contact depuis le site';
-      const mailBody =
-        'Nom : ' + name + '\n' +
-        'Email : ' + email + '\n\n' +
-        message;
-
-      const mailtoUrl =
-        'mailto:hugo.rivals@brassart.fr' +
-        '?subject=' + encodeURIComponent(mailSubject) +
-        '&body=' + encodeURIComponent(mailBody);
-
-      window.location.href = mailtoUrl;
-
-      const btn = form.querySelector('.btn-submit');
-      const originalText = btn.textContent;
-      btn.textContent = '[ Ouverture de ta messagerie… ]';
-      setTimeout(() => { btn.textContent = originalText; }, 3000);
-    }
   </script>
 
   <script>
@@ -1053,6 +999,7 @@
             "link1_desc": "Tous mes jeux",
             "link2_desc": "Podcast GameView",
             "link3_desc": "Mon profil pro",
+            "link4_desc": "rivals.hugo@gmail.com",
             "contact_title": "Travaillons ensemble",
             "section_contact": "Contact",
             "contact_desc": "Tu as un projet, une collaboration ou juste une question ? Écris-moi, je réponds rapidement.",
@@ -1170,6 +1117,7 @@
             "link1_desc": "All my games",
             "link2_desc": "GameView podcast",
             "link3_desc": "My professional profile",
+            "link4_desc": "rivals.hugo@gmail.com",
             "contact_title": "Let's work together",
             "section_contact": "Contact",
             "contact_desc": "Got a project, a collaboration, or just a question? Write to me, I reply quickly.",
@@ -1281,6 +1229,7 @@
             "link1_desc": "すべての作品",
             "link2_desc": "ポッドキャスト GameView",
             "link3_desc": "プロフィールページ",
+            "link4_desc": "rivals.hugo@gmail.com",
             "contact_title": "一緒に仕事をしましょう",
             "section_contact": "お問い合わせ",
             "contact_desc": "プロジェクト、コラボレーション、あるいはちょっとした質問でも構いません。ご連絡ください、迅速にお返事します。",
