@@ -175,18 +175,16 @@
     mask-image: radial-gradient(ellipse 75% 85% at 38% 50%, black 15%, transparent 75%);
   }
 
-  /* Accent végétal — clin d'œil à l'identité visuelle existante (bannière Itch.io) */
-  .hero-plants {
-    position: absolute; top: -40px; right: 0; bottom: -40px; width: min(38vw, 460px);
-    z-index: 0; pointer-events: none; overflow: hidden;
+  /* Accent végétal — feuillage fixe sur les deux bords, répété sur toute la hauteur du site */
+  .site-plants {
+    position: fixed; top: 0; bottom: 0; width: 190px; z-index: 2; pointer-events: none;
+    background-repeat: repeat-y; background-size: 190px auto; opacity: .85;
   }
-  .hero-plants .accent-line {
-    position: absolute; top: 0; bottom: 0; right: 92px; width: 2px; background: var(--accent);
-    opacity: .8;
-  }
-  .hero-plants svg { position: absolute; top: 0; right: 0; height: 100%; width: auto; }
-  .hero-plants .leaves { fill: var(--bg3); }
-  @media (max-width: 900px) { .hero-plants { display: none; } }
+  .site-plants.right { right: 0; background-image: url('images/leaf-right.png'); background-position: right top; }
+  .site-plants.left  { left: 0;  background-image: url('images/leaf-left.png');  background-position: left top; }
+  @media (max-width: 1300px) { .site-plants { width: 130px; background-size: 130px auto; } }
+  @media (max-width: 1000px) { .site-plants { display: none; } }
+
   .hero-content { position: relative; z-index: 1; max-width: 720px; }
   .hero-eyebrow {
     font-family: var(--font); font-size: .62rem; letter-spacing: .26em; text-transform: uppercase;
@@ -459,6 +457,8 @@
 </head>
 <body>
 
+<div class="site-plants left" aria-hidden="true"></div>
+<div class="site-plants right" aria-hidden="true"></div>
 <canvas id="trail-canvas"></canvas>
 
 <header>
@@ -498,48 +498,6 @@
 
   <!-- HERO -->
   <section id="accueil">
-    <div class="hero-plants" aria-hidden="true" id="heroPlants">
-      <div class="accent-line"></div>
-      <svg viewBox="0 0 320 600" preserveAspectRatio="xMaxYMid slice">
-        <g class="leaves">
-          <!-- grande feuille monstera stylisée, haut -->
-          <path d="M260 -20
-                   C 210 20, 190 90, 205 150
-                   C 215 190, 250 200, 280 185
-                   C 310 170, 320 130, 305 95
-                   C 330 120, 340 165, 325 205
-                   C 310 245, 265 260, 225 245
-                   C 180 228, 155 175, 165 120
-                   C 172 80, 200 35, 260 -20 Z
-                   M 235 60 a 10 16 -30 1 0 1 1 Z
-                   M 255 100 a 9 14 -20 1 0 1 1 Z
-                   M 210 150 a 8 13 10 1 0 1 1 Z"
-                fill-rule="evenodd"/>
-          <!-- feuille moyenne, milieu -->
-          <path d="M300 260
-                   C 260 280, 235 325, 245 370
-                   C 252 400, 285 412, 312 398
-                   C 320 394, 326 388, 330 380
-                   C 340 405, 335 435, 312 455
-                   C 285 478, 245 470, 225 440
-                   C 205 408, 210 365, 240 335
-                   C 260 315, 280 288, 300 260 Z
-                   M 275 330 a 7 11 -15 1 0 1 1 Z
-                   M 290 365 a 6 10 0 1 0 1 1 Z"
-                fill-rule="evenodd"/>
-          <!-- petite feuille, bas -->
-          <path d="M290 470
-                   C 255 490, 238 525, 250 555
-                   C 258 575, 282 582, 302 570
-                   C 318 560, 322 540, 312 522
-                   C 328 542, 328 568, 310 585
-                   C 288 603, 255 598, 240 575
-                   C 225 550, 232 518, 258 498
-                   C 270 489, 280 480, 290 470 Z"
-                fill-rule="evenodd"/>
-        </g>
-      </svg>
-    </div>
     <div class="container">
       <div class="hero-content">
         <div class="hero-eyebrow" data-i18n="hero_eyebrow">Game Designer · Brassart Aix-en-Provence · 3ème année</div>
@@ -950,15 +908,6 @@
   }
   window.addEventListener('scroll', setActive, { passive: true });
   setActive();
-
-  /* ── PARALLAX LÉGER — accent végétal du hero uniquement ── */
-  var heroPlants = document.getElementById('heroPlants');
-  if (heroPlants && !reduceMotion) {
-    window.addEventListener('scroll', function () {
-      var offset = Math.min(window.scrollY * 0.12, 60);
-      heroPlants.style.transform = 'translateY(' + offset + 'px)';
-    }, { passive: true });
-  }
 
   /* ── SEASON TABS ── */
   function setSeason(season) {
