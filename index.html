@@ -175,9 +175,10 @@
     mask-image: radial-gradient(ellipse 75% 85% at 38% 50%, black 15%, transparent 75%);
   }
 
-  /* Accent végétal — feuillage fixe sur les deux bords, répété sur toute la hauteur du site */
+  /* Accent végétal — feuillage collé au fond, défile avec la page (pas fixe à l'écran) */
+  body { position: relative; }
   .site-plants {
-    position: fixed; top: 0; bottom: 0; width: 190px; z-index: 2; pointer-events: none;
+    position: absolute; top: 0; bottom: 0; width: 190px; z-index: 0; pointer-events: none;
     background-repeat: repeat-y; background-size: 190px auto; opacity: .85;
   }
   .site-plants.right { right: 0; background-image: url('images/leaf-right.png'); background-position: right top; }
