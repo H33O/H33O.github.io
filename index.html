@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RIVALS Hugo – Game Designer</title>
-<meta name="description" content="Hugo Rivals (H33O) — Game Designer 3ème année à Brassart Aix-en-Provence. Portfolio de jeux vidéo, compétences et podcast GameView.">
+<meta name="description" content="Hugo Rivals (H33O), Game Designer 3ème année à Brassart Aix-en-Provence. Portfolio de jeux vidéo, compétences et podcast GameView.">
 <meta property="og:title" content="RIVALS Hugo – Game Designer">
 <meta property="og:description" content="Portfolio de jeux vidéo, compétences et podcast GameView.">
 <meta property="og:type" content="website">
@@ -174,6 +174,19 @@
     background-size: 9px 9px;
     mask-image: radial-gradient(ellipse 75% 85% at 38% 50%, black 15%, transparent 75%);
   }
+
+  /* Accent végétal — clin d'œil à l'identité visuelle existante (bannière Itch.io) */
+  .hero-plants {
+    position: absolute; top: -40px; right: 0; bottom: -40px; width: min(38vw, 460px);
+    z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .hero-plants .accent-line {
+    position: absolute; top: 0; bottom: 0; right: 92px; width: 2px; background: var(--accent);
+    opacity: .8;
+  }
+  .hero-plants svg { position: absolute; top: 0; right: 0; height: 100%; width: auto; }
+  .hero-plants .leaves { fill: var(--bg3); }
+  @media (max-width: 900px) { .hero-plants { display: none; } }
   .hero-content { position: relative; z-index: 1; max-width: 720px; }
   .hero-eyebrow {
     font-family: var(--font); font-size: .62rem; letter-spacing: .26em; text-transform: uppercase;
@@ -293,9 +306,12 @@
     position: absolute; top: 12px; z-index: 2;
     font-family: var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
     background: rgba(20,20,15,.85); color: var(--white); padding: 6px 12px;
+    transition: transform .25s ease;
   }
-  .project-badge { left: 12px; border: 1px solid var(--line); }
-  .project-badge-year { right: 12px; border: 1px solid var(--accent-dim); }
+  .project-badge { left: 12px; border: 1px solid var(--line); transform-origin: left top; }
+  .project-badge-year { right: 12px; border: 1px solid var(--accent-dim); transform-origin: right top; }
+  .project-card:hover .project-badge,
+  .project-card:hover .project-badge-year { transform: scale(1.12); }
 
   .project-body { padding: 22px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
   .project-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--white); }
@@ -318,9 +334,9 @@
   .skill-name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--white); }
   .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
   .skill-tag {
-    font-family: var(--font); font-size: .58rem; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--accent); border: 1px solid var(--accent-dim); background: rgba(41,194,77,.08);
-    padding: 3px 9px;
+    font-family: var(--font); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--white); border: 1px solid var(--accent-dim); background: rgba(41,194,77,.14);
+    padding: 5px 12px;
   }
   .skill-desc { font-size: .78rem; color: var(--text-dim); line-height: 1.7; }
 
@@ -482,6 +498,48 @@
 
   <!-- HERO -->
   <section id="accueil">
+    <div class="hero-plants" aria-hidden="true" id="heroPlants">
+      <div class="accent-line"></div>
+      <svg viewBox="0 0 320 600" preserveAspectRatio="xMaxYMid slice">
+        <g class="leaves">
+          <!-- grande feuille monstera stylisée, haut -->
+          <path d="M260 -20
+                   C 210 20, 190 90, 205 150
+                   C 215 190, 250 200, 280 185
+                   C 310 170, 320 130, 305 95
+                   C 330 120, 340 165, 325 205
+                   C 310 245, 265 260, 225 245
+                   C 180 228, 155 175, 165 120
+                   C 172 80, 200 35, 260 -20 Z
+                   M 235 60 a 10 16 -30 1 0 1 1 Z
+                   M 255 100 a 9 14 -20 1 0 1 1 Z
+                   M 210 150 a 8 13 10 1 0 1 1 Z"
+                fill-rule="evenodd"/>
+          <!-- feuille moyenne, milieu -->
+          <path d="M300 260
+                   C 260 280, 235 325, 245 370
+                   C 252 400, 285 412, 312 398
+                   C 320 394, 326 388, 330 380
+                   C 340 405, 335 435, 312 455
+                   C 285 478, 245 470, 225 440
+                   C 205 408, 210 365, 240 335
+                   C 260 315, 280 288, 300 260 Z
+                   M 275 330 a 7 11 -15 1 0 1 1 Z
+                   M 290 365 a 6 10 0 1 0 1 1 Z"
+                fill-rule="evenodd"/>
+          <!-- petite feuille, bas -->
+          <path d="M290 470
+                   C 255 490, 238 525, 250 555
+                   C 258 575, 282 582, 302 570
+                   C 318 560, 322 540, 312 522
+                   C 328 542, 328 568, 310 585
+                   C 288 603, 255 598, 240 575
+                   C 225 550, 232 518, 258 498
+                   C 270 489, 280 480, 290 470 Z"
+                fill-rule="evenodd"/>
+        </g>
+      </svg>
+    </div>
     <div class="container">
       <div class="hero-content">
         <div class="hero-eyebrow" data-i18n="hero_eyebrow">Game Designer · Brassart Aix-en-Provence · 3ème année</div>
@@ -490,7 +548,7 @@
           <span class="glitch-once" aria-hidden="true">RIVALS<br>Hugo</span>
         </h1>
         <div class="hero-subtitle">Alias &ldquo;H33O&rdquo;<span class="blink">_</span></div>
-        <p class="hero-sub" data-i18n="hero_sub">Je conçois des expériences qui donnent du sens au jeu.<br>Game designer indie, narrateur de mondes étranges.</p>
+        <p class="hero-sub" data-i18n="hero_sub">Je conçois des expériences qui donnent du sens au jeu.<br>Étudiant en game design, passionné de narration et de storytelling.</p>
         <div class="hero-ctas">
           <a href="#portfolio" class="btn btn-primary" data-i18n="hero_btn1">[ Voir mes jeux ]</a>
           <a href="#liens" class="btn btn-outline" data-i18n="hero_btn2">[ Me contacter ]</a>
@@ -531,7 +589,7 @@
             </div>
             <div class="bio-tl-item">
               <span class="bio-tl-year" data-i18n="bio_tl4_year">Après</span>
-              <span class="bio-tl-text" data-i18n="bio_tl4_text">Animation jeunesse (CPJEPS), menuiserie, multiples métiers — curiosité et adaptabilité comme moteurs.</span>
+              <span class="bio-tl-text" data-i18n="bio_tl4_text">Animation jeunesse (CPJEPS), menuiserie, multiples métiers : curiosité et adaptabilité comme moteurs.</span>
             </div>
             <div class="bio-tl-item">
               <span class="bio-tl-year" data-i18n="bio_tl5_year">~15 ans</span>
@@ -543,11 +601,11 @@
         <div class="bio-text reveal">
           <p class="section-label" data-i18n="section_about">À propos</p>
           <h2 class="section-title reveal-title" data-i18n="bio_title">Qui suis-je ?</h2>
-          <p data-i18n="bio_p1">Je m'appelle <strong>Hugo Rivals</strong>, alias <strong>H33O</strong> — game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.</p>
-          <p data-i18n="bio_p1b">Je conçois des expériences, des jeux et des récits qui sortent de l'ordinaire. Mon objectif est de <strong>provoquer des émotions</strong> chez le joueur, que ce soit à travers la narration ou les mécaniques de jeu.</p>
-          <p data-i18n="bio_p2">Je suis à l'aise autant dans la création d'<strong>expériences fortement scénarisées</strong> que dans des <strong>systèmes purement mécaniques</strong>. Cette flexibilité me permet d'explorer des formats variés et d'adapter mon approche en fonction de l'intention de design.</p>
+          <p data-i18n="bio_p1">Je m'appelle <strong>Hugo Rivals</strong>, alias <strong>H33O</strong>, game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.</p>
+          <p data-i18n="bio_p1b">Depuis tout petit, j'ai toujours aimé créer des univers et raconter des histoires. Très vite, je me suis mis à dessiner, puis à créer des jeux de rôle au collège, avec toujours la même idée en tête : construire des mondes dans lesquels le joueur puisse s'évader.</p>
+          <p data-i18n="bio_p2">Je suis à l'aise sur tout type de projet, car j'adore découvrir de nouveaux systèmes et de nouvelles façons d'envisager le jeu vidéo, même si je reste avant tout passionné par le <strong>level design</strong>, le <strong>narrative design</strong>, l'<strong>UI/UX</strong> et le design en général, ainsi que le <strong>management de projet</strong>.</p>
           <p data-i18n="bio_p3">Je cherche constamment à me confronter à des univers que je ne maîtrise pas encore. Ma curiosité et ma capacité d'apprentissage me poussent à explorer de nouvelles idées et à considérer chaque projet comme une <strong>opportunité d'évolution</strong>.</p>
-          <p data-i18n="bio_p4">Enfin, je suis aussi efficace en <strong>autonomie</strong> que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.</p>
+          <p data-i18n="bio_p4">Enfin, je suis quelqu'un de très sociable, qui s'intègre facilement, aussi efficace en <strong>autonomie</strong> que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.</p>
           <div class="bio-pills">
             <span class="pill" data-i18n="pill1">Jeux narratifs</span>
             <span class="pill" data-i18n="pill2">Emotion-driven design</span>
@@ -763,14 +821,14 @@
     <div class="container">
       <p class="section-label reveal" data-i18n="podcast_label">Mon podcast</p>
       <h2 class="section-title reveal-title">GameView</h2>
-      <p class="podcast-intro reveal" data-i18n="podcast_intro">J'ai toujours été quelqu'un de curieux, et cette curiosité m'a poussé à m'entourer de gens plus expérimentés que moi pour apprendre à leur contact. GameView est né de cette envie d'aller à la rencontre de personnes déjà présentes dans le milieu du jeu vidéo, pour recueillir leurs connaissances et leurs expériences — et les partager avec celles et ceux qui veulent, à leur tour, découvrir ce milieu.</p>
+      <p class="podcast-intro reveal" data-i18n="podcast_intro">J'ai toujours été quelqu'un de curieux, et cette curiosité m'a poussé à m'entourer de gens plus expérimentés que moi pour apprendre à leur contact. GameView est né de cette envie d'aller à la rencontre de personnes déjà présentes dans le milieu du jeu vidéo, pour recueillir leurs connaissances et leurs expériences, et les partager avec celles et ceux qui veulent, à leur tour, découvrir ce milieu.</p>
       <div class="podcast-header reveal">
         <div class="podcast-logo">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.973c3.632-1.102 8.147-.568 11.233 1.329a.78.78 0 01.257 1.072zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.937.937 0 11-.543-1.794c3.536-1.072 9.404-.865 13.115 1.338a.937.937 0 01-.955 1.613z" fill="#9a9690"/></svg>
         </div>
         <div>
           <div class="podcast-show-name">GameView</div>
-          <p class="podcast-show-desc"><span data-i18n="podcast_desc">Une suite d'interviews de personnes dont le métier gravite autour du jeu vidéo — par des passionnés, pour des passionnés.</span> <a href="https://open.spotify.com/show/1wW2NvLuyfLhS5NhULBIrG" target="_blank" rel="noopener" data-i18n="podcast_spotify_link">Écouter sur Spotify →</a></p>
+          <p class="podcast-show-desc"><span data-i18n="podcast_desc">Une suite d'interviews de personnes dont le métier gravite autour du jeu vidéo, par des passionnés, pour des passionnés.</span> <a href="https://open.spotify.com/show/1wW2NvLuyfLhS5NhULBIrG" target="_blank" rel="noopener" data-i18n="podcast_spotify_link">Écouter sur Spotify →</a></p>
         </div>
       </div>
       <div class="season-tabs" role="tablist">
@@ -893,6 +951,15 @@
   window.addEventListener('scroll', setActive, { passive: true });
   setActive();
 
+  /* ── PARALLAX LÉGER — accent végétal du hero uniquement ── */
+  var heroPlants = document.getElementById('heroPlants');
+  if (heroPlants && !reduceMotion) {
+    window.addEventListener('scroll', function () {
+      var offset = Math.min(window.scrollY * 0.12, 60);
+      heroPlants.style.transform = 'translateY(' + offset + 'px)';
+    }, { passive: true });
+  }
+
   /* ── SEASON TABS ── */
   function setSeason(season) {
     document.querySelectorAll('.season-tab').forEach(function (t) {
@@ -928,20 +995,20 @@
     "fr": {
       "nav_home": "Accueil", "nav_about": "À propos", "nav_portfolio": "Portfolio", "nav_skills": "Skills", "nav_podcast": "Podcast", "nav_links": "Liens",
       "hero_eyebrow": "Game Designer · Brassart Aix-en-Provence · 3ème année",
-      "hero_sub": "Je conçois des expériences qui donnent du sens au jeu.<br>Game designer indie, narrateur de mondes étranges.",
+      "hero_sub": "Je conçois des expériences qui donnent du sens au jeu.<br>Étudiant en game design, passionné de narration et de storytelling.",
       "hero_btn1": "[ Voir mes jeux ]", "hero_btn2": "[ Me contacter ]",
       "stat_games": "Jeux créés", "stat_ep": "Épisodes", "scroll": "Scroll",
       "section_about": "À propos", "bio_title": "Qui suis-je ?",
-      "bio_p1": "Je m'appelle <strong>Hugo Rivals</strong>, alias <strong>H33O</strong> — game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.",
-      "bio_p1b": "Je conçois des expériences, des jeux et des récits qui sortent de l'ordinaire. Mon objectif est de <strong>provoquer des émotions</strong> chez le joueur, que ce soit à travers la narration ou les mécaniques de jeu.",
-      "bio_p2": "Je suis à l'aise autant dans la création d'<strong>expériences fortement scénarisées</strong> que dans des <strong>systèmes purement mécaniques</strong>. Cette flexibilité me permet d'explorer des formats variés et d'adapter mon approche en fonction de l'intention de design.",
+      "bio_p1": "Je m'appelle <strong>Hugo Rivals</strong>, alias <strong>H33O</strong>, game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.",
+      "bio_p1b": "Depuis tout petit, j'ai toujours aimé créer des univers et raconter des histoires. Très vite, je me suis mis à dessiner, puis à créer des jeux de rôle au collège, avec toujours la même idée en tête : construire des mondes dans lesquels le joueur puisse s'évader.",
+      "bio_p2": "Je suis à l'aise sur tout type de projet, car j'adore découvrir de nouveaux systèmes et de nouvelles façons d'envisager le jeu vidéo, même si je reste avant tout passionné par le <strong>level design</strong>, le <strong>narrative design</strong>, l'<strong>UI/UX</strong> et le design en général, ainsi que le <strong>management de projet</strong>.",
       "bio_p3": "Je cherche constamment à me confronter à des univers que je ne maîtrise pas encore. Ma curiosité et ma capacité d'apprentissage me poussent à explorer de nouvelles idées et à considérer chaque projet comme une <strong>opportunité d'évolution</strong>.",
-      "bio_p4": "Enfin, je suis aussi efficace en <strong>autonomie</strong> que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.",
+      "bio_p4": "Enfin, je suis quelqu'un de très sociable, qui s'intègre facilement, aussi efficace en <strong>autonomie</strong> que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.",
       "pill1": "Jeux narratifs", "pill2": "Emotion-driven design", "pill3": "Jeux à mécaniques", "pill4": "Level Design", "pill5": "Réalité Virtuelle", "pill6": "Ateliers game design",
       "bio_tl1_year": "2026", "bio_tl1_text": "Organisateur de groupes de création de jeux de société avec des jeunes, en collaboration avec des MJC.",
       "bio_tl2_year": "Auj.", "bio_tl2_text": "3ème année Game Design à Brassart Aix. Ateliers d'initiation au game design en MJC.",
       "bio_tl3_year": "2024", "bio_tl3_text": "Remise en question. 6 mois de prépa bac → DAEU (philo + santé). Recentrage sur la passion créative.",
-      "bio_tl4_year": "Après", "bio_tl4_text": "Animation jeunesse (CPJEPS), menuiserie, multiples métiers — curiosité et adaptabilité comme moteurs.",
+      "bio_tl4_year": "Après", "bio_tl4_text": "Animation jeunesse (CPJEPS), menuiserie, multiples métiers : curiosité et adaptabilité comme moteurs.",
       "bio_tl5_year": "~15 ans", "bio_tl5_text": "Premiers jobs : vente sur les marchés, CAP &amp; BEP cuisine. Découverte du monde du travail.",
       "portfolio_label": "Mes projets", "section_portfolio": "Portfolio",
       "proj1_badge": "Game Jam · 48h", "proj1_year": "GD2", "proj1_title": "ABYSS",
@@ -969,8 +1036,8 @@
       "skill5_name": "Aseprite", "skill5_tag1": "Pixel Art", "skill5_tag2": "Animation", "skill5_desc": "Création de sprites pixel art, animations frame-by-frame pour jeux 2D.",
       "skill6_name": "Miro", "skill6_tag1": "GDD", "skill6_tag2": "Game Flow", "skill6_desc": "Game Design Documents, user flows, brainstorming et gestion de projet collaboratif.",
       "podcast_label": "Mon podcast",
-      "podcast_intro": "J'ai toujours été quelqu'un de curieux, et cette curiosité m'a poussé à m'entourer de gens plus expérimentés que moi pour apprendre à leur contact. GameView est né de cette envie d'aller à la rencontre de personnes déjà présentes dans le milieu du jeu vidéo, pour recueillir leurs connaissances et leurs expériences — et les partager avec celles et ceux qui veulent, à leur tour, découvrir ce milieu.",
-      "podcast_desc": "Une suite d'interviews de personnes dont le métier gravite autour du jeu vidéo — par des passionnés, pour des passionnés.",
+      "podcast_intro": "J'ai toujours été quelqu'un de curieux, et cette curiosité m'a poussé à m'entourer de gens plus expérimentés que moi pour apprendre à leur contact. GameView est né de cette envie d'aller à la rencontre de personnes déjà présentes dans le milieu du jeu vidéo, pour recueillir leurs connaissances et leurs expériences, et les partager avec celles et ceux qui veulent, à leur tour, découvrir ce milieu.",
+      "podcast_desc": "Une suite d'interviews de personnes dont le métier gravite autour du jeu vidéo, par des passionnés, pour des passionnés.",
       "podcast_spotify_link": "Écouter sur Spotify →", "podcast_soon": "Le prochain épisode de GameView arrive bientôt !",
       "links_label": "Retrouve-moi", "section_links": "Liens",
       "link1_desc": "Tous mes jeux", "link2_desc": "Podcast GameView", "link3_desc": "Mon profil pro", "link4_desc": "rivals.hugo@gmail.com",
@@ -979,20 +1046,20 @@
     "en": {
       "nav_home": "Home", "nav_about": "About", "nav_portfolio": "Portfolio", "nav_skills": "Skills", "nav_podcast": "Podcast", "nav_links": "Links",
       "hero_eyebrow": "Game Designer · Brassart Aix-en-Provence · 3rd year",
-      "hero_sub": "I design experiences that give meaning to play.<br>Indie game designer, storyteller of strange worlds.",
+      "hero_sub": "I design experiences that give meaning to play.<br>Game design student, passionate about narrative and storytelling.",
       "hero_btn1": "[ See my games ]", "hero_btn2": "[ Contact me ]",
       "stat_games": "Games made", "stat_ep": "Episodes", "scroll": "Scroll",
       "section_about": "About", "bio_title": "Who am I?",
-      "bio_p1": "My name is <strong>Hugo Rivals</strong>, alias <strong>H33O</strong> — a 26-year-old game designer in my 3rd year at Brassart Aix-en-Provence. Before game design, I worked in a dozen different fields: sales, cooking, youth work, carpentry. That versatility directly shapes how I design games.",
-      "bio_p1b": "I design experiences, games, and stories that break the mold. My goal is to <strong>spark real emotion</strong> in the player, whether through narrative or game mechanics.",
-      "bio_p2": "I'm as comfortable creating <strong>heavily story-driven experiences</strong> as I am with <strong>purely mechanical systems</strong>. This flexibility lets me explore varied formats and adapt my approach to the design intent.",
+      "bio_p1": "My name is <strong>Hugo Rivals</strong>, alias <strong>H33O</strong>, a 26-year-old game designer in my 3rd year at Brassart Aix-en-Provence. Before game design, I worked in a dozen different fields: sales, cooking, youth work, carpentry. That versatility directly shapes how I design games.",
+      "bio_p1b": "Ever since I was a kid, I've loved building worlds and telling stories. I started drawing early on, then began creating tabletop role-playing games in middle school, always with the same idea in mind: build worlds players could escape into.",
+      "bio_p2": "I'm comfortable on any type of project, because I love discovering new systems and new ways of looking at video games, though I remain most passionate about <strong>level design</strong>, <strong>narrative design</strong>, <strong>UI/UX</strong> and design in general, as well as <strong>project management</strong>.",
       "bio_p3": "I constantly seek out territory I haven't mastered yet. My curiosity and ability to learn push me to explore new ideas and treat every project as an <strong>opportunity to grow</strong>.",
-      "bio_p4": "Lastly, I'm just as effective working <strong>independently</strong> as I am in collaborative environments, including within large teams.",
+      "bio_p4": "Lastly, I'm a very sociable person who fits in easily, just as effective working <strong>independently</strong> as I am in collaborative environments, including within large teams.",
       "pill1": "Narrative games", "pill2": "Emotion-driven design", "pill3": "Mechanics-driven games", "pill4": "Level Design", "pill5": "Virtual Reality", "pill6": "Game design workshops",
       "bio_tl1_year": "2026", "bio_tl1_text": "Ran tabletop game-design workshop groups for young people, in partnership with local youth centers.",
       "bio_tl2_year": "Now", "bio_tl2_text": "3rd-year Game Design student at Brassart Aix. Introductory game-design workshops for youth centers.",
       "bio_tl3_year": "2024", "bio_tl3_text": "A turning point. 6 months of prep then a DAEU diploma (philosophy + health). Refocused on my creative passion.",
-      "bio_tl4_year": "Before that", "bio_tl4_text": "Youth work (CPJEPS certificate), carpentry, and many other jobs — curiosity and adaptability as driving forces.",
+      "bio_tl4_year": "Before that", "bio_tl4_text": "Youth work (CPJEPS certificate), carpentry, and many other jobs: curiosity and adaptability as driving forces.",
       "bio_tl5_year": "~Age 15", "bio_tl5_text": "First jobs: market sales, cooking certificates (CAP &amp; BEP). Discovering the working world.",
       "portfolio_label": "My projects", "section_portfolio": "Portfolio",
       "proj1_badge": "Game Jam · 48h", "proj1_year": "GD2", "proj1_title": "ABYSS",
@@ -1020,8 +1087,8 @@
       "skill5_name": "Aseprite", "skill5_tag1": "Pixel Art", "skill5_tag2": "Animation", "skill5_desc": "Pixel art sprite creation, frame-by-frame animation for 2D games.",
       "skill6_name": "Miro", "skill6_tag1": "GDD", "skill6_tag2": "Game Flow", "skill6_desc": "Game Design Documents, user flows, brainstorming, and collaborative project management.",
       "podcast_label": "My podcast",
-      "podcast_intro": "I've always been a curious person, and that curiosity has pushed me to surround myself with people more experienced than me, to learn from them. GameView was born from that same drive — going out to meet people already working in the video game industry, gathering their knowledge and experience, and sharing it with anyone who wants to discover this world for themselves.",
-      "podcast_desc": "A series of interviews with people whose careers revolve around video games — by enthusiasts, for enthusiasts.",
+      "podcast_intro": "I've always been a curious person, and that curiosity has pushed me to surround myself with people more experienced than me, to learn from them. GameView was born from that same drive: going out to meet people already working in the video game industry, gathering their knowledge and experience, and sharing it with anyone who wants to discover this world for themselves.",
+      "podcast_desc": "A series of interviews with people whose careers revolve around video games, by enthusiasts, for enthusiasts.",
       "podcast_spotify_link": "Listen on Spotify →", "podcast_soon": "The next GameView episode is coming soon!",
       "links_label": "Find me", "section_links": "Links",
       "link1_desc": "All my games", "link2_desc": "GameView podcast", "link3_desc": "My professional profile", "link4_desc": "rivals.hugo@gmail.com",
@@ -1030,20 +1097,20 @@
     "ja": {
       "nav_home": "ホーム", "nav_about": "プロフィール", "nav_portfolio": "ポートフォリオ", "nav_skills": "スキル", "nav_podcast": "ポッドキャスト", "nav_links": "リンク",
       "hero_eyebrow": "ゲームデザイナー・Brassart Aix-en-Provence・3年生",
-      "hero_sub": "遊びに意味を与える体験をデザインしています。<br>インディーゲームデザイナー、奇妙な世界の語り手。",
+      "hero_sub": "遊びに意味を与える体験をデザインしています。<br>ゲームデザインを学ぶ学生。物語と語りへの情熱を持っています。",
       "hero_btn1": "[ 作品を見る ]", "hero_btn2": "[ お問い合わせ ]",
       "stat_games": "制作したゲーム数", "stat_ep": "エピソード数", "scroll": "スクロール",
       "section_about": "プロフィール", "bio_title": "自己紹介",
       "bio_p1": "私の名前は<strong>ユゴー・リヴァルス</strong>、通称<strong>H33O</strong>。26歳のゲームデザイナーで、Brassart Aix-en-Provenceの3年生です。ゲームデザインを始める前は、販売員、料理人、青少年指導員、大工など十以上の職業を経験しました。この多様な経験が、私のゲームデザインの考え方に直接活かされています。",
-      "bio_p1b": "私は常識にとらわれない体験、ゲーム、物語をデザインしています。物語であれゲームメカニクスであれ、プレイヤーに<strong>本物の感情を呼び起こす</strong>ことを目指しています。",
-      "bio_p2": "私は<strong>物語性の強い体験</strong>の制作にも、<strong>純粋にメカニクス中心のシステム</strong>にも、同じように自然体で取り組めます。この柔軟性のおかげで、多様なフォーマットを探求し、デザインの意図に応じてアプローチを調整することができます。",
+      "bio_p1b": "子どもの頃から、世界を作り物語を語ることがずっと好きでした。早くから絵を描き始め、中学生の頃にはテーブルトークRPGを自作するように。いつも頭にあったのは同じ想い、プレイヤーが逃避できる世界を作ること。",
+      "bio_p2": "新しいシステムやビデオゲームの新しい捉え方を発見することが大好きなので、どんな種類のプロジェクトにも自然体で取り組めます。とはいえ、最も情熱を注いでいるのは<strong>レベルデザイン</strong>、<strong>ナラティブデザイン</strong>、<strong>UI/UX</strong>を含むデザイン全般、そして<strong>プロジェクトマネジメント</strong>です。",
       "bio_p3": "私は常に、まだ経験したことのない未知の領域に挑み続けています。好奇心と学習意欲が、新しいアイデアを探求する原動力となり、すべてのプロジェクトを<strong>成長の機会</strong>として捉えています。",
-      "bio_p4": "最後に、私は大規模なチームを含む協働環境と同じくらい、<strong>単独作業</strong>でも高い成果を発揮できます。",
+      "bio_p4": "最後に、私はとても社交的で、周囲に馴染みやすい性格です。大規模なチームを含む協働環境と同じくらい、<strong>単独作業</strong>でも高い成果を発揮できます。",
       "pill1": "ナラティブゲーム", "pill2": "感情主導デザイン", "pill3": "メカニクス中心のゲーム", "pill4": "レベルデザイン", "pill5": "バーチャルリアリティ", "pill6": "ゲームデザインワークショップ",
       "bio_tl1_year": "2026", "bio_tl1_text": "青少年向け施設（MJC）と連携し、若者向けボードゲーム制作ワークショップグループを主催。",
       "bio_tl2_year": "現在", "bio_tl2_text": "Brassart Aixにてゲームデザイン3年生。MJCでゲームデザイン入門ワークショップを開催。",
       "bio_tl3_year": "2024", "bio_tl3_text": "転機。6か月間の受験準備を経てDAEU（哲学＋保健）取得。創作への情熱に再び焦点を当てる。",
-      "bio_tl4_year": "それ以前", "bio_tl4_text": "青少年活動指導員資格（CPJEPS）、大工仕事など多職種を経験 —— 好奇心と適応力を原動力に。",
+      "bio_tl4_year": "それ以前", "bio_tl4_text": "青少年活動指導員資格（CPJEPS）、大工仕事など多職種を経験。好奇心と適応力を原動力に。",
       "bio_tl5_year": "15歳頃", "bio_tl5_text": "最初の仕事：市場での販売、調理師資格（CAP・BEP）。働く世界との出会い。",
       "portfolio_label": "制作作品", "section_portfolio": "ポートフォリオ",
       "proj1_badge": "ゲームジャム・48時間", "proj1_year": "GD2", "proj1_title": "ABYSS",
@@ -1072,7 +1139,7 @@
       "skill6_name": "Miro", "skill6_tag1": "GDD", "skill6_tag2": "ゲームフロー", "skill6_desc": "ゲームデザインドキュメント、ユーザーフロー、ブレインストーミング、共同プロジェクト管理。",
       "podcast_label": "私のポッドキャスト",
       "podcast_intro": "私は昔から好奇心旺盛な性格で、その好奇心から自分よりも経験豊富な人たちに囲まれ、彼らから学びたいと思うようになりました。GameViewは、すでにゲーム業界で活躍している人々に会いに行き、その知識や経験を集め、これからこの業界を知りたいと思う人々に伝えたいという思いから生まれました。",
-      "podcast_desc": "ゲーム業界に関わる仕事をしている人々へのインタビューシリーズ —— 愛好家による、愛好家のための番組。",
+      "podcast_desc": "ゲーム業界に関わる仕事をしている人々へのインタビューシリーズ。愛好家による、愛好家のための番組。",
       "podcast_spotify_link": "Spotifyで聴く →", "podcast_soon": "GameViewの次のエピソードは近日公開予定です！",
       "links_label": "見つけてください", "section_links": "リンク",
       "link1_desc": "すべての作品", "link2_desc": "ポッドキャスト GameView", "link3_desc": "プロフィールページ", "link4_desc": "rivals.hugo@gmail.com",
