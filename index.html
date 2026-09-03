@@ -293,7 +293,7 @@
     display: flex; flex-direction: column; transition: border-color .25s ease, transform .25s ease;
   }
   .project-card:hover { border-color: var(--accent-dim); transform: translateY(-4px); }
-  .project-img { background: var(--bg3); position: relative; overflow: hidden; aspect-ratio: 4/3; }
+  .project-img { background: var(--bg3); position: relative; overflow: hidden; aspect-ratio: 4/3; display: block; cursor: pointer; }
   .project-img img {
     width: 100%; height: 100%; object-fit: cover;
     filter: grayscale(45%) contrast(1.08);
@@ -315,11 +315,59 @@
   .project-body { padding: 22px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
   .project-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--white); }
   .project-desc { font-size: .82rem; color: var(--text-dim); line-height: 1.7; flex: 1; }
+  .project-footer-links { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .project-link {
     font-family: var(--font); font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
     color: var(--text-faint); text-decoration: none; transition: color .2s ease;
   }
   .project-link:hover { color: var(--accent); }
+  .project-postmortem-btn {
+    font-family: var(--font); font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--white); background: transparent; border: 1px solid var(--accent-dim); padding: 8px 16px;
+    cursor: pointer; transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .project-postmortem-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+  /* ============================================================
+     POST-MORTEM — fiche modale au clic sur un projet
+     ============================================================ */
+  .postmortem-overlay {
+    position: fixed; inset: 0; z-index: 3000; background: rgba(10,10,8,.88);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  .postmortem-overlay.open { opacity: 1; pointer-events: auto; }
+  .postmortem-modal {
+    background: var(--bg2); border: 1px solid var(--line); max-width: 640px; width: 100%;
+    max-height: 88vh; overflow-y: auto; position: relative;
+    transform: translateY(16px); transition: transform .25s ease;
+  }
+  .postmortem-overlay.open .postmortem-modal { transform: translateY(0); }
+  .postmortem-close {
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    width: 34px; height: 34px; background: rgba(20,20,15,.75); border: 1px solid var(--line);
+    color: var(--white); font-size: 1rem; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: border-color .2s ease, color .2s ease;
+  }
+  .postmortem-close:hover { border-color: var(--accent); color: var(--accent); }
+  .postmortem-img { aspect-ratio: 16/9; background: var(--bg3); overflow: hidden; }
+  .postmortem-img img { width: 100%; height: 100%; object-fit: cover; }
+  .postmortem-body { padding: 28px 30px 34px; }
+  .postmortem-badges { display: flex; gap: 10px; margin-bottom: 16px; }
+  .postmortem-badges span {
+    font-family: var(--font); font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    padding: 5px 11px; border: 1px solid var(--line); color: var(--text-dim);
+  }
+  .postmortem-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 22px; }
+  .postmortem-section { margin-bottom: 22px; }
+  .postmortem-section:last-child { margin-bottom: 0; }
+  .postmortem-section .section-label { margin-bottom: 8px; }
+  .postmortem-section p { font-size: .88rem; color: var(--text-dim); line-height: 1.75; }
+  body.modal-open { overflow: hidden; }
+  @media (max-width: 560px) {
+    .postmortem-body { padding: 22px 20px 26px; }
+    .postmortem-title { font-size: 1.25rem; }
+  }
 
   /* ============================================================
      SKILLS — badges qualitatifs, pas de barres de progression
@@ -587,107 +635,131 @@
       <h2 class="section-title reveal-title" data-i18n="section_portfolio">Portfolio</h2>
       <div class="projects-grid">
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="1">
+          <a href="https://h33o.itch.io/abyss" target="_blank" rel="noopener" class="project-img" aria-label="Voir ABYSS sur Itch.io">
             <img src="images/proj-abyss.png" alt="ABYSS" loading="lazy">
             <span class="project-badge" data-i18n="proj1_badge">Game Jam · 48h</span>
             <span class="project-badge-year" data-i18n="proj1_year">GD2</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj1_title">ABYSS</h3>
             <p class="project-desc" data-i18n="proj1_desc">Direction artistique et encadrement d'une équipe de 7 artistes lors d'une game jam 48h sur le thème "sous pression". Création d'une identité visuelle cohérente en environnement contraint.</p>
-            <a href="https://h33o.itch.io/abyss" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://h33o.itch.io/abyss" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="1" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="2">
+          <a href="https://h33o.itch.io/ogu-et-les-sables-du-temps" target="_blank" rel="noopener" class="project-img" aria-label="Voir OGU et les Sables du Temps sur Itch.io">
             <img src="images/proj-ogu.jpg" alt="OGU" loading="lazy">
             <span class="project-badge" data-i18n="proj2_badge">Projet d'étude · 1 mois</span>
             <span class="project-badge-year" data-i18n="proj2_year">GD1</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj2_title">OGU et les Sables du Temps</h3>
             <p class="project-desc" data-i18n="proj2_desc">Chef de projet sur une production d'un mois avec une équipe de 4 game designers. Organisation du travail, suivi de production et coordination du design.</p>
-            <a href="https://h33o.itch.io/ogu-et-les-sables-du-temps" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://h33o.itch.io/ogu-et-les-sables-du-temps" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="2" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="3">
+          <a href="https://h33o.itch.io/rinka-vr" target="_blank" rel="noopener" class="project-img" aria-label="Voir RINKA sur Itch.io">
             <img src="images/proj-rinka.png" alt="RINKA VR" loading="lazy">
             <span class="project-badge" data-i18n="proj3_badge">Game Jam · 48h</span>
             <span class="project-badge-year" data-i18n="proj3_year">GD2</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj3_title">RINKA</h3>
             <p class="project-desc" data-i18n="proj3_desc">Co-conception d'un jeu en réalité virtuelle en 48h autour du thème "ombre chinoise". Première exploration du médium VR et de ses contraintes interactives.</p>
-            <a href="https://h33o.itch.io/rinka-vr" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://h33o.itch.io/rinka-vr" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="3" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="4">
+          <a href="https://medina-bastien.itch.io/asorio" target="_blank" rel="noopener" class="project-img" aria-label="Voir ASORIO sur Itch.io">
             <img src="images/proj-asorio.jpg" alt="ASORIO" loading="lazy">
             <span class="project-badge" data-i18n="proj4_badge">Projet d'étude · 4 semaines</span>
             <span class="project-badge-year" data-i18n="proj4_year">GD2</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj4_title">ASORIO</h3>
             <p class="project-desc" data-i18n="proj4_desc">Direction artistique en collaboration avec une équipe de 10 artistes 3D. Mise en place et maintien d'une cohérence visuelle globale sur l'ensemble du projet.</p>
-            <a href="https://medina-bastien.itch.io/asorio" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://medina-bastien.itch.io/asorio" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="4" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="5">
+          <a href="https://h33o.itch.io/check-fate" target="_blank" rel="noopener" class="project-img" aria-label="Voir CHECK-FATE sur Itch.io">
             <img src="images/proj-checkfate.png" alt="CHECK-FATE" loading="lazy">
             <span class="project-badge" data-i18n="proj5_badge">Projet d'étude · 1 mois</span>
             <span class="project-badge-year" data-i18n="proj5_year">GD2</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj5_title">CHECK-FATE</h3>
             <p class="project-desc" data-i18n="proj5_desc">Projet d'école mobile inspiré des jeux Game &amp; Watch, réalisé en un mois. J'ai codé l'intégralité du jeu et réalisé tous les sprites moi-même.</p>
-            <a href="https://h33o.itch.io/check-fate" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://h33o.itch.io/check-fate" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="5" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="6">
+          <a href="https://h33o.itch.io/life" target="_blank" rel="noopener" class="project-img" aria-label="Voir L.I.F.E sur Itch.io">
             <img src="images/proj-life.png" alt="L.I.F.E" loading="lazy">
             <span class="project-badge" data-i18n="proj6_badge">Projet d'étude · 1 mois</span>
             <span class="project-badge-year" data-i18n="proj6_year">GD2</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj6_title">L.I.F.E</h3>
             <p class="project-desc" data-i18n="proj6_desc">Jeu mobile inspiré du film Brazil (1986) : une critique bureaucratique déguisée en puzzle arcade, où l'on trie des documents selon des règles de plus en plus absurdes et complexes.</p>
-            <a href="https://h33o.itch.io/life" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://h33o.itch.io/life" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="6" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="7">
+          <a href="https://h33o.itch.io/adhara" target="_blank" rel="noopener" class="project-img" aria-label="Voir ADHARA sur Itch.io">
             <img src="images/proj-adhara.png" alt="ADHARA" loading="lazy">
             <span class="project-badge" data-i18n="proj7_badge">Game Jam · 7 jours</span>
             <span class="project-badge-year" data-i18n="proj7_year">GD2</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj7_title">ADHARA</h3>
             <p class="project-desc" data-i18n="proj7_desc">Réalisé à deux en 7 jours pour la jam "Do You Wanna Jam ?" sur le thème "instable". On y incarne un être astral dévoreur de mondes, qui finit par mettre en danger tous les systèmes solaires.</p>
-            <a href="https://h33o.itch.io/adhara" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://h33o.itch.io/adhara" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="7" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-img">
+        <article class="project-card reveal" data-project="8">
+          <a href="https://h33o.itch.io/waza" target="_blank" rel="noopener" class="project-img" aria-label="Voir WAZA sur Itch.io">
             <img src="images/proj-waza.png" alt="WAZA" loading="lazy">
             <span class="project-badge" data-i18n="proj8_badge">Projet d'étude · 9 jours</span>
             <span class="project-badge-year" data-i18n="proj8_year">GD1</span>
-          </div>
+          </a>
           <div class="project-body">
             <h3 class="project-title" data-i18n="proj8_title">WAZA</h3>
             <p class="project-desc" data-i18n="proj8_desc">Version imprimable d'un jeu de société créé en 9 jours sur le thème de l'Inde. À l'aide d'un tetris en 4 dimensions, il faut remplir une cassolette d'ingrédients pour composer des recettes de cuisine indienne, en confrontation avec un autre joueur.</p>
-            <a href="https://h33o.itch.io/waza" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+            <div class="project-footer-links">
+              <a href="https://h33o.itch.io/waza" target="_blank" rel="noopener" class="project-link" data-i18n="proj_link">Voir sur Itch.io →</a>
+              <button type="button" class="project-postmortem-btn" data-project="8" data-i18n="proj_postmortem_btn">Post-mortem →</button>
+            </div>
           </div>
         </article>
 
@@ -840,6 +912,33 @@
 
 </main>
 
+<!-- MODALE POST-MORTEM — remplie dynamiquement par le JS -->
+<div class="postmortem-overlay" id="postmortemOverlay" aria-hidden="true">
+  <div class="postmortem-modal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <button type="button" class="postmortem-close" id="postmortemClose" aria-label="Fermer">✕</button>
+    <div class="postmortem-img"><img id="pmImg" src="" alt=""></div>
+    <div class="postmortem-body">
+      <div class="postmortem-badges">
+        <span id="pmBadge"></span>
+        <span id="pmYear"></span>
+      </div>
+      <h3 class="postmortem-title" id="pmTitle"></h3>
+      <div class="postmortem-section">
+        <p class="section-label" data-i18n="pm_challenge_label">Le défi</p>
+        <p id="pmChallenge"></p>
+      </div>
+      <div class="postmortem-section">
+        <p class="section-label" data-i18n="pm_solution_label">Comment je l'ai résolu</p>
+        <p id="pmSolution"></p>
+      </div>
+      <div class="postmortem-section">
+        <p class="section-label" data-i18n="pm_lesson_label">Ce que ça m'a appris</p>
+        <p id="pmLesson"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="container">
     <div class="footer-inner">
@@ -978,6 +1077,32 @@
       "proj8_badge": "Projet d'étude · 9 jours", "proj8_year": "GD1", "proj8_title": "WAZA",
       "proj8_desc": "Version imprimable d'un jeu de société créé en 9 jours sur le thème de l'Inde. À l'aide d'un tetris en 4 dimensions, il faut remplir une cassolette d'ingrédients pour composer des recettes de cuisine indienne, en confrontation avec un autre joueur.",
       "proj_link": "Voir sur Itch.io →",
+      "proj_postmortem_btn": "Post-mortem →",
+      "pm_challenge_label": "Le défi", "pm_solution_label": "Comment je l'ai résolu", "pm_lesson_label": "Ce que ça m'a appris",
+      "proj1_challenge": "Réaliser un jeu en 48 heures avec un thème imposé, en travaillant avec une équipe issue de filières différentes, et parvenir à mettre tout le monde d'accord sur une direction commune.",
+      "proj1_solution": "Nous avons résolu ce problème en définissant clairement le rôle de chacun, pour que personne ne marche sur les plates-bandes de l'autre, et en allant rapidement à l'essentiel pour livrer un jeu efficace dans le temps imparti.",
+      "proj1_lesson": "Ce projet m'a beaucoup appris sur la manière de travailler dans un délai court avec des personnes diverses, et sur la capacité à tirer le meilleur de chacun.",
+      "proj2_challenge": "Les différentes équipes du projet avançaient à des vitesses différentes, ce qui a créé des tensions, et nous avions défini un scope trop ambitieux.",
+      "proj2_solution": "Nous avons organisé une grande réunion à mi-parcours du projet pour écouter ce que chacun avait à dire, son ressenti et sa manière de travailler.",
+      "proj2_lesson": "Ce projet m'a beaucoup appris sur ce qu'est réellement le rôle de chef de projet : savoir être à l'écoute des autres, avoir un œil sur l'ensemble de la production, et savoir s'adapter à son équipe pour que chacun puisse donner le meilleur de lui-même.",
+      "proj3_challenge": "Réaliser un jeu en réalité virtuelle en 48 heures, alors que nous n'avions aucune expérience de la VR et découvrions Unity au même moment.",
+      "proj3_solution": "Nous avons réduit le scope du projet pour garantir sa faisabilité dans le temps imparti.",
+      "proj3_lesson": "Ce projet m'a beaucoup appris sur le développement et l'UI/UX, et sur la nécessité de penser un code plus rigoureux dès le départ, en anticipant les problèmes plutôt qu'en se contentant d'y répondre au fur et à mesure.",
+      "proj4_challenge": "Créer une expérience en réalité virtuelle accessible aussi bien aux enfants qu'aux adultes, tout en apprenant à travailler avec des artistes 3D au sein d'une équipe plus large, sans que personne ne se sente perdu.",
+      "proj4_solution": "Nous avons mis en place des points de synchronisation quotidiens pour centraliser les informations et les redistribuer clairement, afin d'éviter toute confusion au sein d'une grande équipe.",
+      "proj4_lesson": "Ce projet m'a appris à savoir parfois me mettre en retrait et écouter les autres avant de vouloir imposer mon point de vue, car des idées intéressantes peuvent venir de n'importe qui dans l'équipe.",
+      "proj5_challenge": "Travailler entièrement seul sur un projet mené en parallèle des cours, sur une durée relativement longue, en imaginant un jeu inspiré des Game & Watch (donc un format assez ancien), tout en respectant leurs règles et leur fonctionnement, alors que ce format n'était pas familier avec ma manière de travailler habituelle. Au milieu du projet, j'ai ressenti le besoin de refaire l'ensemble du visuel pour me réapproprier le projet, car ce que j'avais réalisé au départ ne m'intéressait plus.",
+      "proj5_solution": "J'ai choisi de reprendre entièrement la partie visuelle à mi-parcours plutôt que de continuer sur une base qui ne me motivait plus, quitte à doubler ma charge de travail (sprites et visuels entièrement refaits par mes soins).",
+      "proj5_lesson": "Ce projet m'a appris ma capacité à travailler en autonomie complète : j'ai réussi à livrer un projet dont je suis très fier, en travaillant le soir et la nuit en parallèle des cours. Cela m'a aussi beaucoup appris sur la gestion du temps et sur l'importance d'avoir un cadre de travail clair pour rester efficace.",
+      "proj6_challenge": "Le scope du projet était trop ambitieux : nous voulions un jeu avec un nombre infini de niveaux générés procéduralement, ce qui nous a menés à écrire un code beaucoup trop complexe, qui a fini par ne pas fonctionner. Nous avons dû repenser une grande partie du fonctionnement du jeu côté développement à partir du milieu du projet. La difficulté était aussi de créer des visuels pensés pour désorienter légèrement le joueur, sans jamais dépasser la limite où la charge cognitive devient réellement trop élevée, tout en donnant l'impression qu'elle l'est.",
+      "proj6_solution": "Nous avons clarifié les rôles au sein de l'équipe de 4 personnes, chacun ayant sa responsabilité propre, ce qui a permis d'éviter de perdre du temps en négociations de choix.",
+      "proj6_lesson": "Ce projet m'a appris à savoir arrêter rapidement une feature qui met le jeu en danger, plutôt que de la laisser prendre de la place jusqu'à ce qu'elle devienne un problème majeur plus tard, ainsi que la difficulté de gérer l'ambiguïté visuelle et la charge cognitive du joueur.",
+      "proj7_challenge": "Réaliser une game jam à seulement deux personnes, en nous occupant à la fois du game design et de l'aspect visuel, tout en travaillant à côté d'autres obligations et en devant diviser nos heures disponibles. La principale difficulté a été l'équilibrage d'un jeu réalisé sur un temps aussi court.",
+      "proj7_solution": "À partir du 4e jour, nous avons multiplié les phases de playtest pour livrer un jeu plus stable.",
+      "proj7_lesson": "Ce projet m'a appris à accepter que le jeu ne sera jamais exactement tel qu'on le souhaite, à faire de son mieux malgré tout sans se fixer d'exigences impossibles à atteindre, et à savoir prendre des décisions qui vont à l'encontre de notre vision de base, pour le bien du jeu.",
+      "proj8_challenge": "Réaliser un jeu de société en seulement 9 jours, sur un thème imposé. Le projet a évolué pendant trop longtemps, au point que des changements sont intervenus sur des systèmes cœurs du jeu alors qu'ils avaient déjà été validés plusieurs jours auparavant, le jeu a énormément changé, même très peu de temps avant la deadline.",
+      "proj8_solution": "Nous avons communiqué encore davantage qu'auparavant, en nous assurant qu'à chaque étape décisionnelle, chaque membre de l'équipe soit d'accord, afin d'éviter les retours en arrière.",
+      "proj8_lesson": "Ce projet m'a appris le travail manuel autour du jeu de société, ainsi que la capacité à s'adapter et à trouver des solutions rapidement lorsque les délais sont extrêmement courts.",
       "skills_label": "Outils maîtrisés", "section_skills": "Logiciels",
       "skill1_name": "Photoshop", "skill1_tag1": "Retouche", "skill1_tag2": "Compositing", "skill1_desc": "Retouche photo, UI, visuels de jeux et compositing pour projets de game design.",
       "skill2_name": "Unreal Engine", "skill2_tag1": "Blueprints", "skill2_tag2": "Level Design", "skill2_desc": "Prototypage de niveaux, blueprints visuels, éclairage et atmosphère.",
@@ -1029,6 +1154,32 @@
       "proj8_badge": "School Project · 9 days", "proj8_year": "GD1", "proj8_title": "WAZA",
       "proj8_desc": "The printable version of a board game created in 9 days on the theme of India. Using a 4-dimensional tetris system, players fill a cooking pot with ingredients to complete Indian recipes, competing against another player.",
       "proj_link": "View on Itch.io →",
+      "proj_postmortem_btn": "Post-mortem →",
+      "pm_challenge_label": "The challenge", "pm_solution_label": "How I solved it", "pm_lesson_label": "What it taught me",
+      "proj1_challenge": "Making a game in 48 hours with an imposed theme, working with a team made up of people from different fields, and getting everyone to agree on a common direction.",
+      "proj1_solution": "We solved this by clearly defining everyone's role, so no one stepped on anyone else's toes, and by quickly getting to the essentials to deliver an effective game within the time available.",
+      "proj1_lesson": "This project taught me a lot about working under a tight deadline with a diverse group of people, and about how to get the best out of everyone.",
+      "proj2_challenge": "The different teams on the project were moving at different speeds, which created tension, and we had set a scope that was too ambitious.",
+      "proj2_solution": "We held a big meeting halfway through the project to listen to what everyone had to say, how they felt, and how they liked to work.",
+      "proj2_lesson": "This project taught me a lot about what being a project lead really means: listening to others, keeping an eye on the whole production, and adapting to your team so everyone can do their best work.",
+      "proj3_challenge": "Making a virtual reality game in 48 hours, with no prior VR experience and while discovering Unity at the same time.",
+      "proj3_solution": "We reduced the project's scope to make it achievable within the time we had.",
+      "proj3_lesson": "This project taught me a lot about development and UI/UX, and about the need to think through more rigorous code from the start, anticipating problems instead of just reacting to them as they came up.",
+      "proj4_challenge": "Creating a VR experience accessible to both children and adults, while learning to work with 3D artists as part of a larger team, without anyone feeling lost.",
+      "proj4_solution": "We set up daily check-ins to centralize information and redistribute it clearly, to avoid confusion within a large team.",
+      "proj4_lesson": "This project taught me to sometimes step back and listen to others before pushing my own point of view, because good ideas can come from anyone on the team.",
+      "proj5_challenge": "Working entirely alone on a project run alongside my coursework, over a fairly long period, designing a game inspired by Game & Watch handhelds (so a fairly old format), while respecting their rules and mechanics, which wasn't familiar territory for how I usually work. Halfway through, I felt the need to redo the entire visual style to reconnect with the project, since what I'd made at the start no longer interested me.",
+      "proj5_solution": "I chose to fully redo the visual side of the project halfway through rather than keep building on a foundation that no longer motivated me, even though it doubled my workload (I redid every sprite and visual myself).",
+      "proj5_lesson": "This project taught me my ability to work in complete autonomy: I managed to deliver a project I'm really proud of, working evenings and nights alongside my classes. It also taught me a lot about time management and the importance of a clear working structure to stay effective.",
+      "proj6_challenge": "The project's scope was too ambitious: we wanted a game with an infinite number of procedurally generated levels, which led us to write code that was far too complex and ultimately didn't work. From the middle of the project onward, we had to rethink a large part of how the game worked on the development side. The other challenge was designing visuals meant to slightly disorient the player, without ever crossing the line where cognitive load actually becomes too high, while still giving the impression that it is.",
+      "proj6_solution": "We clarified roles within the 4-person team, with each person owning their own area, which avoided wasting time negotiating decisions.",
+      "proj6_lesson": "This project taught me to know when to cut a feature quickly once it puts the game at risk, rather than letting it take up more and more space until it becomes a major problem later, as well as the difficulty of managing visual ambiguity and the player's cognitive load.",
+      "proj7_challenge": "Making a game jam project with just two people, handling both game design and visuals while working around other commitments and splitting our available hours. The main difficulty was balancing a game made in such a short time.",
+      "proj7_solution": "Starting on day 4, we ran playtests much more frequently to deliver a more stable game.",
+      "proj7_lesson": "This project taught me to accept that a game will never be exactly what you envisioned, to still do your best without setting impossible standards, and to know when to make decisions that go against your original vision, for the good of the game.",
+      "proj8_challenge": "Making a board game in just 9 days, on an imposed theme. The project kept evolving for too long, to the point where changes were made to core systems that had already been validated days earlier, the game changed enormously, even very close to the deadline.",
+      "proj8_solution": "We communicated even more than before, making sure the whole team agreed at every decision point, to avoid having to backtrack.",
+      "proj8_lesson": "This project taught me the hands-on craft of board game design, as well as the ability to adapt and find solutions quickly when deadlines are extremely tight.",
       "skills_label": "Tools I use", "section_skills": "Software",
       "skill1_name": "Photoshop", "skill1_tag1": "Retouching", "skill1_tag2": "Compositing", "skill1_desc": "Photo retouching, UI, game visuals, and compositing for game design projects.",
       "skill2_name": "Unreal Engine", "skill2_tag1": "Blueprints", "skill2_tag2": "Level Design", "skill2_desc": "Level prototyping, visual blueprints, lighting, and atmosphere.",
@@ -1080,6 +1231,32 @@
       "proj8_badge": "学校プロジェクト・9日間", "proj8_year": "GD1", "proj8_title": "WAZA",
       "proj8_desc": "インドをテーマに9日間で制作したボードゲームの印刷版。4次元テトリスのシステムを用いて、鍋に材料を詰めてインド料理のレシピを完成させ、対戦相手と競い合う。",
       "proj_link": "Itch.ioで見る →",
+      "proj_postmortem_btn": "ポストモーテム →",
+      "pm_challenge_label": "課題", "pm_solution_label": "解決方法", "pm_lesson_label": "そこから学んだこと",
+      "proj1_challenge": "48時間という制限時間の中で、与えられたテーマに沿ったゲームを制作すること。さらに異なる分野出身のメンバーとチームを組み、全員の方向性を一致させる必要がありました。",
+      "proj1_solution": "各メンバーの役割を明確に分担することで作業がぶつからないようにし、素早く本質に集中することで、限られた時間内に完成度の高いゲームを仕上げました。",
+      "proj1_lesson": "このプロジェクトから、短い期限の中で多様なメンバーと働く方法や、それぞれの強みを最大限に引き出す力を学びました。",
+      "proj2_challenge": "プロジェクト内の各チームの進行速度が異なり、緊張が生まれたこと。また、当初のスコープが野心的すぎたことも課題でした。",
+      "proj2_solution": "プロジェクトの中間地点で大きなミーティングを開き、メンバー一人ひとりの意見や感じていること、働き方について耳を傾けました。",
+      "proj2_lesson": "このプロジェクトから、プロジェクトリーダーの本当の役割を学びました。他者の声に耳を傾け、制作全体に目を配り、チームに合わせて柔軟に対応することで、全員が最大限の力を発揮できるようにすることです。",
+      "proj3_challenge": "VRの経験が全くない状態で、同時にUnityも初めて触りながら、48時間でVRゲームを制作すること。",
+      "proj3_solution": "限られた時間内で実現可能なように、プロジェクトのスコープを縮小しました。",
+      "proj3_lesson": "このプロジェクトから、開発とUI/UXについて多くを学び、問題が起きてから対処するのではなく、最初からより堅牢なコードを設計する必要性を実感しました。",
+      "proj4_challenge": "子どもにも大人にもアクセスしやすいVR体験を作ること。同時に3Dアーティストとの協働や、より大規模なチームの中で誰も置き去りにされないように働く方法を学ぶ必要がありました。",
+      "proj4_solution": "毎日の進捗共有の場を設け、情報を一元化して正確に共有することで、大規模チーム内の混乱を防ぎました。",
+      "proj4_lesson": "このプロジェクトから、時には一歩引いて他者の意見に耳を傾けてから発言することの大切さを学びました。良いアイデアはチームの誰からでも生まれ得るからです。",
+      "proj5_challenge": "授業と並行して、比較的長い期間、完全に一人でプロジェクトを進めること。ゲーム＆ウォッチにインスパイアされた（かなり古い形式の）ゲームを、そのルールや仕組みを尊重しながら制作することは、普段の制作スタイルとは異なる挑戦でした。プロジェクトの中盤で、最初に作ったビジュアルに興味を失ってしまい、プロジェクトへの熱意を取り戻すためにビジュアルを一から作り直す必要性を感じました。",
+      "proj5_solution": "モチベーションが上がらないまま続けるのではなく、中盤でビジュアル面を完全に作り直すことを選びました。その結果、作業量は倍になりましたが、スプライトやビジュアルはすべて自分の手で制作し直しました。",
+      "proj5_lesson": "このプロジェクトから、完全に自律して作業をやり遂げる自分の力を学びました。授業の合間の夜間に作業を重ね、心から誇れるプロジェクトを完成させることができました。また、時間管理の重要性と、効率的に働くための明確な枠組みを持つことの大切さも学びました。",
+      "proj6_challenge": "プロジェクトのスコープが野心的すぎたこと。無限に生成されるプロシージャルなレベルを持つゲームを目指した結果、コードが過度に複雑になり、最終的にうまく機能しませんでした。プロジェクトの中盤から、開発側の仕組みの大部分を見直す必要がありました。もう一つの課題は、プレイヤーを実際には過度な認知負荷にさらすことなく、あくまで「そう感じさせる」程度に留めながら、あえて迷わせるようなビジュアルをデザインすることでした。",
+      "proj6_solution": "4人のチーム内で役割を明確にし、それぞれが自分の担当領域を持つことで、意思決定に時間を無駄にすることを避けました。",
+      "proj6_lesson": "このプロジェクトから、あるフィーチャーがゲームを危険にさらすと分かった時点で、それが後々大きな問題になる前に素早く見切りをつける判断力を学びました。また、ビジュアルの曖昧さとプレイヤーの認知負荷を管理することの難しさも実感しました。",
+      "proj7_challenge": "たった2人でゲームジャムに挑み、ゲームデザインとビジュアルの両方を担当しながら、他の予定と両立するために作業時間を分け合う必要があったこと。最大の難関は、これほど短い制作期間でゲームバランスを取ることでした。",
+      "proj7_solution": "4日目からプレイテストの頻度を大幅に増やし、より安定したゲームに仕上げました。",
+      "proj7_lesson": "このプロジェクトから、ゲームが理想通りにはならないことを受け入れつつも、達成不可能な基準を設けずにベストを尽くすこと、そしてゲームのために当初のビジョンに反する決断を下す判断力を学びました。",
+      "proj8_challenge": "与えられたテーマのもと、わずか9日間でボードゲームを制作すること。プロジェクトがあまりに長く変化し続けた結果、数日前にすでに承認していたコアシステムにまで変更が入り、締め切り直前になってもゲームが大きく変わり続けました。",
+      "proj8_solution": "以前よりもさらにコミュニケーションを密にし、意思決定の各段階でチーム全員が合意していることを確認することで、後戻りを防ぎました。",
+      "proj8_lesson": "このプロジェクトから、ボードゲーム制作における手作業的な工程や、締め切りが極めて短い状況で素早く適応し解決策を見つける力を学びました。",
       "skills_label": "習得ツール", "section_skills": "使用ソフト",
       "skill1_name": "Photoshop", "skill1_tag1": "レタッチ", "skill1_tag2": "合成", "skill1_desc": "写真のレタッチ、UI、ゲームビジュアル、ゲームデザインプロジェクト向けの合成作業。",
       "skill2_name": "Unreal Engine", "skill2_tag1": "ブループリント", "skill2_tag2": "レベルデザイン", "skill2_desc": "レベルのプロトタイピング、ビジュアルブループリント、ライティングと雰囲気づくり。",
@@ -1099,6 +1276,7 @@
 
   function applyLang(lang) {
     var t = translations[lang];
+    window.currentLang = lang;
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
       if (t[key] !== undefined) el.innerHTML = t[key];
@@ -1109,11 +1287,56 @@
       b.classList.toggle('active', isActive);
       b.setAttribute('aria-current', isActive ? 'true' : 'false');
     });
+    if (document.getElementById('postmortemOverlay').classList.contains('open')) {
+      fillPostmortem(window.currentProjectId);
+    }
   }
 
   document.querySelectorAll('.lang-btn').forEach(function (b) {
     b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); });
   });
+
+  /* ── POST-MORTEM — fiche détaillée par projet ── */
+  var projectImages = {
+    "1": "images/proj-abyss.png", "2": "images/proj-ogu.jpg", "3": "images/proj-rinka.png",
+    "4": "images/proj-asorio.jpg", "5": "images/proj-checkfate.png", "6": "images/proj-life.png",
+    "7": "images/proj-adhara.png", "8": "images/proj-waza.png"
+  };
+
+  var pmOverlay = document.getElementById('postmortemOverlay');
+
+  function fillPostmortem(id) {
+    var t = translations[window.currentLang || 'fr'];
+    document.getElementById('pmImg').src = projectImages[id];
+    document.getElementById('pmImg').alt = t['proj' + id + '_title'] || '';
+    document.getElementById('pmBadge').textContent = t['proj' + id + '_badge'] || '';
+    document.getElementById('pmYear').textContent = t['proj' + id + '_year'] || '';
+    document.getElementById('pmTitle').textContent = t['proj' + id + '_title'] || '';
+    document.getElementById('pmChallenge').textContent = t['proj' + id + '_challenge'] || '';
+    document.getElementById('pmSolution').textContent = t['proj' + id + '_solution'] || '';
+    document.getElementById('pmLesson').textContent = t['proj' + id + '_lesson'] || '';
+  }
+
+  function openPostmortem(id) {
+    window.currentProjectId = id;
+    fillPostmortem(id);
+    pmOverlay.classList.add('open');
+    pmOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  }
+
+  function closePostmortem() {
+    pmOverlay.classList.remove('open');
+    pmOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  document.querySelectorAll('.project-postmortem-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () { openPostmortem(btn.getAttribute('data-project')); });
+  });
+  document.getElementById('postmortemClose').addEventListener('click', closePostmortem);
+  pmOverlay.addEventListener('click', function (e) { if (e.target === pmOverlay) closePostmortem(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pmOverlay.classList.contains('open')) closePostmortem(); });
 })();
 </script>
 </body>
