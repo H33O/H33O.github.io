@@ -464,21 +464,27 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .season-tab {
-  width: 280px;
-  height: 88px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 190px;
+  height: 56px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
   padding: 0;
   border-radius: 16px;
   border: none;
+  outline: none;
+  background-color: transparent;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: #ffffff;
   text-transform: uppercase;
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.03em;
   text-shadow: 0 2px 8px rgba(0,0,0,0.5);
@@ -492,7 +498,9 @@ img, svg { display: block; max-width: 100%; }
 .season-tab:hover { transform: translateY(-2px); }
 
 .season-tab.active {
-  box-shadow: 0 0 0 3px var(--accent-podcasts);
+  background-image: url("images/btn_saison_blanc.png") !important;
+  color: var(--bg);
+  text-shadow: none;
 }
 
 .season2-placeholder {
