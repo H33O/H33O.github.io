@@ -464,24 +464,35 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .season-tab {
-  padding: 10px 22px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-dim);
+  width: 280px;
+  height: 88px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 16px;
+  border: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  text-transform: uppercase;
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-.season-tab:hover { color: var(--text); }
+.season-tab[data-season="1"] { background-image: url("images/btn_saison1.png"); }
+.season-tab[data-season="2"] { background-image: url("images/btn_saison2.png"); }
+
+.season-tab:hover { transform: translateY(-2px); }
 
 .season-tab.active {
-  color: var(--text);
-  border-color: var(--accent-podcasts);
-  background: color-mix(in srgb, var(--accent-podcasts) 20%, transparent);
+  box-shadow: 0 0 0 3px var(--accent-podcasts);
 }
 
 .season2-placeholder {
@@ -1013,9 +1024,21 @@ footer {
   </div>
 
   <div class="episode-list" id="season-2" hidden>
-    <div class="season2-placeholder">
-      <span data-en="Episode coming soon">Épisode à venir</span>
+    <!-- ============================================================
+         ÉPISODE 1 DE LA SAISON 2 — remplace l'ID Spotify ci-dessous.
+         Dans ton lien Spotify (ex: https://open.spotify.com/episode/ABC123XYZ),
+         l'ID est la partie après "/episode/" et avant un éventuel "?".
+         Colle juste cet ID à la place de REMPLACE_PAR_ID_EPISODE_S2_01
+         juste en dessous, sans toucher au reste de la ligne.
+         Pour ajouter un épisode 2 plus tard, duplique tout le bloc
+         <div class="episode-embed">...</div> juste en dessous de celui-ci,
+         avant la ligne <p> "Le prochain épisode arrive bientôt".
+         ============================================================ -->
+    <div class="episode-embed">
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/REMPLACE_PAR_ID_EPISODE_S2_01?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
+
+    <p style="margin-top:24px; font-style:italic;" data-en="The next episode is coming soon!">Le prochain épisode arrive bientôt.</p>
   </div>
 </section>
 
