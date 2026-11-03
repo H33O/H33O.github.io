@@ -368,7 +368,7 @@ img, svg { display: block; max-width: 100%; }
 }
 
 .postmortem.is-open {
-  max-height: 600px;
+  max-height: 1400px;
   opacity: 1;
   padding-top: 20px;
   margin-top: 20px;
@@ -660,10 +660,367 @@ footer {
   }
 }
 
+/* ============================================
+   AJOUTS — parcours, carrousels, services, contact
+   Tout repose sur les variables :root existantes.
+   ============================================ */
+
+#accueil { scroll-margin-top: var(--bar-height); }
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+.carousel-viewport:focus-visible {
+  outline: 3px solid var(--accent-accueil);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--bg);
+}
+
+/* ---------- Bouton d'action : contour blanc, texte blanc, grossit au survol ---------- */
+
+.btn--solid {
+  background: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn--solid:hover {
+  background: transparent;
+  border-color: #ffffff;
+  color: #ffffff;
+  transform: scale(1.06);
+}
+
+summary.btn { list-style: none; }
+summary.btn::-webkit-details-marker { display: none; }
+.when-open { display: none; }
+details[open] > summary .when-closed { display: none; }
+details[open] > summary .when-open { display: inline; }
+
+/* ---------- Menu mobile (bouton) ---------- */
+
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--text);
+  background: rgba(28,28,28,0.55);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.menu-toggle svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+/* ---------- Hero : trois parcours ---------- */
+
+.hero-text { max-width: 520px; padding: 40px 64px; }
+
+.hero-text .hero-ask {
+  font-family: var(--font-display);
+  font-size: 15px;
+  margin: 28px 0 12px;
+}
+
+.hero-paths {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.path {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  min-height: 76px;
+  padding: 16px 24px;
+  border-radius: 18px;
+  border: 2px solid #ffffff;
+  background: rgba(0,0,0,0.32);
+  color: #ffffff;
+  text-decoration: none;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  transition: transform 0.18s ease;
+}
+
+.path strong { font-family: var(--font-display); font-size: 18px; line-height: 1.2; }
+.path span { font-size: 14px; font-weight: 500; }
+.path:hover { transform: scale(1.05); }
+.path:active { transform: scale(1.01); }
+
+/* ---------- Titres secondaires et intros ---------- */
+
+.section-lead {
+  font-size: 17px;
+  max-width: 60ch;
+  margin: -16px 0 40px;
+}
+
+.block-title-unused {
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 72px 0 8px;
+}
+
+.block-lead { max-width: 60ch; margin: 0 0 24px; }
+
+/* ---------- Carrousel générique ---------- */
+
+/* Toute la bande (titre, marges et cartes) met le carrousel en pause au survol */
+.strip { padding: 72px 0 40px; }
+.strip + .strip { padding-top: 56px; padding-bottom: 88px; }
+
+.strip-head { margin-bottom: 18px; }
+.strip-title { margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 0.01em; }
+.strip-head .carousel-hint { margin-top: 6px; }
+
+.carousel { position: relative; width: 100%; }
+
+.strip-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.carousel-hint { margin: 0; font-size: 14px; }
+
+.carousel-btns { display: flex; gap: 8px; }
+.carousel.is-static .carousel-btns { display: none; }
+
+.carousel-btn {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.carousel-btn:hover { background: var(--text); color: var(--bg); }
+.carousel-btn:active { transform: scale(0.94); }
+
+.carousel-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-btn .i-play { display: none; }
+.carousel-btn[aria-pressed="true"] .i-pause { display: none; }
+.carousel-btn[aria-pressed="true"] .i-play { display: block; }
+
+.carousel-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 14px 0 22px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+}
+
+.carousel-viewport::-webkit-scrollbar { display: none; }
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+}
+
+/* ---------- Cartes épisodes ---------- */
+
+.ep-card {
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px 12px 18px;
+  text-align: left;
+  text-decoration: none;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.ep-card:hover { transform: translateY(-3px); border-color: var(--accent-podcasts); }
+
+.ep-cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--accent-podcasts) 30%, var(--surface-2));
+}
+
+.ep-cover img { width: 100%; height: 100%; object-fit: cover; }
+.ep-cover img.is-default { width: 62%; height: auto; object-fit: contain; }
+
+.ep-play {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-accueil);
+  color: #1c1c1c;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.ep-play svg { width: 16px; height: 16px; fill: currentColor; margin-left: 2px; }
+
+.ep-info { display: flex; flex-direction: column; gap: 4px; padding: 0 4px; }
+.ep-num { font-size: 13px; color: var(--text-dim); }
+.ep-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ep-guest { font-size: 13px; color: var(--text-dim); line-height: 1.4; }
+
+/* ---------- Recommandations ---------- */
+
+.reco-card {
+  flex: 0 0 360px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.reco-demo {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px dashed var(--text-dim);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.reco-card blockquote {
+  margin: 0;
+  padding-left: 16px;
+  border-left: 3px solid var(--reco-accent, var(--accent-portfolio));
+}
+
+.reco-card blockquote p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text); }
+
+.reco-author { display: flex; align-items: center; gap: 14px; }
+
+.reco-avatar {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--reco-accent, var(--accent-portfolio)) 30%, var(--surface-2));
+}
+
+.reco-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.reco-name { margin: 0; font-size: 15px; font-weight: 700; color: var(--text); }
+.reco-meta { margin: 0; font-size: 13px; line-height: 1.4; color: var(--text-dim); }
+
+/* ---------- Services ---------- */
+
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.offer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--offer-accent, var(--accent-portfolio));
+  border-radius: 16px;
+}
+
+.offer h3 { margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 0.01em; }
+.offer-promise { margin: 0; font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.4; }
+
+.offer ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.offer li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.offer li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--offer-accent, var(--accent-portfolio));
+}
+
+.offers-cta { margin-top: 40px; }
+
+/* ---------- À propos : logiciels repliés ---------- */
+
+.tools-details .skill-grid { margin-top: 28px; }
+
+/* ---------- Contact ---------- */
+
+.contact-text { max-width: 60ch; font-size: 17px; }
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 860px) {
-  .top-nav { display: none; } /* remplacé par un menu mobile à prévoir plus tard */
   .game-card { grid-template-columns: 1fr; }
   .game-card:nth-child(even) { direction: ltr; }
   .about-block { grid-template-columns: 1fr; }
@@ -674,6 +1031,48 @@ footer {
   .top-bar { padding: 0 20px; }
 }
 
+/* ---------- Responsive : ajouts (placés après les règles existantes) ---------- */
+
+/* Menu burger dès 1080px : la barre contient 5 liens + langue + icônes */
+@media (max-width: 1080px) {
+  .menu-toggle { display: inline-flex; }
+
+  .top-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 32px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .top-nav.is-open { display: flex; }
+  .top-nav a { padding: 14px 0; font-size: 17px; }
+  .top-nav a.active::after { bottom: 6px; width: 28px; }
+  .top-right { gap: 20px; }
+}
+
+@media (max-width: 860px) {
+  .top-nav { padding: 8px 20px 16px; }
+
+  .hero-text { padding: 32px 20px; max-width: 100%; }
+  .path { align-items: flex-start; }
+  .strip { padding-top: 48px; }
+
+  .offers-grid { grid-template-columns: 1fr; }
+  .ep-card { flex-basis: 220px; }
+  .reco-card { flex-basis: 300px; }
+}
+
+/* Petits écrans : les icônes de la barre sont reprises dans la section Contact */
+@media (max-width: 640px) {
+  .top-links { display: none; }
+}
+
 </style>
 </head>
 <body>
@@ -682,10 +1081,11 @@ footer {
   <a href="#accueil" class="logo"><img src="images/logo.png" alt="Hugo Rivals — logo"></a>
 
   <div class="top-right">
-    <nav class="top-nav">
+    <nav class="top-nav" id="top-nav" aria-label="Navigation principale">
       <a href="#accueil" data-cat="accueil" class="active" data-en="Home">Accueil</a>
-      <a href="#a-propos" data-cat="apropos" data-en="About">À propos</a>
+      <a href="#offres" data-cat="offres" data-en="Services">Services</a>
       <a href="#portfolio" data-cat="portfolio" data-en="Portfolio">Portfolio</a>
+      <a href="#a-propos" data-cat="apropos" data-en="About">À propos</a>
       <a href="#podcasts" data-cat="podcasts" data-en="Podcasts">Podcasts</a>
     </nav>
 
@@ -709,6 +1109,9 @@ footer {
         <svg viewBox="0 0 24 24"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.2.5 7.8 6.1L19.8 6H4.2ZM20 8.1l-7.4 5.8a1 1 0 0 1-1.2 0L4 8.1V18h16V8.1Z"/></svg>
       </a>
     </div>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="top-nav">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
 </header>
 
@@ -718,107 +1121,103 @@ footer {
   <div class="hero-text">
     <h1>Hugo Rivals</h1>
     <p data-en="I design experiences that mean something.<br>Game design student, passionate about narrative and storytelling.">Je conçois des expériences qui donnent du sens.<br>Étudiant en game design, passionné de narration et de storytelling.</p>
+    <p class="hero-ask" data-en="What brings you here?">Qu'est-ce qui vous amène ?</p>
+    <nav class="hero-paths" aria-label="Choisir un parcours">
+      <a class="path path--recruit" href="#portfolio">
+        <strong data-en="See my projects">Voir mes projets</strong>
+      </a>
+      <a class="path path--freelance" href="#offres">
+        <strong data-en="I need a freelancer">Je cherche un freelance</strong>
+        <span data-en="See what I offer">Voir ce que je propose</span>
+      </a>
+      <a class="path path--podcast" href="#podcasts">
+        <strong data-en="I want to listen to GameView">Je veux écouter GameView</strong>
+        <span data-en="Browse the episodes">Parcourir les épisodes</span>
+      </a>
+    </nav>
   </div>
 </section>
 
-<!-- ===================== À PROPOS ===================== -->
-<section id="a-propos" class="wrap section">
-  <h1 class="section-title reveal" data-en="Who am I?">Qui suis-je ?</h1>
-
-  <div class="about-block reveal">
-    <h2>Portrait</h2>
-    <div>
-      <div class="portrait-row">
-        <div class="ph-image tone-apropos" style="max-width:220px; padding:0; background:none; border:none; flex-shrink:0;"><img class="media-photo square" src="images/bio-hugo.png" alt="Portrait d'Hugo Rivals"></div>
-        <div class="mini-timeline">
-          <div class="mini-timeline-item reveal">
-            <span class="year" style="color:var(--accent-accueil);" data-en="2026">2026</span>
-            <p data-en="Organizer of board game creation groups for young people, in partnership with local youth centers (MJC).">Organisateur de groupes de création de jeux de société avec des jeunes, en collaboration avec des MJC.</p>
-          </div>
-          <div class="mini-timeline-item reveal">
-            <span class="year" style="color:var(--accent-apropos);" data-en="Today">Aujourd'hui</span>
-            <p data-en="3rd year Game Design at Brassart Aix. Introductory game design workshops in youth centers.">3ème année Game Design à Brassart Aix. Ateliers d'initiation au game design en MJC.</p>
-          </div>
-          <div class="mini-timeline-item reveal">
-            <span class="year" style="color:var(--accent-portfolio);" data-en="2024">2024</span>
-            <p data-en="A period of reflection. 6 months of exam prep → DAEU (philosophy + health). Refocusing on my creative passion.">Remise en question. 6 mois de prépa bac → DAEU (philo + santé). Recentrage sur la passion créative.</p>
-          </div>
-          <div class="mini-timeline-item reveal">
-            <span class="year" style="color:var(--accent-podcasts);" data-en="Before">Avant</span>
-            <p data-en="Youth work (CPJEPS), carpentry, and several other jobs: curiosity and adaptability as driving forces.">Animation jeunesse (CPJEPS), menuiserie, multiples métiers : curiosité et adaptabilité comme moteurs.</p>
-          </div>
-          <div class="mini-timeline-item reveal">
-            <span class="year" style="color:var(--accent-accueil);" data-en="~15 years old">~15 ans</span>
-            <p data-en="First jobs: market vending, culinary vocational diplomas (CAP & BEP). Discovering the working world.">Premiers jobs : vente sur les marchés, CAP & BEP cuisine. Découverte du monde du travail.</p>
-          </div>
-        </div>
+<!-- ===================== PREUVE : ÉPISODES + RECOMMANDATIONS ===================== -->
+<section class="strip" id="preuve">
+  <div class="carousel" id="episodes-carousel" role="region" aria-roledescription="carrousel">
+    <div class="wrap strip-head">
+      <div>
+        <h2 class="strip-title" data-en="GameView, the podcast">GameView, le podcast</h2>
+        <p class="carousel-hint" data-en="Click an episode to listen to it on Spotify.">Cliquez sur un épisode pour l'écouter sur Spotify.</p>
       </div>
-      <p data-en="My name is Hugo Rivals, aka H33O, a 26-year-old game designer in my 3rd year at Brassart Aix-en-Provence. Before game design, I worked around ten different jobs: salesman, cook, youth worker, carpenter. That versatility directly feeds the way I design games.">Je m'appelle Hugo Rivals, alias H33O, game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.</p>
-      <p data-en="Ever since I was little, I've loved creating worlds and telling stories. I quickly started drawing, then creating tabletop role-playing games in middle school, always with the same idea in mind: building worlds the player can escape into.">Depuis tout petit, j'ai toujours aimé créer des univers et raconter des histoires. Très vite, je me suis mis à dessiner, puis à créer des jeux de rôle au collège, avec toujours la même idée en tête : construire des mondes dans lesquels le joueur puisse s'évader.</p>
-      <div class="tag-row">
-        <span class="tag" data-en="Narrative games">Jeux narratifs</span>
-        <span class="tag">Emotion-driven design</span>
-        <span class="tag" data-en="Mechanics-driven games">Jeux à mécaniques</span>
-        <span class="tag">Level Design</span>
-        <span class="tag" data-en="Virtual Reality">Réalité Virtuelle</span>
-        <span class="tag" data-en="Game design workshops">Ateliers game design</span>
+      <div class="carousel-btns">
+        <button class="carousel-btn" type="button" data-carousel="toggle" aria-pressed="false">
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+        </button>
       </div>
+    </div>
+    <div class="carousel-viewport" tabindex="0" role="group" aria-label="Épisodes">
+      <div class="carousel-track"></div>
     </div>
   </div>
+</section>
 
-  <div class="about-block">
-    <h2 data-en="What I do">Ce que je fais</h2>
-    <div>
-      <p data-en="I'm comfortable on any type of project, because I love discovering new systems and new ways of thinking about video games, even though I remain first and foremost passionate about level design, narrative design, UI/UX and design in general, as well as project management.">Je suis à l'aise sur tout type de projet, car j'adore découvrir de nouveaux systèmes et de nouvelles façons d'envisager le jeu vidéo, même si je reste avant tout passionné par le level design, le narrative design, l'UI/UX et le design en général, ainsi que le management de projet.</p>
-      <p data-en="I constantly seek to confront myself with worlds I don't yet master. My curiosity and ability to learn push me to explore new ideas and to see every project as an opportunity to grow.">Je cherche constamment à me confronter à des univers que je ne maîtrise pas encore. Ma curiosité et ma capacité d'apprentissage me poussent à explorer de nouvelles idées et à considérer chaque projet comme une opportunité d'évolution.</p>
-      <p data-en="Finally, I'm someone very sociable, who fits in easily, just as effective working independently as in collaborative environments, including within large teams.">Enfin, je suis quelqu'un de très sociable, qui s'intègre facilement, aussi efficace en autonomie que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.</p>
+<section class="strip" id="recommandations">
+  <div class="carousel" id="reco-carousel" role="region" aria-roledescription="carrousel">
+    <div class="wrap strip-head">
+      <div>
+        <h2 class="strip-title" data-en="They worked with me">Ils ont travaillé avec moi</h2>
+        <p class="carousel-hint" data-en="What the people I collaborated with say.">Ce que disent les personnes avec qui j'ai collaboré.</p>
+      </div>
+      <div class="carousel-btns">
+        <button class="carousel-btn" type="button" data-carousel="toggle" aria-pressed="false">
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="carousel-viewport" tabindex="0" role="group" aria-label="Recommandations">
+      <div class="carousel-track"></div>
     </div>
   </div>
+</section>
 
-  <div class="about-block">
-    <h2 data-en="Skills / Software">Compétences / Logiciels</h2>
-    <div class="skill-grid">
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 21 8l-9 5-9-5 9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></div>
-        <span>Photoshop</span>
-        <p data-en="Photo editing, UI, game visuals and compositing for game design projects.">Retouche photo, UI, visuels de jeux et compositing pour projets de game design.</p>
-      </div>
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4.5v11L12 22l-8-4.5v-11L12 2Z"/><circle cx="12" cy="12" r="3.2"/></svg></div>
-        <span>Unreal Engine</span>
-        <p data-en="Level prototyping, visual blueprints, lighting and atmosphere.">Prototypage de niveaux, blueprints visuels, éclairage et atmosphère.</p>
-      </div>
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z"/><path d="M12 2v10M3 7l9 5 9-5"/></svg></div>
-        <span>Unity</span>
-        <p data-en="Prototype development, VR games, C# scripting and scene management.">Développement de prototypes, jeux VR, scripting C# et gestion de scènes.</p>
-      </div>
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="9.2" ry="4" transform="rotate(25 12 12)"/></svg></div>
-        <span>Blender</span>
-        <p data-en="Low-poly 3D modeling, game assets and rendering for art direction.">Modélisation 3D low-poly, assets pour jeux et rendu pour DA de projets.</p>
-      </div>
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.3"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7" fill="#fff" stroke="none"/></svg></div>
-        <span>Aseprite</span>
-        <p data-en="Pixel art sprite creation, frame-by-frame animation for 2D games.">Création de sprites pixel art, animations frame-by-frame pour jeux 2D.</p>
-      </div>
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="6" rx="1"/><rect x="14" y="14" width="7" height="6" rx="1"/><path d="M10 7h4M17 10v4"/><circle cx="14" cy="7" r="1.3" fill="#fff" stroke="none"/><circle cx="10" cy="17" r="1.3" fill="#fff" stroke="none"/></svg></div>
-        <span>Miro</span>
-        <p data-en="Game Design Documents, user flows, brainstorming and collaborative project management.">Game Design Documents, user flows, brainstorming et gestion de projet collaboratif.</p>
-      </div>
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V8l10-2v10"/><circle cx="7" cy="18" r="2.2"/><circle cx="17" cy="16" r="2.2"/><path d="M3 11h4M3 7h4"/></svg></div>
-        <span>Audacity</span>
-        <p data-en="Audio editing and mixing for podcasts and game sound design.">Montage et mixage audio pour podcasts et sound design de jeux.</p>
-      </div>
-      <div class="skill-item reveal">
-        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18"/><path d="M8 13h3M8 16.5h6"/></svg></div>
-        <span>Notion</span>
-        <p data-en="Project management, Gantt charts and team documentation.">Gestion de projet, création de Gantt et documentation d'équipe.</p>
-      </div>
-    </div>
+<!-- ===================== SERVICES ===================== -->
+<section id="offres" class="wrap section">
+  <h2 class="section-title reveal" data-en="What I offer">Ce que je propose</h2>
+  <p class="section-lead reveal" data-en="Three ways to work together, in a studio or as a freelancer.">Trois façons de travailler ensemble, en studio ou en freelance.</p>
+
+  <div class="offers-grid">
+    <article class="offer reveal" style="--offer-accent: var(--accent-accueil);">
+      <h3>Narrative design</h3>
+      <p class="offer-promise" data-en="Stories that serve the gameplay, not the other way around.">Des histoires qui servent le gameplay, pas l'inverse.</p>
+      <ul>
+        <li data-en="Worlds, characters and tone, from pitch to reference document">Univers, personnages et ton, du pitch au document de référence</li>
+        <li data-en="Narrative thread that follows the rhythm of the game">Fil narratif calé sur le rythme du jeu</li>
+        <li data-en="Storytelling through mechanics and environment">Narration par les mécaniques et l'environnement</li>
+      </ul>
+    </article>
+
+    <article class="offer reveal" style="--offer-accent: var(--accent-apropos);">
+      <h3>Level design</h3>
+      <p class="offer-promise" data-en="Readable levels that guide players without holding their hand.">Des niveaux lisibles, qui guident sans prendre la main du joueur.</p>
+      <ul>
+        <li data-en="Level blocking and prototyping in Unreal Engine and Unity">Blocking et prototypage de niveaux sous Unreal Engine et Unity</li>
+        <li data-en="Pacing, difficulty and readability, checked through playtests">Rythme, difficulté et lisibilité, vérifiés en playtest</li>
+        <li data-en="Lighting and atmosphere that help players find their way">Éclairage et ambiance au service de l'orientation</li>
+      </ul>
+    </article>
+
+    <article class="offer reveal" style="--offer-accent: var(--accent-portfolio);">
+      <h3 data-en="Team management">Management d'équipe</h3>
+      <p class="offer-promise" data-en="An aligned team, even on short deadlines or in large groups.">Une équipe alignée, même en délai court ou à grande échelle.</p>
+      <ul>
+        <li data-en="Clear roles and regular sync points">Rôles clairs et points de synchronisation réguliers</li>
+        <li data-en="Production tracking with Notion and Miro (Gantt, user flows)">Suivi de production avec Notion et Miro (Gantt, user flows)</li>
+        <li data-en="Art direction of teams of up to 10 artists">Direction artistique d'équipes jusqu'à 10 artistes</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="offers-cta reveal">
+    <a class="btn btn--solid" href="mailto:rivals.hugo@gmail.com" data-en="Talk about your project">Parler de votre projet</a>
   </div>
 </section>
 
@@ -1003,6 +1402,110 @@ footer {
   </div>
 
 </section>
+<!-- ===================== À PROPOS ===================== -->
+<section id="a-propos" class="wrap section">
+  <h1 class="section-title reveal" data-en="Who am I?">Qui suis-je ?</h1>
+
+  <div class="about-block reveal">
+    <h2>Portrait</h2>
+    <div>
+      <div class="portrait-row">
+        <div class="ph-image tone-apropos" style="max-width:220px; padding:0; background:none; border:none; flex-shrink:0;"><img class="media-photo square" src="images/bio-hugo.png" alt="Portrait d'Hugo Rivals"></div>
+        <div class="mini-timeline">
+          <div class="mini-timeline-item reveal">
+            <span class="year" style="color:var(--accent-accueil);" data-en="2026">2026</span>
+            <p data-en="Organizer of board game creation groups for young people, in partnership with local youth centers (MJC).">Organisateur de groupes de création de jeux de société avec des jeunes, en collaboration avec des MJC.</p>
+          </div>
+          <div class="mini-timeline-item reveal">
+            <span class="year" style="color:var(--accent-apropos);" data-en="Today">Aujourd'hui</span>
+            <p data-en="3rd year Game Design at Brassart Aix. Introductory game design workshops in youth centers.">3ème année Game Design à Brassart Aix. Ateliers d'initiation au game design en MJC.</p>
+          </div>
+          <div class="mini-timeline-item reveal">
+            <span class="year" style="color:var(--accent-portfolio);" data-en="2024">2024</span>
+            <p data-en="A period of reflection. 6 months of exam prep → DAEU (philosophy + health). Refocusing on my creative passion.">Remise en question. 6 mois de prépa bac → DAEU (philo + santé). Recentrage sur la passion créative.</p>
+          </div>
+          <div class="mini-timeline-item reveal">
+            <span class="year" style="color:var(--accent-podcasts);" data-en="Before">Avant</span>
+            <p data-en="Youth work (CPJEPS), carpentry, and several other jobs: curiosity and adaptability as driving forces.">Animation jeunesse (CPJEPS), menuiserie, multiples métiers : curiosité et adaptabilité comme moteurs.</p>
+          </div>
+          <div class="mini-timeline-item reveal">
+            <span class="year" style="color:var(--accent-accueil);" data-en="~15 years old">~15 ans</span>
+            <p data-en="First jobs: market vending, culinary vocational diplomas (CAP & BEP). Discovering the working world.">Premiers jobs : vente sur les marchés, CAP & BEP cuisine. Découverte du monde du travail.</p>
+          </div>
+        </div>
+      </div>
+      <p data-en="My name is Hugo Rivals, aka H33O, a 26-year-old game designer in my 3rd year at Brassart Aix-en-Provence. Before game design, I worked around ten different jobs: salesman, cook, youth worker, carpenter. That versatility directly feeds the way I design games.">Je m'appelle Hugo Rivals, alias H33O, game designer de 26 ans, en 3ème année à Brassart Aix-en-Provence. Avant le game design, j'ai exercé une dizaine de métiers : vendeur, cuisinier, animateur, menuisier. Cette polyvalence nourrit directement ma façon de concevoir des jeux.</p>
+      <p data-en="Ever since I was little, I've loved creating worlds and telling stories. I quickly started drawing, then creating tabletop role-playing games in middle school, always with the same idea in mind: building worlds the player can escape into.">Depuis tout petit, j'ai toujours aimé créer des univers et raconter des histoires. Très vite, je me suis mis à dessiner, puis à créer des jeux de rôle au collège, avec toujours la même idée en tête : construire des mondes dans lesquels le joueur puisse s'évader.</p>
+      <div class="tag-row">
+        <span class="tag" data-en="Narrative games">Jeux narratifs</span>
+        <span class="tag">Emotion-driven design</span>
+        <span class="tag" data-en="Mechanics-driven games">Jeux à mécaniques</span>
+        <span class="tag">Level Design</span>
+        <span class="tag" data-en="Virtual Reality">Réalité Virtuelle</span>
+        <span class="tag" data-en="Game design workshops">Ateliers game design</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-block">
+    <h2 data-en="What I do">Ce que je fais</h2>
+    <div>
+      <p data-en="I'm comfortable on any type of project, because I love discovering new systems and new ways of thinking about video games, even though I remain first and foremost passionate about level design, narrative design, UI/UX and design in general, as well as project management.">Je suis à l'aise sur tout type de projet, car j'adore découvrir de nouveaux systèmes et de nouvelles façons d'envisager le jeu vidéo, même si je reste avant tout passionné par le level design, le narrative design, l'UI/UX et le design en général, ainsi que le management de projet.</p>
+      <p data-en="I constantly seek to confront myself with worlds I don't yet master. My curiosity and ability to learn push me to explore new ideas and to see every project as an opportunity to grow.">Je cherche constamment à me confronter à des univers que je ne maîtrise pas encore. Ma curiosité et ma capacité d'apprentissage me poussent à explorer de nouvelles idées et à considérer chaque projet comme une opportunité d'évolution.</p>
+      <p data-en="Finally, I'm someone very sociable, who fits in easily, just as effective working independently as in collaborative environments, including within large teams.">Enfin, je suis quelqu'un de très sociable, qui s'intègre facilement, aussi efficace en autonomie que dans des environnements collaboratifs, y compris au sein d'équipes de grande taille.</p>
+    </div>
+  </div>
+
+  <div class="about-block">
+    <h2 data-en="Skills / Software">Compétences / Logiciels</h2>
+    <details class="tools-details">
+      <summary class="btn"><span class="when-closed" data-en="See the 8 tools">Voir les 8 logiciels</span><span class="when-open" data-en="Hide the tools">Masquer les logiciels</span></summary>
+    <div class="skill-grid">
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 21 8l-9 5-9-5 9-5Z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></div>
+        <span>Photoshop</span>
+        <p data-en="Photo editing, UI, game visuals and compositing for game design projects.">Retouche photo, UI, visuels de jeux et compositing pour projets de game design.</p>
+      </div>
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4.5v11L12 22l-8-4.5v-11L12 2Z"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+        <span>Unreal Engine</span>
+        <p data-en="Level prototyping, visual blueprints, lighting and atmosphere.">Prototypage de niveaux, blueprints visuels, éclairage et atmosphère.</p>
+      </div>
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z"/><path d="M12 2v10M3 7l9 5 9-5"/></svg></div>
+        <span>Unity</span>
+        <p data-en="Prototype development, VR games, C# scripting and scene management.">Développement de prototypes, jeux VR, scripting C# et gestion de scènes.</p>
+      </div>
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="9.2" ry="4" transform="rotate(25 12 12)"/></svg></div>
+        <span>Blender</span>
+        <p data-en="Low-poly 3D modeling, game assets and rendering for art direction.">Modélisation 3D low-poly, assets pour jeux et rendu pour DA de projets.</p>
+      </div>
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.3"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7" fill="#fff" stroke="none"/></svg></div>
+        <span>Aseprite</span>
+        <p data-en="Pixel art sprite creation, frame-by-frame animation for 2D games.">Création de sprites pixel art, animations frame-by-frame pour jeux 2D.</p>
+      </div>
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="6" rx="1"/><rect x="14" y="14" width="7" height="6" rx="1"/><path d="M10 7h4M17 10v4"/><circle cx="14" cy="7" r="1.3" fill="#fff" stroke="none"/><circle cx="10" cy="17" r="1.3" fill="#fff" stroke="none"/></svg></div>
+        <span>Miro</span>
+        <p data-en="Game Design Documents, user flows, brainstorming and collaborative project management.">Game Design Documents, user flows, brainstorming et gestion de projet collaboratif.</p>
+      </div>
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V8l10-2v10"/><circle cx="7" cy="18" r="2.2"/><circle cx="17" cy="16" r="2.2"/><path d="M3 11h4M3 7h4"/></svg></div>
+        <span>Audacity</span>
+        <p data-en="Audio editing and mixing for podcasts and game sound design.">Montage et mixage audio pour podcasts et sound design de jeux.</p>
+      </div>
+      <div class="skill-item reveal">
+        <div class="ph-image tone-apropos"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18"/><path d="M8 13h3M8 16.5h6"/></svg></div>
+        <span>Notion</span>
+        <p data-en="Project management, Gantt charts and team documentation.">Gestion de projet, création de Gantt et documentation d'équipe.</p>
+      </div>
+    </div>
+    </details>
+  </div>
+</section>
+
 <section id="podcasts" class="wrap section">
   <h1 class="section-title reveal">GameView</h1>
 
@@ -1068,11 +1571,145 @@ footer {
   </div>
 </section>
 
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="wrap section">
+  <h2 class="section-title reveal" data-en="Let's work together">Travaillons ensemble</h2>
+  <p class="contact-text reveal" data-en="A position to fill or a freelance mission? Tell me about your project in a few lines.">Un poste à pourvoir ou une mission en freelance ? Décrivez-moi votre projet en quelques lignes.</p>
+  <div class="game-actions reveal">
+    <a class="btn btn--solid" href="mailto:rivals.hugo@gmail.com" data-en="Write to Hugo">Écrire à Hugo</a>
+    <a class="btn" href="https://www.linkedin.com/in/hugo-rivals-21483535b/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://h33o.itch.io" target="_blank" rel="noopener">itch.io</a>
+  </div>
+</section>
+
 <footer>
   <div class="wrap" data-en="© 2026 Hugo Rivals – Game Designer. All rights reserved. Aix-en-Provence, France">© 2026 Hugo Rivals – Game Designer. Tous droits réservés. Aix-en-Provence · Brassart</div>
 </footer>
 
 <script>
+/* ============================================================
+   CONFIGURATION DU SITE — tout ce que tu peux modifier est ici
+   Tu n'as rien à toucher en dessous de ce bloc.
+   ============================================================ */
+const SITE_CONFIG = {
+
+  /* ---------- CARROUSEL DES ÉPISODES (tous les épisodes, toutes saisons) ---------- */
+  episodes: {
+    autoplay: true,        // true = défile tout seul · false = immobile (on peut faire défiler au doigt / trackpad)
+    speed: 45,             // vitesse en pixels par seconde (plus grand = plus rapide · 0 = immobile)
+    direction: "left",     // sens : "left" = les cartes vont vers la gauche · "right" = vers la droite
+    pauseOnHover: true,    // true = le défilement s'arrête quand la souris est sur toute la bande (titre + cartes)
+    defaultCover: "images/gameview-logo.png",  // pochette de secours si aucune autre n'est disponible
+    autoFetch: true,       // true = récupère automatiquement la pochette et le titre de chaque épisode chez Spotify
+                           // (ce que tu écris toi-même dans "cover" ou "title" ci-dessous passe toujours avant)
+    items: [
+      // id     : identifiant Spotify (la partie après /episode/ dans le lien de l'épisode)
+      // season : numéro de saison · number : numéro de l'épisode (affichés sur la carte)
+      // title  : titre de l'épisode. Laisser "" = titre Spotify (si autoFetch est activé), sinon « Épisode N »
+      //          (un texte simple ou { fr: "…", en: "…" } pour les deux langues)
+      // guest  : nom de l'invité · role : son métier ou son studio (texte simple ou { fr, en })
+      // cover  : chemin d'une image (ex. "images/ep1.jpg"). Laisser "" = pochette Spotify de l'épisode
+      //          (si autoFetch est activé), sinon le logo par défaut
+      // Un clic sur la carte ouvre l'épisode sur Spotify.
+      // Pour ajouter un épisode : copie une ligne, change l'id, la saison et le numéro. L'ordre des lignes = l'ordre affiché.
+      { id: "4aMpXtAG8KyaFQ1On37h57", season: 1, number: 1, title: "", guest: "", role: "", cover: "" },
+      { id: "0HsML9WJh7o6eZCUwH3IAB", season: 1, number: 2, title: "", guest: "", role: "", cover: "" },
+      { id: "2MbwhbiaUMGo28oX6NTxWM", season: 1, number: 3, title: "", guest: "", role: "", cover: "" },
+      { id: "3cqtVb6lmr7cKl2Yw4mfNq", season: 1, number: 4, title: "", guest: "", role: "", cover: "" },
+      { id: "3L0aqbdy2XJEQe9yJniod4", season: 1, number: 5, title: "", guest: "", role: "", cover: "" },
+      { id: "3ouTEPE0ZpjEdduyq7RnkC", season: 1, number: 6, title: "", guest: "", role: "", cover: "" },
+      { id: "4paO4GgzBLg4KD8lvxqOw0", season: 1, number: 7, title: "", guest: "", role: "", cover: "" },
+      { id: "43atQYBcmwGQDsBtW9ID3G", season: 1, number: 8, title: "", guest: "", role: "", cover: "" },
+      { id: "67YSGveq2JumGwZVUeU94s", season: 2, number: 1, title: "", guest: "", role: "", cover: "" }
+    ]
+  },
+
+  /* ---------- CARROUSEL DES RECOMMANDATIONS ---------- */
+  recommendations: {
+    autoplay: true,        // true = défile tout seul · false = immobile (on peut faire défiler au doigt / trackpad)
+    speed: 30,             // vitesse en pixels par seconde (plus grand = plus rapide · 0 = immobile)
+    direction: "right",    // sens : "left" = les cartes vont vers la gauche · "right" = vers la droite
+    pauseOnHover: true,    // true = le défilement s'arrête quand la souris est sur toute la bande (titre + cartes)
+    items: [
+      // name   : nom de la personne
+      // role   : son poste (texte simple ou { fr, en })
+      // studio : nom du studio · game : nom du jeu (laisser "" pour masquer)
+      // photo  : chemin d'une photo (ex. "images/camille.jpg") ou "" pour des initiales colorées
+      // quote  : le témoignage { fr: "…", en: "…" }
+      // demo   : true = affiche l'étiquette « Exemple de test ». SUPPRIME cette ligne (ou mets false)
+      //          dès que le témoignage est réel.
+      // Pour ajouter une recommandation : copie un bloc { … }, sépare-les par une virgule.
+      // Pour en retirer une : supprime son bloc. Le nombre de cartes s'adapte tout seul.
+      {
+        name: "Léonard Bertos",
+        role: { fr: "Narrative Designer", en: "Narrative Designer" },
+        studio: "Gobelinz Studio", game: "",
+        photo: "",
+        quote: {
+          fr: "Durant notre échange pour Gameview, j'ai vu qu'Hugo avait fait des recherches poussées sur ce qui était disponible en ligne, et il a pu poser des questions particulièrement pointues sur les projets sur lesquels j'ai travaillé, mais aussi des questions plus globales sur des techniques précises de game design. J'ai trouvé l'échange enrichissant, une telle curiosité empêche de nous reposer sur nos lauriers. Nul doute que la relève arrive.",
+          en: "During our conversation for GameView, I saw that Hugo had done in-depth research on what was available online, and he was able to ask particularly sharp questions about the projects I've worked on, as well as broader questions about specific game design techniques. I found the exchange enriching; that kind of curiosity keeps us from resting on our laurels. No doubt the next generation is on its way."
+        }
+      },
+      {
+        name: "Camille Laurent",
+        role: { fr: "Directrice de production", en: "Production Director" },
+        studio: "Studio Brumeline", game: "Les Marées Grises",
+        photo: "",
+        quote: {
+          fr: "Hugo a repris la coordination en plein coup de chaud. Il a écouté chacun, clarifié les rôles et relancé la production en quelques jours. Nous avons livré à temps, avec une équipe plus sereine.",
+          en: "Hugo took over coordination right in the crunch. He listened to everyone, clarified roles and got production moving again within days. We shipped on time, with a calmer team."
+        }
+      },
+      {
+        name: "Nolan Ferrer",
+        role: { fr: "Level Designer", en: "Level Designer" },
+        studio: "Atelier Pixelmarée", game: "Echo Verger",
+        photo: "",
+        quote: {
+          fr: "Ses niveaux sont lisibles dès la première partie. Il teste vite, accepte les retours sans ego et ajuste le rythme jusqu'à ce que le joueur comprenne sans qu'on ait à lui expliquer.",
+          en: "His levels are readable from the very first playthrough. He tests fast, takes feedback without ego and keeps adjusting the pacing until players get it without being told."
+        }
+      },
+      {
+        name: "Théo Barbier",
+        role: { fr: "Directeur artistique", en: "Art Director" },
+        studio: "Collectif Sablier", game: "Mirage 48",
+        photo: "",
+        quote: {
+          fr: "Avec dix artistes sur le même projet, il a gardé une identité visuelle cohérente. Des points de synchro courts et clairs : personne ne s'est senti perdu, et ça se voit à l'écran.",
+          en: "With ten artists on the same project, he kept the visual identity consistent. Short, clear sync points: nobody felt lost, and it shows on screen."
+        }
+      },
+      {
+        name: "Maëlle Roux",
+        role: { fr: "Game Designer", en: "Game Designer" },
+        studio: "Atelier Cobalt", game: "Petit Courant",
+        photo: "",
+        quote: {
+          fr: "Autonome, curieux et fiable. Il a pris en main un prototype VR sans expérience préalable et a su réduire le scope au bon moment. Je retravaillerais avec lui sans hésiter.",
+          en: "Independent, curious and reliable. He took on a VR prototype with no prior experience and cut the scope at just the right time. I would work with him again without hesitation."
+        }
+      }
+    ]
+  }
+};
+
+/* Textes de l'interface générés par le script (boutons, étiquettes). */
+const UI = {
+  fr: {
+    episode: "Épisode", season: "Saison", episodeLc: "épisode", project: "Projet", demo: "Exemple de test",
+    listen: "Écouter sur Spotify",
+    pause: "Mettre en pause le défilement", play: "Relancer le défilement",
+    episodesLabel: "Épisodes du podcast GameView", recosLabel: "Recommandations"
+  },
+  en: {
+    episode: "Episode", season: "Season", episodeLc: "episode", project: "Project", demo: "Test example",
+    listen: "Listen on Spotify",
+    pause: "Pause scrolling", play: "Resume scrolling",
+    episodesLabel: "GameView podcast episodes", recosLabel: "Recommendations"
+  }
+};
+
 // ---------- État de langue global ----------
 let currentLang = 'fr';
 
@@ -1151,6 +1788,7 @@ function applyLang(lang) {
 
   document.documentElement.lang = lang;
   currentLang = lang;
+  if (typeof rerenderDynamic === 'function') rerenderDynamic();
 }
 
 document.querySelectorAll('.lang-switch a').forEach(link => {
@@ -1184,6 +1822,320 @@ document.querySelectorAll('.btn-postmortem').forEach(btn => {
     btn.textContent = isOpen ? PM_BTN_LABELS[currentLang].open : PM_BTN_LABELS[currentLang].close;
   });
 });
+
+/* ============================================================
+   MOTEUR — carrousels, épisodes, recommandations, menu mobile
+   (à ne pas modifier : tout se règle dans SITE_CONFIG en haut)
+   ============================================================ */
+
+const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+// Texte simple ou { fr, en } -> texte dans la langue courante
+function L(value) {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  return value[currentLang] || value.fr || '';
+}
+
+function makeEl(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text != null) node.textContent = text;
+  return node;
+}
+
+// ---------- Carrousel générique : défilement continu en boucle, pause, glissement tactile ----------
+function createCarousel(root, cfg, getRegionLabel) {
+  const viewport = root.querySelector('.carousel-viewport');
+  const track = root.querySelector('.carousel-track');
+  const btnToggle = root.querySelector('[data-carousel="toggle"]');
+
+  const state = {
+    loop: false, half: 0, pos: 0, lastSet: 0, last: performance.now(), width: 0,
+    userPaused: !cfg.autoplay || REDUCE_MOTION.matches,
+    hover: false, focus: false, touch: false, visible: true, holdUntil: 0
+  };
+
+  function gap() { return parseFloat(getComputedStyle(track).columnGap) || 0; }
+
+  function refreshLabels() {
+    viewport.setAttribute('aria-label', getRegionLabel());
+    btnToggle.setAttribute('aria-pressed', String(state.userPaused));
+    btnToggle.setAttribute('aria-label', state.userPaused ? UI[currentLang].play : UI[currentLang].pause);
+  }
+
+  // À appeler après chaque remplacement des cartes : mesure puis clone pour une boucle sans coupure
+  function rebuild() {
+    track.querySelectorAll('[data-clone]').forEach(n => n.remove());
+    viewport.scrollLeft = 0;
+    state.pos = 0;
+    state.lastSet = 0;
+    state.width = viewport.clientWidth;
+
+    const originals = Array.from(track.children);
+    const total = originals.reduce((w, n) => w + n.getBoundingClientRect().width, 0) + gap() * originals.length;
+    state.loop = originals.length >= 2 && total > 0;
+
+    if (state.loop) {
+      // assez de copies pour que la piste soit toujours plus large que l'écran, même très large
+      const sets = Math.max(1, Math.ceil(viewport.clientWidth / total));
+      for (let s = 0; s < sets; s++) {
+        originals.forEach(n => {
+          const clone = n.cloneNode(true);
+          clone.dataset.clone = '1';
+          clone.setAttribute('aria-hidden', 'true');
+          clone.tabIndex = -1;
+          track.appendChild(clone);
+        });
+      }
+      state.half = total;
+    }
+    root.classList.toggle('is-static', !state.loop);
+    refreshLabels();
+  }
+
+  function running() {
+    return !state.userPaused && state.loop && cfg.speed > 0 && state.visible && !document.hidden &&
+           !state.hover && !state.focus && !state.touch && performance.now() >= state.holdUntil;
+  }
+
+  function tick(now) {
+    const dt = Math.min((now - state.last) / 1000, 0.1);
+    state.last = now;
+    if (running()) {
+      const sign = cfg.direction === 'right' ? -1 : 1;
+      state.pos += sign * cfg.speed * dt;
+      if (state.pos >= state.half) state.pos -= state.half;
+      else if (state.pos < 0) state.pos += state.half;   // sens inverse : on repart de la fin, sans saut visible
+      viewport.scrollLeft = state.pos;
+      state.lastSet = viewport.scrollLeft;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  btnToggle.addEventListener('click', () => {
+    state.userPaused = !state.userPaused;
+    refreshLabels();
+  });
+
+  // Quand la personne fait défiler à la main : on suit sa position et on garde la boucle invisible
+  viewport.addEventListener('scroll', () => {
+    let current = viewport.scrollLeft;
+    if (state.loop && current >= state.half) {
+      current -= state.half;
+      viewport.scrollLeft = current;
+    }
+    if (Math.abs(current - state.lastSet) > 1.5) {
+      state.pos = current;
+      state.lastSet = current;
+    }
+  }, { passive: true });
+
+  viewport.addEventListener('wheel', () => { state.holdUntil = performance.now() + 2500; }, { passive: true });
+  viewport.addEventListener('touchstart', () => { state.touch = true; }, { passive: true });
+  const touchEnd = () => { state.touch = false; state.holdUntil = performance.now() + 3000; };
+  viewport.addEventListener('touchend', touchEnd, { passive: true });
+  viewport.addEventListener('touchcancel', touchEnd, { passive: true });
+
+  // Zone de pause : toute la bande (titre, marges et cartes), pas seulement la rangée de cartes
+  const hoverZone = root.closest('.strip') || root;
+  hoverZone.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && cfg.pauseOnHover) state.hover = true; });
+  hoverZone.addEventListener('pointerleave', () => { state.hover = false; });
+  // Clavier uniquement : un clic souris ne doit pas figer le carrousel
+  root.addEventListener('focusin', e => { if (e.target.matches(':focus-visible')) state.focus = true; });
+  root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) state.focus = false; });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => { state.visible = entries[0].isIntersecting; }).observe(root);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (viewport.clientWidth !== state.width) rebuild();
+    }, 200);
+  });
+
+  requestAnimationFrame(tick);
+  return { rebuild, refreshLabels };
+}
+
+// ---------- Épisodes (cartes cliquables vers Spotify) ----------
+const episodesRoot = document.getElementById('episodes-carousel');
+const episodesTrack = episodesRoot.querySelector('.carousel-track');
+const episodesCarousel = createCarousel(episodesRoot, SITE_CONFIG.episodes, () => UI[currentLang].episodesLabel);
+
+const PLAY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>';
+
+// Pochette et titre récupérés automatiquement chez Spotify (mémorisés pour la session)
+const autoMeta = {};
+
+function buildEpisodeCard(ep) {
+  const cfg = SITE_CONFIG.episodes;
+  const ui = UI[currentLang];
+  const auto = autoMeta[ep.id] || {};
+  const title = L(ep.title) || auto.title || '';
+  const cover = ep.cover || auto.thumb || '';
+  const heading = title || ui.episode + ' ' + ep.number;
+  const meta = title
+    ? ui.season + ' ' + ep.season + ', ' + ui.episodeLc + ' ' + ep.number
+    : ui.season + ' ' + ep.season;
+
+  const card = makeEl('a', 'ep-card');
+  card.dataset.id = ep.id;
+  card.href = 'https://open.spotify.com/episode/' + ep.id;
+  card.target = '_blank';
+  card.rel = 'noopener';
+  card.title = ui.listen;
+  card.setAttribute('aria-label', heading + ', ' + meta + ', ' + ui.listen);
+
+  const frame = makeEl('span', 'ep-cover');
+  const img = document.createElement('img');
+  img.src = cover || cfg.defaultCover;
+  img.alt = '';
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  if (!cover) img.className = 'is-default';
+  // si la pochette ne charge pas, on retombe sur le logo par défaut
+  img.addEventListener('error', () => {
+    if (img.getAttribute('src') !== cfg.defaultCover) { img.src = cfg.defaultCover; img.className = 'is-default'; }
+  });
+  frame.appendChild(img);
+  const badge = makeEl('span', 'ep-play');
+  badge.innerHTML = PLAY_ICON;
+  frame.appendChild(badge);
+
+  const info = makeEl('span', 'ep-info');
+  info.appendChild(makeEl('span', 'ep-num', meta));
+  info.appendChild(makeEl('span', 'ep-title', heading));
+  const guest = [ep.guest, L(ep.role)].filter(Boolean).join(', ');
+  if (guest) info.appendChild(makeEl('span', 'ep-guest', guest));
+
+  card.appendChild(frame);
+  card.appendChild(info);
+  return card;
+}
+
+// Remplace les cartes d'un épisode (originales et copies de la boucle) sans toucher au défilement
+function refreshEpisodeCards(ep) {
+  episodesTrack.querySelectorAll('.ep-card').forEach(old => {
+    if (old.dataset.id !== ep.id) return;
+    const fresh = buildEpisodeCard(ep);
+    if (old.dataset.clone) {
+      fresh.dataset.clone = '1';
+      fresh.setAttribute('aria-hidden', 'true');
+      fresh.tabIndex = -1;
+    }
+    old.replaceWith(fresh);
+  });
+}
+
+function fetchEpisodeMeta(ep) {
+  if (autoMeta[ep.id] || !('fetch' in window)) return;
+  autoMeta[ep.id] = {};   // évite de redemander pendant la même session
+  const controller = 'AbortController' in window ? new AbortController() : null;
+  const timer = controller ? setTimeout(() => controller.abort(), 6000) : null;
+  const url = 'https://open.spotify.com/oembed?url=' + encodeURIComponent('https://open.spotify.com/episode/' + ep.id);
+  fetch(url, controller ? { signal: controller.signal } : undefined)
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('oEmbed ' + r.status)))
+    .then(data => {
+      autoMeta[ep.id] = { title: data.title || '', thumb: data.thumbnail_url || '' };
+      refreshEpisodeCards(ep);
+    })
+    .catch(() => { /* pas grave : la carte garde le logo par défaut et « Épisode N » */ })
+    .finally(() => { if (timer) clearTimeout(timer); });
+}
+
+function renderEpisodes() {
+  const cfg = SITE_CONFIG.episodes;
+  episodesTrack.textContent = '';
+  cfg.items.forEach(ep => episodesTrack.appendChild(buildEpisodeCard(ep)));
+  episodesCarousel.rebuild();
+
+  if (cfg.autoFetch) {
+    cfg.items.forEach(ep => {
+      // on ne demande à Spotify que ce que tu n'as pas renseigné toi-même
+      if (!ep.cover || !L(ep.title)) fetchEpisodeMeta(ep);
+    });
+  }
+}
+
+// ---------- Recommandations ----------
+const recosRoot = document.getElementById('reco-carousel');
+const recosTrack = recosRoot.querySelector('.carousel-track');
+const recosCarousel = createCarousel(recosRoot, SITE_CONFIG.recommendations, () => UI[currentLang].recosLabel);
+const RECO_ACCENTS = ['--accent-accueil', '--accent-apropos', '--accent-portfolio', '--accent-podcasts'];
+
+function initials(name) {
+  return name.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+}
+
+function renderRecos() {
+  const ui = UI[currentLang];
+  recosTrack.textContent = '';
+
+  SITE_CONFIG.recommendations.items.forEach((item, i) => {
+    const card = makeEl('figure', 'reco-card');
+    card.style.setProperty('--reco-accent', 'var(' + RECO_ACCENTS[i % RECO_ACCENTS.length] + ')');
+
+    const top = makeEl('div');
+    if (item.demo) top.appendChild(makeEl('span', 'reco-demo', ui.demo));
+    const quote = makeEl('blockquote');
+    quote.appendChild(makeEl('p', null, L(item.quote)));
+    if (item.demo) quote.style.marginTop = '14px';
+    top.appendChild(quote);
+
+    const author = makeEl('figcaption', 'reco-author');
+    const avatar = makeEl('span', 'reco-avatar');
+    if (item.photo) {
+      const photo = document.createElement('img');
+      photo.src = item.photo;
+      photo.alt = item.name;
+      photo.loading = 'lazy';
+      avatar.appendChild(photo);
+    } else {
+      avatar.textContent = initials(item.name);
+      avatar.setAttribute('aria-hidden', 'true');
+    }
+    const who = makeEl('span');
+    who.style.display = 'block';
+    who.appendChild(makeEl('p', 'reco-name', item.name));
+    const roleLine = [L(item.role), item.studio].filter(Boolean).join(', ');
+    if (roleLine) who.appendChild(makeEl('p', 'reco-meta', roleLine));
+    if (item.game) who.appendChild(makeEl('p', 'reco-meta', ui.project + ' : ' + item.game));
+    author.appendChild(avatar);
+    author.appendChild(who);
+
+    card.appendChild(top);
+    card.appendChild(author);
+    recosTrack.appendChild(card);
+  });
+
+  recosCarousel.rebuild();
+}
+
+// Appelée au chargement et à chaque changement de langue
+function rerenderDynamic() {
+  renderEpisodes();
+  renderRecos();
+  episodesCarousel.refreshLabels();
+  recosCarousel.refreshLabels();
+}
+
+rerenderDynamic();
+
+// ---------- Menu mobile ----------
+const menuToggle = document.querySelector('.menu-toggle');
+const topNav = document.getElementById('top-nav');
+menuToggle.addEventListener('click', () => {
+  const open = topNav.classList.toggle('is-open');
+  menuToggle.setAttribute('aria-expanded', String(open));
+});
+topNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  topNav.classList.remove('is-open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+}));
 
 </script>
 </body>
