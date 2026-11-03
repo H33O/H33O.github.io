@@ -678,6 +678,8 @@ summary:focus-visible,
 
 /* ---------- Bouton d'action : contour blanc, texte blanc, grossit au survol ---------- */
 
+/* Bouton d'action (« Parler de votre projet », « Écrire à Hugo ») : contour blanc, texte blanc.
+   border = épaisseur du contour · transform: scale(1.06) au survol = à quel point il grossit. */
 .btn--solid {
   background: transparent;
   border: 2px solid #ffffff;
@@ -718,6 +720,7 @@ details[open] > summary .when-open { display: inline; }
 
 /* ---------- Hero : trois parcours ---------- */
 
+/* Bloc de texte de l'accueil : max-width = largeur du bloc, padding = marges. */
 .hero-text { max-width: 520px; padding: 40px 64px; }
 
 .hero-text .hero-ask {
@@ -732,6 +735,10 @@ details[open] > summary .when-open { display: inline; }
   gap: 12px;
 }
 
+/* LES 3 BOUTONS DE L'ACCUEIL.
+   border-radius: 999px = bords arrondis en pilule (mets 18px pour des coins moins ronds)
+   background: rgba(0,0,0,0.32) = voile sombre derrière le bouton (mets 0 à la place de 0.32 pour le retirer)
+   min-height = hauteur · padding = espace intérieur · border = contour blanc. */
 .path {
   display: flex;
   flex-direction: column;
@@ -739,8 +746,8 @@ details[open] > summary .when-open { display: inline; }
   justify-content: center;
   gap: 2px;
   min-height: 76px;
-  padding: 16px 24px;
-  border-radius: 18px;
+  padding: 16px 36px;
+  border-radius: 999px;
   border: 2px solid #ffffff;
   background: rgba(0,0,0,0.32);
   color: #ffffff;
@@ -751,6 +758,7 @@ details[open] > summary .when-open { display: inline; }
 
 .path strong { font-family: var(--font-display); font-size: 18px; line-height: 1.2; }
 .path span { font-size: 14px; font-weight: 500; }
+/* Au survol, le bouton grossit : change 1.05 (1 = ne bouge pas, 1.1 = grossit plus). */
 .path:hover { transform: scale(1.05); }
 .path:active { transform: scale(1.01); }
 
@@ -774,6 +782,8 @@ details[open] > summary .when-open { display: inline; }
 /* ---------- Carrousel générique ---------- */
 
 /* Toute la bande (titre, marges et cartes) met le carrousel en pause au survol */
+/* BANDES DES CARROUSELS (épisodes et recommandations).
+   Le padding définit aussi la zone qui met le défilement en pause au survol : plus il est grand, plus la zone est large. */
 .strip { padding: 72px 0 40px; }
 .strip + .strip { padding-top: 56px; padding-bottom: 88px; }
 
@@ -828,6 +838,7 @@ details[open] > summary .when-open { display: inline; }
 .carousel-btn[aria-pressed="true"] .i-pause { display: none; }
 .carousel-btn[aria-pressed="true"] .i-play { display: block; }
 
+/* Fenêtre du carrousel. Le mask-image crée le léger fondu sur les bords gauche/droite (retire les 2 lignes mask pour l'enlever). */
 .carousel-viewport {
   overflow-x: auto;
   overflow-y: hidden;
@@ -842,14 +853,16 @@ details[open] > summary .when-open { display: inline; }
 
 .carousel-track {
   display: flex;
-  gap: 20px;
+  gap: var(--card-gap, 20px);   /* réglé par "gap" dans SITE_CONFIG */
   width: max-content;
 }
 
 /* ---------- Cartes épisodes ---------- */
 
+/* CARTE D'UN ÉPISODE. La largeur se règle avec "cardWidth" dans SITE_CONFIG (pas ici).
+   padding = marge intérieure · border-radius = arrondi · background = couleur de fond. */
 .ep-card {
-  flex: 0 0 240px;
+  flex: 0 0 var(--card-w, 240px);   /* réglé par "cardWidth" dans SITE_CONFIG */
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -881,6 +894,8 @@ details[open] > summary .when-open { display: inline; }
 .ep-cover img { width: 100%; height: 100%; object-fit: cover; }
 .ep-cover img.is-default { width: 62%; height: auto; object-fit: contain; }
 
+/* Rond « play » posé sur la pochette. background = sa couleur (blanc), color = couleur du triangle.
+   width/height = taille du rond. */
 .ep-play {
   position: absolute;
   right: 10px;
@@ -891,7 +906,7 @@ details[open] > summary .when-open { display: inline; }
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--accent-accueil);
+  background: #ffffff;
   color: #1c1c1c;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
@@ -900,6 +915,7 @@ details[open] > summary .when-open { display: inline; }
 
 .ep-info { display: flex; flex-direction: column; gap: 4px; padding: 0 4px; }
 .ep-num { font-size: 13px; color: var(--text-dim); }
+/* Titre de l'épisode : -webkit-line-clamp: 3 = nombre de lignes maximum avant la coupure (…). */
 .ep-title {
   font-size: 16px;
   font-weight: 700;
@@ -913,8 +929,10 @@ details[open] > summary .when-open { display: inline; }
 
 /* ---------- Recommandations ---------- */
 
+/* BULLE DE RECOMMANDATION. La largeur se règle avec "cardWidth" dans SITE_CONFIG (pas ici).
+   padding = marge intérieure · gap = espace entre le texte et l'auteur. */
 .reco-card {
-  flex: 0 0 360px;
+  flex: 0 0 var(--card-w, 420px);   /* réglé par "cardWidth" dans SITE_CONFIG */
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -945,6 +963,7 @@ details[open] > summary .when-open { display: inline; }
 
 .reco-author { display: flex; align-items: center; gap: 14px; }
 
+/* Pastille de la personne (photo ou initiales). width/height = taille. */
 .reco-avatar {
   width: 48px;
   height: 48px;
@@ -967,12 +986,14 @@ details[open] > summary .when-open { display: inline; }
 
 /* ---------- Services ---------- */
 
+/* SERVICES : grille des 3 offres. repeat(3, 1fr) = 3 colonnes de même largeur · gap = espace entre les cartes. */
 .offers-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
+/* Une carte de service. La couleur du trait du haut vient de --offer-accent (définie dans le HTML de chaque carte). */
 .offer {
   display: flex;
   flex-direction: column;
@@ -1064,8 +1085,7 @@ details[open] > summary .when-open { display: inline; }
   .strip { padding-top: 48px; }
 
   .offers-grid { grid-template-columns: 1fr; }
-  .ep-card { flex-basis: 220px; }
-  .reco-card { flex-basis: 300px; }
+  /* largeur des cartes sur mobile : réglée dans SITE_CONFIG (cardWidthMobile) */
 }
 
 /* Petits écrans : les icônes de la barre sont reprises dans la section Contact */
@@ -1121,6 +1141,10 @@ details[open] > summary .when-open { display: inline; }
   <div class="hero-text">
     <h1>Hugo Rivals</h1>
     <p data-en="I design experiences that mean something.<br>Game design student, passionate about narrative and storytelling.">Je conçois des expériences qui donnent du sens.<br>Étudiant en game design, passionné de narration et de storytelling.</p>
+    <!-- ===== LES 3 BOUTONS DE L'ACCUEIL =====
+         Pour chaque bouton : href="#…" = où il mène (#portfolio, #offres, #podcasts, #contact)
+         <strong> = texte principal · <span> = petite ligne dessous (supprime le <span> pour n'avoir qu'une ligne)
+         data-en="…" = la même chose en anglais. Le style est dans le CSS (.path). -->
     <p class="hero-ask" data-en="What brings you here?">Qu'est-ce qui vous amène ?</p>
     <nav class="hero-paths" aria-label="Choisir un parcours">
       <a class="path path--recruit" href="#portfolio">
@@ -1138,7 +1162,9 @@ details[open] > summary .when-open { display: inline; }
   </div>
 </section>
 
-<!-- ===================== PREUVE : ÉPISODES + RECOMMANDATIONS ===================== -->
+<!-- ===================== PREUVE : ÉPISODES + RECOMMANDATIONS =====================
+     Les cartes sont créées automatiquement depuis SITE_CONFIG (dans le script, en bas du fichier).
+     Ici tu changes seulement les titres et les petites phrases au-dessus des carrousels. -->
 <section class="strip" id="preuve">
   <div class="carousel" id="episodes-carousel" role="region" aria-roledescription="carrousel">
     <div class="wrap strip-head">
@@ -1179,7 +1205,10 @@ details[open] > summary .when-open { display: inline; }
   </div>
 </section>
 
-<!-- ===================== SERVICES ===================== -->
+<!-- ===================== SERVICES =====================
+     3 cartes : chacune a un titre (<h3>), une phrase d'accroche (.offer-promise) et 3 points (<li>).
+     Pour changer un texte : modifie le français, puis la version anglaise dans data-en="…".
+     La couleur du trait du haut = style="--offer-accent: …" sur la balise <article>. -->
 <section id="offres" class="wrap section">
   <h2 class="section-title reveal" data-en="What I offer">Ce que je propose</h2>
   <p class="section-lead reveal" data-en="Three ways to work together, in a studio or as a freelancer.">Trois façons de travailler ensemble, en studio ou en freelance.</p>
@@ -1571,7 +1600,8 @@ details[open] > summary .when-open { display: inline; }
   </div>
 </section>
 
-<!-- ===================== CONTACT ===================== -->
+<!-- ===================== CONTACT =====================
+     Pour changer l'adresse mail : modifie mailto:… · pour un autre réseau : copie une ligne <a class="btn" …>. -->
 <section id="contact" class="wrap section">
   <h2 class="section-title reveal" data-en="Let's work together">Travaillons ensemble</h2>
   <p class="contact-text reveal" data-en="A position to fill or a freelance mission? Tell me about your project in a few lines.">Un poste à pourvoir ou une mission en freelance ? Décrivez-moi votre projet en quelques lignes.</p>
@@ -1588,6 +1618,25 @@ details[open] > summary .when-open { display: inline; }
 
 <script>
 /* ============================================================
+   GUIDE RAPIDE — comment modifier le site
+   ------------------------------------------------------------
+   • Tout ce qui se règle facilement est dans SITE_CONFIG, juste en dessous.
+   • Chaque ligne a la forme   nom: valeur,   (garde la virgule à la fin).
+   • Un texte s'écrit entre guillemets : "Bonjour".
+     Pour les deux langues : { fr: "Bonjour", en: "Hello" }.
+   • Un nombre s'écrit SANS guillemets : speed: 45.
+   • true = oui, false = non (sans guillemets).
+   • Après une modification : enregistre le fichier puis recharge la page
+     (Ctrl + F5). Sur GitHub Pages, la mise en ligne peut prendre une minute.
+   • Si la page s'affiche vide après une modification : il manque sûrement une
+     virgule, un guillemet ou une accolade. Annule ta dernière modification.
+   • Les textes fixes (boutons d'accueil, services, contact) sont dans le HTML,
+     plus haut : cherche le texte en français, modifie-le, puis modifie la
+     version anglaise dans l'attribut data-en="…" juste à côté.
+   • Les couleurs et polices du site sont dans le bloc :root du CSS, tout en haut.
+   ============================================================ */
+
+/* ============================================================
    CONFIGURATION DU SITE — tout ce que tu peux modifier est ici
    Tu n'as rien à toucher en dessous de ce bloc.
    ============================================================ */
@@ -1599,6 +1648,9 @@ const SITE_CONFIG = {
     speed: 45,             // vitesse en pixels par seconde (plus grand = plus rapide · 0 = immobile)
     direction: "left",     // sens : "left" = les cartes vont vers la gauche · "right" = vers la droite
     pauseOnHover: true,    // true = le défilement s'arrête quand la souris est sur toute la bande (titre + cartes)
+    gap: 36,               // ESPACE entre deux cartes, en pixels (plus grand = cartes plus écartées)
+    cardWidth: 240,        // LARGEUR d'une carte épisode, en pixels, sur ordinateur
+    cardWidthMobile: 220,  // largeur d'une carte sur téléphone / petit écran (≤ 860 px)
     defaultCover: "images/gameview-logo.png",  // pochette de secours si aucune autre n'est disponible
     autoFetch: true,       // true = récupère automatiquement la pochette et le titre de chaque épisode chez Spotify
                            // (ce que tu écris toi-même dans "cover" ou "title" ci-dessous passe toujours avant)
@@ -1612,14 +1664,14 @@ const SITE_CONFIG = {
       //          (si autoFetch est activé), sinon le logo par défaut
       // Un clic sur la carte ouvre l'épisode sur Spotify.
       // Pour ajouter un épisode : copie une ligne, change l'id, la saison et le numéro. L'ordre des lignes = l'ordre affiché.
-      { id: "4aMpXtAG8KyaFQ1On37h57", season: 1, number: 1, title: "", guest: "", role: "", cover: "" },
-      { id: "0HsML9WJh7o6eZCUwH3IAB", season: 1, number: 2, title: "", guest: "", role: "", cover: "" },
-      { id: "2MbwhbiaUMGo28oX6NTxWM", season: 1, number: 3, title: "", guest: "", role: "", cover: "" },
-      { id: "3cqtVb6lmr7cKl2Yw4mfNq", season: 1, number: 4, title: "", guest: "", role: "", cover: "" },
-      { id: "3L0aqbdy2XJEQe9yJniod4", season: 1, number: 5, title: "", guest: "", role: "", cover: "" },
-      { id: "3ouTEPE0ZpjEdduyq7RnkC", season: 1, number: 6, title: "", guest: "", role: "", cover: "" },
-      { id: "4paO4GgzBLg4KD8lvxqOw0", season: 1, number: 7, title: "", guest: "", role: "", cover: "" },
-      { id: "43atQYBcmwGQDsBtW9ID3G", season: 1, number: 8, title: "", guest: "", role: "", cover: "" },
+      { id: "43atQYBcmwGQDsBtW9ID3G", season: 1, number: 1, title: "", guest: "", role: "", cover: "" },
+      { id: "4paO4GgzBLg4KD8lvxqOw0", season: 1, number: 2, title: "", guest: "", role: "", cover: "" },
+      { id: "3ouTEPE0ZpjEdduyq7RnkC", season: 1, number: 3, title: "", guest: "", role: "", cover: "" },
+      { id: "3L0aqbdy2XJEQe9yJniod4", season: 1, number: 4, title: "", guest: "", role: "", cover: "" },
+      { id: "3cqtVb6lmr7cKl2Yw4mfNq", season: 1, number: 5, title: "", guest: "", role: "", cover: "" },
+      { id: "2MbwhbiaUMGo28oX6NTxWM", season: 1, number: 6, title: "", guest: "", role: "", cover: "" },
+      { id: "0HsML9WJh7o6eZCUwH3IAB", season: 1, number: 7, title: "", guest: "", role: "", cover: "" },
+      { id: "4aMpXtAG8KyaFQ1On37h57", season: 1, number: 8, title: "", guest: "", role: "", cover: "" },
       { id: "67YSGveq2JumGwZVUeU94s", season: 2, number: 1, title: "", guest: "", role: "", cover: "" }
     ]
   },
@@ -1630,6 +1682,9 @@ const SITE_CONFIG = {
     speed: 30,             // vitesse en pixels par seconde (plus grand = plus rapide · 0 = immobile)
     direction: "right",    // sens : "left" = les cartes vont vers la gauche · "right" = vers la droite
     pauseOnHover: true,    // true = le défilement s'arrête quand la souris est sur toute la bande (titre + cartes)
+    gap: 24,               // ESPACE entre deux bulles, en pixels
+    cardWidth: 420,        // LARGEUR d'une bulle de recommandation, en pixels, sur ordinateur
+    cardWidthMobile: 320,  // largeur d'une bulle sur téléphone / petit écran (≤ 860 px)
     items: [
       // name   : nom de la personne
       // role   : son poste (texte simple ou { fr, en })
@@ -1864,8 +1919,17 @@ function createCarousel(root, cfg, getRegionLabel) {
     btnToggle.setAttribute('aria-label', state.userPaused ? UI[currentLang].play : UI[currentLang].pause);
   }
 
+  // Applique la largeur des cartes et l'espace entre elles (réglages SITE_CONFIG : cardWidth, cardWidthMobile, gap)
+  function applySizing() {
+    const small = window.matchMedia('(max-width: 860px)').matches;
+    const width = (small && cfg.cardWidthMobile) ? cfg.cardWidthMobile : cfg.cardWidth;
+    if (width) root.style.setProperty('--card-w', width + 'px');
+    if (cfg.gap != null) root.style.setProperty('--card-gap', cfg.gap + 'px');
+  }
+
   // À appeler après chaque remplacement des cartes : mesure puis clone pour une boucle sans coupure
   function rebuild() {
+    applySizing();
     track.querySelectorAll('[data-clone]').forEach(n => n.remove());
     viewport.scrollLeft = 0;
     state.pos = 0;
