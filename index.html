@@ -721,32 +721,64 @@ details[open] > summary .when-open { display: inline; }
 /* ---------- Hero : trois parcours ---------- */
 
 /* Bloc de texte de l'accueil : max-width = largeur du bloc, padding = marges. */
-.hero-text { max-width: 520px; padding: 40px 64px; }
+/* ACCUEIL (hero) : tout est centré.
+   .hero-text h1  = le nom : font-size: clamp(minimum, taille selon l'écran, maximum) -> change le 120px pour agrandir/réduire
+   .hero-tagline  = la phrase sous le nom : font-size pour sa taille
+   .hero-paths    = les 3 boutons en ligne : gap = espace entre eux */
+.hero { justify-content: center; }
+
+.hero-text {
+  max-width: 1200px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: clamp(44px, 9.5vw, 120px);
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.hero-text .hero-tagline {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 18px;
+}
 
 .hero-text .hero-ask {
   font-family: var(--font-display);
   font-size: 15px;
-  margin: 28px 0 12px;
+  margin: 36px 0 16px;
 }
 
+/* Les 3 boutons restent TOUJOURS sur une seule ligne : sur petit écran ils rétrécissent
+   (taille du texte, marges et espace entre eux suivent la largeur de l'écran). */
 .hero-paths {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: clamp(8px, 1.6vw, 20px);
 }
 
 /* LES 3 BOUTONS DE L'ACCUEIL.
    border-radius: 999px = bords arrondis en pilule (mets 18px pour des coins moins ronds)
    background: rgba(0,0,0,0.32) = voile sombre derrière le bouton (mets 0 à la place de 0.32 pour le retirer)
-   min-height = hauteur · padding = espace intérieur · border = contour blanc. */
+   Les valeurs « clamp(petit, selon l'écran, grand) » font rétrécir le bouton sur petit écran :
+   - min-height / padding = hauteur et marges intérieures
+   - strong = taille du texte principal · span = taille de la petite ligne dessous
+   Pour des boutons plus grands ou plus petits partout, change le dernier nombre de chaque clamp. */
 .path {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 2px;
-  min-height: 76px;
-  padding: 16px 36px;
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: clamp(54px, 6vw, 72px);
+  padding: 12px clamp(12px, 2.5vw, 32px);
   border-radius: 999px;
   border: 2px solid #ffffff;
   background: rgba(0,0,0,0.32);
@@ -756,11 +788,51 @@ details[open] > summary .when-open { display: inline; }
   transition: transform 0.18s ease;
 }
 
-.path strong { font-family: var(--font-display); font-size: 18px; line-height: 1.2; }
-.path span { font-size: 14px; font-weight: 500; }
+.path strong { font-family: var(--font-display); font-size: clamp(10px, 1.45vw, 16px); line-height: 1.2; }
+.path span { font-size: clamp(9px, 1.2vw, 13px); font-weight: 500; line-height: 1.3; }
+
 /* Au survol, le bouton grossit : change 1.05 (1 = ne bouge pas, 1.1 = grossit plus). */
 .path:hover { transform: scale(1.05); }
 .path:active { transform: scale(1.01); }
+
+/* ---------- Bouton retour vers l'accueil ---------- */
+
+/* BOUTON RETOUR (Services, Portfolio, GameView) : cercle blanc avec flèche blanche, en haut à droite de la section.
+   width/height = taille du cercle · top/right = position · transform: scale(1.1) au survol = à quel point il grossit. */
+.has-back { position: relative; }
+
+.back-home {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: rgba(28,28,28,0.6);
+  color: #ffffff;
+  transition: transform 0.18s ease;
+}
+
+.back-home svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.back-home:hover { transform: scale(1.1); }
+.back-home:active { transform: scale(1.02); }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* ---------- Titres secondaires et intros ---------- */
 
@@ -791,7 +863,9 @@ details[open] > summary .when-open { display: inline; }
 .strip-title { margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 0.01em; }
 .strip-head .carousel-hint { margin-top: 6px; }
 
-.carousel { position: relative; width: 100%; }
+/* OMBRE DERRIÈRE LES CARTES des carrousels : --card-shadow = décalage vertical, flou, puis opacité (0.45).
+   Pour une ombre plus discrète, baisse 0.45 ; pour la retirer, mets --card-shadow: none; */
+.carousel { position: relative; width: 100%; --card-shadow: 0 8px 22px rgba(0,0,0,0.45); }
 
 .strip-head {
   display: flex;
@@ -844,7 +918,7 @@ details[open] > summary .when-open { display: inline; }
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 14px 0 22px;
+  padding: 14px 0 36px;   /* le bas laisse la place à l'ombre des cartes */
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
 }
@@ -874,6 +948,7 @@ details[open] > summary .when-open { display: inline; }
   background: var(--surface);
   border: 2px solid var(--border);
   border-radius: 16px;
+  box-shadow: var(--card-shadow);
   cursor: pointer;
   transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
 }
@@ -942,6 +1017,7 @@ details[open] > summary .when-open { display: inline; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
+  box-shadow: var(--card-shadow);
 }
 
 .reco-demo {
@@ -1079,18 +1155,48 @@ details[open] > summary .when-open { display: inline; }
 
 @media (max-width: 860px) {
   .top-nav { padding: 8px 20px 16px; }
+  .back-home { top: 12px; right: 20px; width: 40px; height: 40px; }
+  .back-home svg { width: 18px; height: 18px; }
 
-  .hero-text { padding: 32px 20px; max-width: 100%; }
-  .path { align-items: flex-start; }
+  .hero { justify-content: center; }
+  .hero-text { padding: 32px 20px; max-width: 100%; text-align: center; }
   .strip { padding-top: 48px; }
 
   .offers-grid { grid-template-columns: 1fr; }
   /* largeur des cartes sur mobile : réglée dans SITE_CONFIG (cardWidthMobile) */
 }
 
-/* Petits écrans : les icônes de la barre sont reprises dans la section Contact */
+/* Petits écrans */
 @media (max-width: 640px) {
-  .top-links { display: none; }
+  .top-links { display: none; }   /* les icônes sont reprises dans la section Contact */
+
+  /* ACCUEIL : les 3 boutons restent en ligne, plus petits ; la petite ligne sous chaque titre disparaît */
+  .hero-text { padding: 24px 12px; }
+  .path span { display: none; }
+  .path { min-height: 52px; padding: 10px 10px; }
+  .hero-text .hero-tagline { font-size: 15px; }
+  .hero-text .hero-ask { margin: 28px 0 12px; }
+
+  /* CARROUSELS : cartes et textes réduits (largeurs et espaces : cardWidthMobile / gapMobile dans SITE_CONFIG) */
+  .strip { padding: 40px 0 8px; }
+  .strip + .strip { padding-top: 32px; padding-bottom: 56px; }
+  .strip-title { font-size: 18px; }
+  .strip-head .carousel-hint { font-size: 12px; }
+  .carousel-btn { width: 36px; height: 36px; }
+  .carousel-viewport { padding: 10px 0 26px; }
+
+  .ep-card { padding: 8px 8px 12px; gap: 10px; border-radius: 12px; }
+  .ep-title { font-size: 13px; }
+  .ep-num, .ep-guest { font-size: 11px; }
+  .ep-play { width: 30px; height: 30px; right: 8px; bottom: 8px; }
+  .ep-play svg { width: 13px; height: 13px; }
+
+  .reco-card { padding: 16px; gap: 14px; border-radius: 12px; }
+  .reco-card blockquote { padding-left: 12px; }
+  .reco-card blockquote p { font-size: 13px; line-height: 1.5; }
+  .reco-avatar { width: 38px; height: 38px; font-size: 13px; }
+  .reco-name { font-size: 13px; }
+  .reco-meta { font-size: 11.5px; }
 }
 
 </style>
@@ -1140,7 +1246,7 @@ details[open] > summary .when-open { display: inline; }
   <div class="hero-bg"></div>
   <div class="hero-text">
     <h1>Hugo Rivals</h1>
-    <p data-en="I design experiences that mean something.<br>Game design student, passionate about narrative and storytelling.">Je conçois des expériences qui donnent du sens.<br>Étudiant en game design, passionné de narration et de storytelling.</p>
+    <p class="hero-tagline" data-en="I design experiences that mean something.<br>Game design student, passionate about narrative and storytelling.">Je conçois des expériences qui donnent du sens.<br>Étudiant en game design, passionné de narration et de storytelling.</p>
     <!-- ===== LES 3 BOUTONS DE L'ACCUEIL =====
          Pour chaque bouton : href="#…" = où il mène (#portfolio, #offres, #podcasts, #contact)
          <strong> = texte principal · <span> = petite ligne dessous (supprime le <span> pour n'avoir qu'une ligne)
@@ -1209,7 +1315,12 @@ details[open] > summary .when-open { display: inline; }
      3 cartes : chacune a un titre (<h3>), une phrase d'accroche (.offer-promise) et 3 points (<li>).
      Pour changer un texte : modifie le français, puis la version anglaise dans data-en="…".
      La couleur du trait du haut = style="--offer-accent: …" sur la balise <article>. -->
-<section id="offres" class="wrap section">
+<section id="offres" class="wrap section has-back">
+  <!-- BOUTON RETOUR : cercle avec flèche blanche qui ramène à l'accueil (#accueil). Style : .back-home dans le CSS. -->
+  <a class="back-home" href="#accueil">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <span class="sr-only" data-en="Back to home">Retour à l'accueil</span>
+  </a>
   <h2 class="section-title reveal" data-en="What I offer">Ce que je propose</h2>
   <p class="section-lead reveal" data-en="Three ways to work together, in a studio or as a freelancer.">Trois façons de travailler ensemble, en studio ou en freelance.</p>
 
@@ -1251,7 +1362,13 @@ details[open] > summary .when-open { display: inline; }
 </section>
 
 <!-- ===================== PORTFOLIO ===================== -->
-<section id="portfolio" class="wrap section">
+<section id="portfolio" class="wrap section has-back">
+  <!-- BOUTON RETOUR : cercle avec flèche blanche qui ramène à l'accueil (#accueil). Style : .back-home dans le CSS. -->
+  <a class="back-home" href="#accueil">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <span class="sr-only" data-en="Back to home">Retour à l'accueil</span>
+  </a>
+
   <h1 class="section-title reveal">Portfolio</h1>
 
   <!-- 1. ABYSS -->
@@ -1535,7 +1652,13 @@ details[open] > summary .when-open { display: inline; }
   </div>
 </section>
 
-<section id="podcasts" class="wrap section">
+<section id="podcasts" class="wrap section has-back">
+  <!-- BOUTON RETOUR : cercle avec flèche blanche qui ramène à l'accueil (#accueil). Style : .back-home dans le CSS. -->
+  <a class="back-home" href="#accueil">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <span class="sr-only" data-en="Back to home">Retour à l'accueil</span>
+  </a>
+
   <h1 class="section-title reveal">GameView</h1>
 
   <div class="about-block reveal" style="margin-bottom:40px;">
@@ -1650,7 +1773,8 @@ const SITE_CONFIG = {
     pauseOnHover: true,    // true = le défilement s'arrête quand la souris est sur toute la bande (titre + cartes)
     gap: 36,               // ESPACE entre deux cartes, en pixels (plus grand = cartes plus écartées)
     cardWidth: 240,        // LARGEUR d'une carte épisode, en pixels, sur ordinateur
-    cardWidthMobile: 220,  // largeur d'une carte sur téléphone / petit écran (≤ 860 px)
+    cardWidthMobile: 165,  // largeur d'une carte sur téléphone (écran ≤ 640 px)
+    gapMobile: 14,         // espace entre deux cartes sur téléphone, en pixels
     defaultCover: "images/gameview-logo.png",  // pochette de secours si aucune autre n'est disponible
     autoFetch: true,       // true = récupère automatiquement la pochette et le titre de chaque épisode chez Spotify
                            // (ce que tu écris toi-même dans "cover" ou "title" ci-dessous passe toujours avant)
@@ -1684,7 +1808,8 @@ const SITE_CONFIG = {
     pauseOnHover: true,    // true = le défilement s'arrête quand la souris est sur toute la bande (titre + cartes)
     gap: 24,               // ESPACE entre deux bulles, en pixels
     cardWidth: 420,        // LARGEUR d'une bulle de recommandation, en pixels, sur ordinateur
-    cardWidthMobile: 320,  // largeur d'une bulle sur téléphone / petit écran (≤ 860 px)
+    cardWidthMobile: 255,  // largeur d'une bulle sur téléphone (écran ≤ 640 px)
+    gapMobile: 12,         // espace entre deux bulles sur téléphone, en pixels
     items: [
       // name   : nom de la personne
       // role   : son poste (texte simple ou { fr, en })
@@ -1919,12 +2044,13 @@ function createCarousel(root, cfg, getRegionLabel) {
     btnToggle.setAttribute('aria-label', state.userPaused ? UI[currentLang].play : UI[currentLang].pause);
   }
 
-  // Applique la largeur des cartes et l'espace entre elles (réglages SITE_CONFIG : cardWidth, cardWidthMobile, gap)
+  // Applique la largeur des cartes et l'espace entre elles (réglages SITE_CONFIG : cardWidth, cardWidthMobile, gap, gapMobile)
   function applySizing() {
-    const small = window.matchMedia('(max-width: 860px)').matches;
-    const width = (small && cfg.cardWidthMobile) ? cfg.cardWidthMobile : cfg.cardWidth;
+    const phone = window.matchMedia('(max-width: 640px)').matches;
+    const width = (phone && cfg.cardWidthMobile) ? cfg.cardWidthMobile : cfg.cardWidth;
+    const gap = (phone && cfg.gapMobile != null) ? cfg.gapMobile : cfg.gap;
     if (width) root.style.setProperty('--card-w', width + 'px');
-    if (cfg.gap != null) root.style.setProperty('--card-gap', cfg.gap + 'px');
+    if (gap != null) root.style.setProperty('--card-gap', gap + 'px');
   }
 
   // À appeler après chaque remplacement des cartes : mesure puis clone pour une boucle sans coupure
