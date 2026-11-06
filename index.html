@@ -731,6 +731,10 @@ details[open] > summary .when-open { display: inline; }
   max-width: 1200px;
   padding: 40px 32px;
   text-align: center;
+  /* Réglage fin du centrage : --hero-shift décale tout le bloc (nom, phrase, boutons).
+     0px = parfaitement centré · 8px = décale de 8 px vers la droite · -8px = vers la gauche. */
+  --hero-shift: 0px;
+  transform: translateX(var(--hero-shift));
 }
 
 .hero-text h1 {
@@ -1814,6 +1818,7 @@ const SITE_CONFIG = {
       // name   : nom de la personne
       // role   : son poste (texte simple ou { fr, en })
       // studio : nom du studio · game : nom du jeu (laisser "" pour masquer)
+      //          Pour plusieurs jeux : game: ["Jeu 1", "Jeu 2"] (le libellé passe alors à « Projets »)
       // photo  : chemin d'une photo (ex. "images/camille.jpg") ou "" pour des initiales colorées
       // quote  : le témoignage { fr: "…", en: "…" }
       // demo   : true = affiche l'étiquette « Exemple de test ». SUPPRIME cette ligne (ou mets false)
@@ -1831,33 +1836,23 @@ const SITE_CONFIG = {
         }
       },
       {
-        name: "Camille Laurent",
-        role: { fr: "Directrice de production", en: "Production Director" },
-        studio: "Studio Brumeline", game: "Les Marées Grises",
+        name: "Anthony Jauneaud",
+        role: { fr: "Directeur narratif", en: "Narrative Director" },
+        studio: "Acte Zéro", game: ["Dordogne", "Battlestar Galactica: Scattered Hopes"],
         photo: "",
         quote: {
-          fr: "Hugo a repris la coordination en plein coup de chaud. Il a écouté chacun, clarifié les rôles et relancé la production en quelques jours. Nous avons livré à temps, avec une équipe plus sereine.",
-          en: "Hugo took over coordination right in the crunch. He listened to everyone, clarified roles and got production moving again within days. We shipped on time, with a calmer team."
+          fr: "Hugo a préparé, dirigé et produit un podcast autour du narrative design avec sérieux et professionnalisme. J'ai pu y rencontrer un jeune homme motivé, organisé, passionné par le jeu vidéo. Aucun doute que nos chemins se recroiseront.",
+          en: "Hugo prepared, directed and produced a podcast about narrative design with seriousness and professionalism. I got to meet a motivated, organized young man who is passionate about video games. No doubt our paths will cross again."
         }
       },
       {
-        name: "Nolan Ferrer",
-        role: { fr: "Level Designer", en: "Level Designer" },
-        studio: "Atelier Pixelmarée", game: "Echo Verger",
+        name: "Pierre Corbinais",
+        role: { fr: "Créateur du jeu", en: "Game creator" },
+        studio: "", game: "Wednesdays",
         photo: "",
         quote: {
-          fr: "Ses niveaux sont lisibles dès la première partie. Il teste vite, accepte les retours sans ego et ajuste le rythme jusqu'à ce que le joueur comprenne sans qu'on ait à lui expliquer.",
-          en: "His levels are readable from the very first playthrough. He tests fast, takes feedback without ego and keeps adjusting the pacing until players get it without being told."
-        }
-      },
-      {
-        name: "Théo Barbier",
-        role: { fr: "Directeur artistique", en: "Art Director" },
-        studio: "Collectif Sablier", game: "Mirage 48",
-        photo: "",
-        quote: {
-          fr: "Avec dix artistes sur le même projet, il a gardé une identité visuelle cohérente. Des points de synchro courts et clairs : personne ne s'est senti perdu, et ça se voit à l'écran.",
-          en: "With ten artists on the same project, he kept the visual identity consistent. Short, clear sync points: nobody felt lost, and it shows on screen."
+          fr: "Merci à Hugo de m'avoir invité pour parler de Wednesdays sur Gameview, et bravo à lui pour avoir parfaitement mené cet entretien autour d'un sujet pourtant plus que difficile!",
+          en: "Thanks to Hugo for inviting me to talk about Wednesdays on GameView, and well done to him for leading this interview so perfectly on a subject that is anything but easy!"
         }
       },
       {
@@ -1877,13 +1872,13 @@ const SITE_CONFIG = {
 /* Textes de l'interface générés par le script (boutons, étiquettes). */
 const UI = {
   fr: {
-    episode: "Épisode", season: "Saison", episodeLc: "épisode", project: "Projet", demo: "Exemple de test",
+    episode: "Épisode", season: "Saison", episodeLc: "épisode", project: "Projet", projects: "Projets", demo: "Exemple de test",
     listen: "Écouter sur Spotify",
     pause: "Mettre en pause le défilement", play: "Relancer le défilement",
     episodesLabel: "Épisodes du podcast GameView", recosLabel: "Recommandations"
   },
   en: {
-    episode: "Episode", season: "Season", episodeLc: "episode", project: "Project", demo: "Test example",
+    episode: "Episode", season: "Season", episodeLc: "episode", project: "Project", projects: "Projects", demo: "Test example",
     listen: "Listen on Spotify",
     pause: "Pause scrolling", play: "Resume scrolling",
     episodesLabel: "GameView podcast episodes", recosLabel: "Recommendations"
@@ -2293,7 +2288,9 @@ function renderRecos() {
     who.appendChild(makeEl('p', 'reco-name', item.name));
     const roleLine = [L(item.role), item.studio].filter(Boolean).join(', ');
     if (roleLine) who.appendChild(makeEl('p', 'reco-meta', roleLine));
-    if (item.game) who.appendChild(makeEl('p', 'reco-meta', ui.project + ' : ' + item.game));
+    // game : un seul jeu (texte) ou plusieurs (liste) ; le libellé passe au pluriel s'il y en a plusieurs
+    const games = Array.isArray(item.game) ? item.game.filter(Boolean) : (item.game ? [item.game] : []);
+    if (games.length) who.appendChild(makeEl('p', 'reco-meta', (games.length > 1 ? ui.projects : ui.project) + ' : ' + games.join(', ')));
     author.appendChild(avatar);
     author.appendChild(who);
 
