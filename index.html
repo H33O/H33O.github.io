@@ -749,20 +749,15 @@ details[open] > summary .when-open { display: inline; }
   font-size: 18px;
 }
 
-.hero-text .hero-ask {
-  font-family: var(--font-display);
-  font-size: 15px;
-  margin: 36px 0 16px;
-}
-
-/* Les 3 boutons restent TOUJOURS sur une seule ligne : sur petit écran ils rétrécissent
-   (taille du texte, marges et espace entre eux suivent la largeur de l'écran). */
+/* Les 3 boutons ont TOUJOURS la même taille et restent centrés sur une seule ligne :
+   la grille leur donne 3 colonnes de largeur identique (repeat(3, 1fr)) et la même hauteur.
+   width: min(100%, 900px) = largeur maximale de l'ensemble · gap = espace entre les boutons. */
 .hero-paths {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
+  margin: 36px auto 0;   /* espace entre la phrase et les boutons ; auto = centré */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(8px, 1.6vw, 20px);
+  width: min(100%, 900px);
 }
 
 /* LES 3 BOUTONS DE L'ACCUEIL.
@@ -779,10 +774,9 @@ details[open] > summary .when-open { display: inline; }
   justify-content: center;
   text-align: center;
   gap: 2px;
-  flex: 0 1 auto;
   min-width: 0;
-  min-height: clamp(54px, 6vw, 72px);
-  padding: 12px clamp(12px, 2.5vw, 32px);
+  min-height: clamp(64px, 7vw, 84px);
+  padding: 12px clamp(10px, 2vw, 28px);
   border-radius: 999px;
   border: 2px solid #ffffff;
   background: rgba(0,0,0,0.32);
@@ -793,7 +787,8 @@ details[open] > summary .when-open { display: inline; }
 }
 
 .path strong { font-family: var(--font-display); font-size: clamp(10px, 1.45vw, 16px); line-height: 1.2; }
-.path span { font-size: clamp(9px, 1.2vw, 13px); font-weight: 500; line-height: 1.3; }
+.path > span { font-size: clamp(9px, 1.2vw, 13px); font-weight: 500; line-height: 1.3; }
+.t-short { display: none; }   /* version courte du texte : affichée seulement sur téléphone */
 
 /* Au survol, le bouton grossit : change 1.05 (1 = ne bouge pas, 1.1 = grossit plus). */
 .path:hover { transform: scale(1.05); }
@@ -928,6 +923,13 @@ details[open] > summary .when-open { display: inline; }
 }
 
 .carousel-viewport::-webkit-scrollbar { display: none; }
+
+/* Glisser à la souris : curseur « main » ; pendant le glissé la main se ferme et on ne sélectionne pas le texte */
+.carousel-viewport { cursor: grab; }
+.carousel-track { user-select: none; -webkit-user-select: none; }
+.carousel-viewport img { -webkit-user-drag: none; }
+.carousel-viewport.is-dragging, .carousel-viewport.is-dragging * { cursor: grabbing; }
+.carousel-viewport.is-dragging a { pointer-events: none; }
 
 .carousel-track {
   display: flex;
@@ -1176,10 +1178,12 @@ details[open] > summary .when-open { display: inline; }
 
   /* ACCUEIL : les 3 boutons restent en ligne, plus petits ; la petite ligne sous chaque titre disparaît */
   .hero-text { padding: 24px 12px; }
-  .path span { display: none; }
-  .path { min-height: 52px; padding: 10px 10px; }
+  .path > span { display: none; }
+  .t-long { display: none; }
+  .t-short { display: inline; }
+  .path { min-height: 56px; padding: 10px 8px; }
   .hero-text .hero-tagline { font-size: 15px; }
-  .hero-text .hero-ask { margin: 28px 0 12px; }
+  .hero-paths { margin-top: 26px; }
 
   /* CARROUSELS : cartes et textes réduits (largeurs et espaces : cardWidthMobile / gapMobile dans SITE_CONFIG) */
   .strip { padding: 40px 0 8px; }
@@ -1253,19 +1257,19 @@ details[open] > summary .when-open { display: inline; }
     <p class="hero-tagline" data-en="I design experiences that mean something.<br>Game design student, passionate about narrative and storytelling.">Je conçois des expériences qui donnent du sens.<br>Étudiant en game design, passionné de narration et de storytelling.</p>
     <!-- ===== LES 3 BOUTONS DE L'ACCUEIL =====
          Pour chaque bouton : href="#…" = où il mène (#portfolio, #offres, #podcasts, #contact)
-         <strong> = texte principal · <span> = petite ligne dessous (supprime le <span> pour n'avoir qu'une ligne)
-         data-en="…" = la même chose en anglais. Le style est dans le CSS (.path). -->
-    <p class="hero-ask" data-en="What brings you here?">Qu'est-ce qui vous amène ?</p>
+         <strong> = texte principal : « t-long » = version complète (ordinateur, tablette), « t-short » = version courte (téléphone)
+         le <span> en dessous = petite ligne, masquée sur téléphone (supprime-le pour n'avoir qu'une ligne)
+         data-en='…' = la même chose en anglais (garde les deux <span> à l'intérieur). Le style est dans le CSS (.path). -->
     <nav class="hero-paths" aria-label="Choisir un parcours">
       <a class="path path--recruit" href="#portfolio">
-        <strong data-en="See my projects">Voir mes projets</strong>
+        <strong data-en='<span class="t-long">See my projects</span><span class="t-short">Projects</span>'><span class="t-long">Voir mes projets</span><span class="t-short">Mes projets</span></strong>
       </a>
       <a class="path path--freelance" href="#offres">
-        <strong data-en="I need a freelancer">Je cherche un freelance</strong>
-        <span data-en="See what I offer">Voir ce que je propose</span>
+        <strong data-en='<span class="t-long">Looking for a freelancer?</span><span class="t-short">Freelancer?</span>'><span class="t-long">Vous cherchez un freelance ?</span><span class="t-short">Freelance ?</span></strong>
+        <span data-en="See my services">Voir mes services</span>
       </a>
       <a class="path path--podcast" href="#podcasts">
-        <strong data-en="I want to listen to GameView">Je veux écouter GameView</strong>
+        <strong data-en='<span class="t-long">I want to listen to GameView</span><span class="t-short">GameView</span>'><span class="t-long">Je veux écouter GameView</span><span class="t-short">GameView</span></strong>
         <span data-en="Browse the episodes">Parcourir les épisodes</span>
       </a>
     </nav>
@@ -2028,7 +2032,7 @@ function createCarousel(root, cfg, getRegionLabel) {
   const state = {
     loop: false, half: 0, pos: 0, lastSet: 0, last: performance.now(), width: 0,
     userPaused: !cfg.autoplay || REDUCE_MOTION.matches,
-    hover: false, focus: false, touch: false, visible: true, holdUntil: 0
+    hover: false, focus: false, touch: false, dragging: false, visible: true, holdUntil: 0
   };
 
   function gap() { return parseFloat(getComputedStyle(track).columnGap) || 0; }
@@ -2081,7 +2085,7 @@ function createCarousel(root, cfg, getRegionLabel) {
 
   function running() {
     return !state.userPaused && state.loop && cfg.speed > 0 && state.visible && !document.hidden &&
-           !state.hover && !state.focus && !state.touch && performance.now() >= state.holdUntil;
+           !state.hover && !state.focus && !state.touch && !state.dragging && performance.now() >= state.holdUntil;
   }
 
   function tick(now) {
@@ -2115,6 +2119,50 @@ function createCarousel(root, cfg, getRegionLabel) {
       state.lastSet = current;
     }
   }, { passive: true });
+
+  // ---------- Glisser à la souris (ordinateur) ----------
+  // Clic + déplacement = le carrousel suit la souris (comme au doigt sur téléphone).
+  // Quand la souris quitte la bande, le défilement automatique reprend tout seul.
+  const drag = { active: false, moved: false, startX: 0, startScroll: 0 };
+
+  viewport.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    drag.active = true;
+    drag.moved = false;
+    drag.startX = e.clientX;
+    drag.startScroll = viewport.scrollLeft;
+    state.dragging = true;
+  });
+
+  window.addEventListener('pointermove', e => {
+    if (!drag.active) return;
+    const dx = e.clientX - drag.startX;
+    if (!drag.moved && Math.abs(dx) > 5) {          // au-delà de 5 px, ce n'est plus un simple clic
+      drag.moved = true;
+      viewport.classList.add('is-dragging');
+    }
+    if (!drag.moved) return;
+    let target = drag.startScroll - dx;
+    // en boucle : on reste dans [0, half[ (le contenu est identique après un tour complet)
+    target = state.loop ? ((target % state.half) + state.half) % state.half : Math.max(0, target);
+    viewport.scrollLeft = target;
+  });
+
+  function endDrag() {
+    if (!drag.active) return;
+    drag.active = false;
+    state.dragging = false;
+    viewport.classList.remove('is-dragging');
+    if (drag.moved) setTimeout(() => { drag.moved = false; }, 0);   // laisse passer le clic qui suit, pour l'annuler
+  }
+  window.addEventListener('pointerup', endDrag);
+  window.addEventListener('pointercancel', endDrag);
+
+  // Un glissé ne doit pas ouvrir l'épisode sur lequel on relâche la souris
+  viewport.addEventListener('click', e => {
+    if (drag.moved) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+  viewport.addEventListener('dragstart', e => e.preventDefault());   // pas de « glisser-déposer » du lien ou de l'image
 
   viewport.addEventListener('wheel', () => { state.holdUntil = performance.now() + 2500; }, { passive: true });
   viewport.addEventListener('touchstart', () => { state.touch = true; }, { passive: true });
