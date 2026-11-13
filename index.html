@@ -1274,6 +1274,219 @@ details[open] > summary .when-open { display: inline; }
   .reco-meta { font-size: 11.5px; }
 }
 
+
+/* ================================================================================
+   ADAPTATION MOBILE — recomposition tactile
+   --------------------------------------------------------------------------------
+   Tout ce bloc est placé dans des media queries (≤ 768 px, ≤ 480 px, appareils tactiles) :
+   RIEN ici ne s'applique sur ordinateur. Il est volontairement tout à la fin du fichier
+   pour surcharger les règles précédentes sans les modifier.
+   Pour retirer toute l'adaptation mobile : supprime ce bloc jusqu'à la fin de la balise <style>.
+   ================================================================================ */
+
+/* ---------- Tablette et mobile : ≤ 768 px ---------- */
+@media (max-width: 768px) {
+
+  :root { --bar-height: 72px; }   /* barre du haut plus basse : plus de place pour le contenu */
+
+  a, button, summary { touch-action: manipulation; -webkit-tap-highlight-color: rgba(255, 255, 255, 0.14); }
+
+  /* ----- Marges et rythme ----- */
+  .wrap {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+  .section { padding-top: clamp(64px, 16vw, 80px); padding-bottom: clamp(48px, 12vw, 72px); }
+  .section-title { font-size: clamp(26px, 7.4vw, 34px); line-height: 1.15; margin-bottom: 28px; }
+  .section-lead { font-size: 16px; line-height: 1.55; margin: -8px 0 28px; }
+
+  /* ----- En-tête ----- */
+  .top-bar {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+  .logo img { height: 52px; max-width: 48vw; object-fit: contain; }
+  .top-right { gap: 8px; }
+  .lang-switch { gap: 0; font-size: 16px; }
+  .lang-switch a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+
+  /* Icônes de la barre (visibles entre 641 et 768 px) : zone tactile de 44 px sans changer leur taille visible */
+  .top-links { gap: 28px; }
+  .top-links a { position: relative; }
+  .top-links a::after { content: ""; position: absolute; inset: -9px; }
+
+  /* ----- Menu : bouton rond en bas à droite (au pouce) + liste qui s'ouvre en bas ----- */
+  .menu-toggle {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 1100;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border-width: 2px;
+    background: rgba(28, 28, 28, 0.94);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+  .menu-toggle svg { width: 24px; height: 24px; }
+  .menu-toggle[aria-expanded="true"] { background: var(--text); color: var(--bg); }   /* état « ouvert » visible */
+
+  .top-nav {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 8px max(20px, env(safe-area-inset-right)) calc(88px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+    border-radius: 20px 20px 0 0;
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+    box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.55);
+  }
+  .top-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0;
+    font-size: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .top-nav a:last-child { border-bottom: none; }
+  .top-nav a.active::after { display: none; }
+
+  /* ----- Accueil ----- */
+  .hero { min-height: calc(100vh - var(--bar-height)); min-height: calc(100svh - var(--bar-height)); }
+  .hero-text { padding: 32px 16px 48px; width: 100%; max-width: 100%; }   /* pleine largeur : les boutons suivent la marge de 16 px */
+  .hero-text h1 { font-size: clamp(40px, 12vw, 64px); margin-bottom: 20px; }
+  .hero-text .hero-tagline { font-size: 16px; line-height: 1.5; max-width: 34ch; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 2px 16px rgba(0, 0, 0, 0.45); }
+  .hero-paths { width: 100%; max-width: 560px; margin-top: 28px; }
+  .path strong { font-size: clamp(14px, 4vw, 17px); text-wrap: balance; }   /* évite un « ? » seul sur la 2e ligne */
+  .path > span { font-size: 14px; }
+
+  /* Voile léger sur l'illustration d'accueil : texte blanc lisible même sur un fond clair */
+  .hero-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.4));
+  }
+
+  /* ----- Carrousels : défilement horizontal natif, accroche (snap), carte suivante qui dépasse ----- */
+  .strip { padding: 48px 0 8px; }
+  .strip + .strip { padding-top: 40px; padding-bottom: 56px; }
+  .strip-title { font-size: clamp(18px, 5.2vw, 24px); }
+  .strip-head .carousel-hint { font-size: 14px; }
+
+  #episodes-carousel { --card-w: min(68vw, 280px); --card-gap: 14px; }
+  #reco-carousel { --card-w: min(84vw, 360px); --card-gap: 14px; }
+
+  .carousel-viewport {
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 16px;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: none;
+    mask-image: none;
+    cursor: auto;
+    padding: 10px 0 26px;
+  }
+  .carousel-track { padding: 0 16px; }
+  .ep-card, .reco-card { scroll-snap-align: start; }
+
+  .carousel-btn { width: 44px; height: 44px; }
+
+  .ep-card { padding: 10px 10px 16px; border-radius: 14px; }
+  .ep-num, .ep-guest { font-size: 14px; }
+  .ep-title { font-size: 16px; }
+  .ep-play { width: 40px; height: 40px; }
+
+  .reco-card { padding: 20px; gap: 18px; border-radius: 14px; }
+  .reco-card blockquote p { font-size: 16px; line-height: 1.55; }
+  .reco-avatar { width: 44px; height: 44px; font-size: 15px; }
+  .reco-name { font-size: 16px; }
+  .reco-meta { font-size: 14px; }
+
+  /* ----- Services : cartes pleine largeur empilées ----- */
+  .offers-grid { grid-template-columns: 1fr; gap: 16px; }
+  .offer li { font-size: 16px; }
+  .offer-promise { font-size: 18px; }
+  .offers-cta { margin-top: 28px; }
+
+  /* ----- Portfolio : image au-dessus, texte en dessous (l'alternance gauche/droite est neutralisée) ----- */
+  .projects-list > .game-card,
+  .projects-list > .game-card:nth-child(even) { direction: ltr; }
+  .game-card { gap: 24px; padding: 40px 0; }
+  .game-info h3 { font-size: clamp(26px, 7.5vw, 32px); }
+  .game-card p, .game-card li { font-size: 16px; line-height: 1.55; }
+  .badge, .tag, .pm-label { font-size: 14px; }
+  .game-actions { gap: 12px; }
+  .game-actions .btn { flex: 1 1 auto; justify-content: center; }
+  .projects-more { margin-top: 28px; }
+
+  /* ----- À propos ----- */
+  .about-block { gap: 16px; padding: 32px 0; }
+  .timeline-item p, .about-block p { font-size: 16px; line-height: 1.55; }
+  .mini-timeline-item .year { font-size: 16px; }
+  .skill-item span { font-size: 14px; }
+
+  /* ----- GameView (bas de page) ----- */
+  .season-tabs { gap: 10px; }
+  .season-tab { flex: 1 1 0; min-width: 0; width: auto; max-width: 190px; }
+  .episode-embed { margin-bottom: 20px; }
+
+  /* ----- Boutons et zones tactiles (44 px minimum) ----- */
+  .btn { min-height: 48px; justify-content: center; font-size: 16px; padding: 12px 24px; }
+  .back-home { top: 12px; right: max(16px, env(safe-area-inset-right)); width: 44px; height: 44px; }
+  .back-home::after { content: ""; position: absolute; inset: -6px; }   /* zone tactile 56 px */
+
+  /* ----- Pied de page ----- */
+  footer { font-size: 14px; padding: 32px 0 calc(96px + env(safe-area-inset-bottom)); }   /* laisse la place au bouton de menu */
+
+  /* ----- Retour visuel au toucher ----- */
+  .btn:active, .path:active, .back-home:active, .carousel-btn:active, .season-tab:active,
+  .menu-toggle:active, .ep-card:active, .top-links a:active { transform: scale(0.97); }
+  .btn:disabled:active { transform: none; }
+  .top-nav a:active { opacity: 0.7; }
+}
+
+/* ---------- Petits téléphones : ≤ 480 px ---------- */
+@media (max-width: 480px) {
+  .hero-text { padding: 24px 16px 40px; }
+  .hero-paths { max-width: none; }
+  .path { padding: 14px 16px; }
+  .strip { padding-top: 40px; }
+  .offer { padding: 24px 20px; }
+  .back-home { top: 10px; }
+  #contact .game-actions .btn { flex: 1 1 100%; }   /* boutons de contact pleine largeur, faciles à toucher */
+  #episodes-carousel { --card-w: 72vw; }
+  #reco-carousel { --card-w: 86vw; }
+}
+
+/* ---------- Appareils tactiles : plus rien ne dépend du survol ---------- */
+@media (hover: none) {
+  .game-media-link:hover .media-photo,
+  .game-media-link.has-gif:hover .media-photo { transform: none; }
+  .top-nav a:hover { transform: none; }
+  .top-links a:hover { opacity: 0.9; transform: none; }
+  .btn:hover { background: transparent; color: var(--text); transform: none; }
+  .btn--solid:hover { transform: none; }
+  .btn--disabled:hover, .btn:disabled:hover { color: var(--text-dim); }
+  .skill-item:hover .ph-image { transform: none; }
+  .season-tab:hover { transform: none; }
+  .path:hover { transform: none; }
+  .back-home:hover { transform: none; }
+  .carousel-btn:hover { background: transparent; color: var(--text); }
+  .ep-card:hover { transform: none; border-color: var(--border); }
+}
+
+/* ---------- Mobile + « réduire les animations » ---------- */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  * { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
 </style>
 </head>
 <body>
@@ -2127,6 +2340,9 @@ document.querySelectorAll('.btn-postmortem').forEach(btn => {
    ============================================================ */
 
 const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
+// Mobile / petite tablette : les carrousels se font au doigt (défilement natif + accroche CSS), sans défilement automatique ni boucle.
+// Rien de ce qui suit ne change quoi que ce soit au-dessus de 768 px.
+const MOBILE_MQ = window.matchMedia('(max-width: 768px)');
 
 // Texte simple ou { fr, en } -> texte dans la langue courante
 function L(value) {
@@ -2151,7 +2367,8 @@ function createCarousel(root, cfg, getRegionLabel) {
   const state = {
     loop: false, half: 0, pos: 0, lastSet: 0, last: performance.now(), width: 0,
     userPaused: !cfg.autoplay || REDUCE_MOTION.matches,
-    hover: false, focus: false, touch: false, dragging: false, visible: true, holdUntil: 0
+    hover: false, focus: false, touch: false, dragging: false, visible: true, holdUntil: 0,
+    native: false
   };
 
   function gap() { return parseFloat(getComputedStyle(track).columnGap) || 0; }
@@ -2164,6 +2381,11 @@ function createCarousel(root, cfg, getRegionLabel) {
 
   // Applique la largeur des cartes et l'espace entre elles (réglages SITE_CONFIG : cardWidth, cardWidthMobile, gap, gapMobile)
   function applySizing() {
+    if (MOBILE_MQ.matches) {   // mobile : les tailles viennent du CSS (media queries), pas de la config
+      root.style.removeProperty('--card-w');
+      root.style.removeProperty('--card-gap');
+      return;
+    }
     const phone = window.matchMedia('(max-width: 640px)').matches;
     const width = (phone && cfg.cardWidthMobile) ? cfg.cardWidthMobile : cfg.cardWidth;
     const gap = (phone && cfg.gapMobile != null) ? cfg.gapMobile : cfg.gap;
@@ -2182,7 +2404,10 @@ function createCarousel(root, cfg, getRegionLabel) {
 
     const originals = Array.from(track.children);
     const total = originals.reduce((w, n) => w + n.getBoundingClientRect().width, 0) + gap() * originals.length;
-    state.loop = originals.length >= 2 && total > 0;
+    const native = MOBILE_MQ.matches;
+    if (native) { state.userPaused = true; state.native = true; }
+    else if (state.native) { state.native = false; state.userPaused = !cfg.autoplay || REDUCE_MOTION.matches; }
+    state.loop = !native && originals.length >= 2 && total > 0;
 
     if (state.loop) {
       // assez de copies pour que la piste soit toujours plus large que l'écran, même très large
@@ -2551,6 +2776,18 @@ projectsToggle.addEventListener('click', () => {
       setTimeout(() => old.remove(), 260);   // le temps du fondu
     }
 
+    // Appareil tactile (pas de survol) : le GIF joue tant que l'image est bien visible à l'écran, et s'arrête sinon.
+    // Un appui sur l'image ouvre toujours le projet comme avant.
+    if (window.matchMedia('(hover: none)').matches) {
+      if (!lowData && 'IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+          hovering = entries[0].isIntersecting;
+          if (hovering) load(() => { if (hovering) show(); }); else hide();
+        }, { threshold: 0.6 }).observe(frame);
+      }
+      return;
+    }
+
     frame.addEventListener('pointerenter', e => {
       if (e.pointerType !== 'mouse') return;   // sur téléphone, un appui ouvre le projet comme avant
       hovering = true;
@@ -2577,6 +2814,18 @@ const topNav = document.getElementById('top-nav');
 menuToggle.addEventListener('click', () => {
   const open = topNav.classList.toggle('is-open');
   menuToggle.setAttribute('aria-expanded', String(open));
+});
+function closeMenu() {
+  topNav.classList.remove('is-open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+}
+// Mobile uniquement : un toucher en dehors du menu (ou la touche Échap) le referme
+document.addEventListener('click', e => {
+  if (!MOBILE_MQ.matches || !topNav.classList.contains('is-open')) return;
+  if (!topNav.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && MOBILE_MQ.matches && topNav.classList.contains('is-open')) { closeMenu(); menuToggle.focus(); }
 });
 topNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   topNav.classList.remove('is-open');
